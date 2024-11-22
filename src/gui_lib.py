@@ -33,10 +33,13 @@ class LCD:
                     backlight_enabled=LCD_BACKLIGHTENABLED)
         self.lcd.clear()
 
-    def display(self, dialog):
+    def displayWelcome(self):
+        self.lcd.write_string('Welcome to abook\n\rthe audiobook reader')
+
+    def display(self, dialog, arguments):
         match dialog:
             case DIALOGS.WELCOME:
-                return displayWelcome()
+                return self.displayWelcome()
             case DIALOGS.CHOOSE_CAST:
                 return "one"
             case DIALOGS.CHOOSE_WIFI:
@@ -47,9 +50,7 @@ class LCD:
                 return "two"
             case default:
                 return "something"
-            
-    def displayWelcome(self):
-        self.lcd.write_string('Welcome to abook\n\rthe audiobook reader')
+
 
 
 
