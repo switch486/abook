@@ -19,6 +19,7 @@ DIALOGS.CHOOSE_CAST=1
 DIALOGS.CHOOSE_WIFI=2
 DIALOGS.CHOOSE_AUDIOBOOK=3
 DIALOGS.AUDIOBOOK_PLAY=4
+DIALOGS.TEST=99
 
 class LCD:
     def __init__(self):
@@ -48,6 +49,8 @@ class LCD:
                 return "two"
             case DIALOGS.AUDIOBOOK_PLAY:
                 return "two"
+            case DIALOGS.TEST:
+                return self.lcd.write_string(arguments)
             case default:
                 return "something"
 

@@ -35,6 +35,7 @@ gui = gui_lib.LCD()
 currentDialog = gui_lib.DIALOGS.WELCOME
 
 gui.display(currentDialog)
+gui.display(gui_lib.DIALOGS.TEST, 'aabbcc TEST')
 
 # read property file containing last cast device
 
@@ -43,6 +44,7 @@ while True:
    if pressedButton == "button_1":
        buttonshim.set_pixel(0x94, 0x00, 0xd3)
        pressedButton = "null"
+       gui.display(gui_lib.DIALOGS.TEST, 'something')
    elif pressedButton == "button_2":
        buttonshim.set_pixel(0x00, 0x00, 0xff)
        pressedButton = "null"
