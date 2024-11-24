@@ -6,33 +6,38 @@ import buttonshim
 def button_a(button, pressed):
     global pressedButton
     pressedButton = 'button_1'
+    gui.display(gui_lib.DIALOGS.TEST, button)
     
 @buttonshim.on_press(buttonshim.BUTTON_B)
 def button_b(button, pressed):
     global pressedButton
     pressedButton = 'button_2'
+    gui.display(gui_lib.DIALOGS.TEST, button)
     
 @buttonshim.on_press(buttonshim.BUTTON_C)
 def button_c(button, pressed):
     global pressedButton
     pressedButton = 'button_3'
+    gui.display(gui_lib.DIALOGS.TEST, button)
 
 @buttonshim.on_press(buttonshim.BUTTON_D)
 def button_d(button, pressed):
     global pressedButton
     pressedButton = 'button_4'
+    gui.display(gui_lib.DIALOGS.TEST, button)
 
 @buttonshim.on_press(buttonshim.BUTTON_E)
 def button_e(button, pressed):    
     global pressedButton
     pressedButton = 'button_5'
+    gui.display(gui_lib.DIALOGS.TEST, button)
 
 pressedButton = "null" 
 
-
-
 gui = gui_lib.LCD()
 currentDialog = gui_lib.DIALOGS.WELCOME
+
+
 
 gui.display(currentDialog)
 gui.display(gui_lib.DIALOGS.TEST, 'aabbcc TEST')
@@ -44,7 +49,6 @@ while True:
    if pressedButton == "button_1":
        buttonshim.set_pixel(0x94, 0x00, 0xd3)
        pressedButton = "null"
-       gui.display(gui_lib.DIALOGS.TEST, 'something')
    elif pressedButton == "button_2":
        buttonshim.set_pixel(0x00, 0x00, 0xff)
        pressedButton = "null"
