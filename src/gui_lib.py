@@ -38,6 +38,7 @@ class LCD:
         self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
 
     def display(self, dialog, arguments=''):
+        self.lcd.clear()
         match dialog:
             case DIALOGS.WELCOME:
                 return self.displayWelcome()
@@ -49,10 +50,8 @@ class LCD:
                 return "two"
             case DIALOGS.AUDIOBOOK_PLAY:
                 return "two"
-            case DIALOGS.TEST:
-                return self.lcd.write_string(arguments)
             case default:
-                return "something"
+                return self.lcd.write_string(arguments)
 
 
 

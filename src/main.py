@@ -5,27 +5,27 @@ import buttonshim
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_a(button, pressed):
     global pressedButton
-    pressedButton = button
+    pressedButton = 'button_1'
     
 @buttonshim.on_press(buttonshim.BUTTON_B)
 def button_b(button, pressed):
     global pressedButton
-    pressedButton = button
+    pressedButton = 'button_2'
     
 @buttonshim.on_press(buttonshim.BUTTON_C)
 def button_c(button, pressed):
     global pressedButton
-    pressedButton = button
+    pressedButton = 'button_3'
 
 @buttonshim.on_press(buttonshim.BUTTON_D)
 def button_d(button, pressed):
     global pressedButton
-    pressedButton = button
+    pressedButton = 'button_4'
 
 @buttonshim.on_press(buttonshim.BUTTON_E)
 def button_e(button, pressed):    
     global pressedButton
-    pressedButton = button
+    pressedButton = 'button_5'
 
 pressedButton = "null" 
 
