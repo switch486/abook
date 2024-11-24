@@ -5,4 +5,4 @@ source ~/Desktop/abook/venv/bin/activate
 
 echo "launch app"
 
-python /abook/src/main.py
+python /src/main.py
