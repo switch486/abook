@@ -39,7 +39,6 @@ class LCD:
 
     def display(self, dialog, arguments=''):
         self.lcd.clear()
-        print('Dialog to open: ' + dialog)
         match dialog:
             case DIALOGS.WELCOME:
                 return self.displayWelcome()

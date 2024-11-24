@@ -6,6 +6,7 @@ import buttonshim
 def button_a(button, pressed):
     global pressedButton
     pressedButton = 'button_1'
+    print('- Button1 pressed')
     
 @buttonshim.on_press(buttonshim.BUTTON_B)
 def button_b(button, pressed):
