@@ -40,21 +40,21 @@ gui.display(currentDialog)
 
 while True:
    time.sleep(.1)
-   if button_flag == "button_1":
+   if pressedButton == "button_1":
        buttonshim.set_pixel(0x94, 0x00, 0xd3)
-       button_flag = "null"
-   elif button_flag == "button_2":
+       pressedButton = "null"
+   elif pressedButton == "button_2":
        buttonshim.set_pixel(0x00, 0x00, 0xff)
-       button_flag = "null"
-   elif button_flag == "button_3":    
+       pressedButton = "null"
+   elif pressedButton == "button_3":    
        buttonshim.set_pixel(0x00, 0xff, 0x00)
-       button_flag = "null"
-   elif button_flag == "button_4":       
+       pressedButton = "null"
+   elif pressedButton == "button_4":       
        buttonshim.set_pixel(0xff, 0xff, 0x00)
-       button_flag = "null"
-   elif button_flag == "button_5":   
+       pressedButton = "null"
+   elif pressedButton == "button_5":   
        buttonshim.set_pixel(0xff, 0x00, 0x00)
-       button_flag = "null"
+       pressedButton = "null"
 
 
 
