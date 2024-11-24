@@ -34,7 +34,7 @@ class LCD:
         self.lcd.clear()
 
     def displayWelcome(self):
-        self.lcd.write_string('Welcome to abook\n\rthe audiobook reader')
+        self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
 
     def display(self, dialog, arguments=''):
         match dialog:
