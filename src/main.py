@@ -1,62 +1,73 @@
 import gui_lib
+import DialogContext
+import logic
 import time
 import buttonshim
+import constants.BUTTONS as BUTTONS
 
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_a(button, pressed):
     global pressedButton
-    pressedButton = 'button_1'
-    print('- Button1 pressed')
+    pressedButton = BUTTONS.BUTTON_A
     
 @buttonshim.on_press(buttonshim.BUTTON_B)
 def button_b(button, pressed):
     global pressedButton
-    pressedButton = 'button_2'
+    pressedButton = BUTTONS.BUTTON_B
     
 @buttonshim.on_press(buttonshim.BUTTON_C)
 def button_c(button, pressed):
     global pressedButton
-    pressedButton = 'button_3'
+    pressedButton = BUTTONS.BUTTON_C
 
 @buttonshim.on_press(buttonshim.BUTTON_D)
 def button_d(button, pressed):
     global pressedButton
-    pressedButton = 'button_4'
+    pressedButton = BUTTONS.BUTTON_D
 
 @buttonshim.on_press(buttonshim.BUTTON_E)
 def button_e(button, pressed):    
     global pressedButton
-    pressedButton = 'button_5'
+    pressedButton = BUTTONS.BUTTON_E
 
 pressedButton = "null" 
 
 gui = gui_lib.LCD()
-currentDialog = gui_lib.DIALOGS.WELCOME
-
-
+currentDialogContext = DialogContext()
+currentDialogContext.dialogName = gui_lib.DIALOGS.WELCOME
 
 gui.display(currentDialog)
-gui.display(gui_lib.DIALOGS.TEST, 'aabbcc TEST')
+
+
+
 
 # read property file containing last cast device
 
 while True:
-   time.sleep(.1)
-   if pressedButton == "button_1":
+   time.sleep(.5)
+   if pressedButton != "null":
+       currentDialog = logic.handleButtonPress(currentDialog, pressedButton)
+
+
+
+
+
+
+
+
+
+
+   if pressedButton == BUTTONS.BUTTON_A:
        buttonshim.set_pixel(0x94, 0x00, 0xd3)
-       pressedButton = "null"
-   elif pressedButton == "button_2":
+   elif pressedButton == BUTTONS.BUTTON_B:
        buttonshim.set_pixel(0x00, 0x00, 0xff)
-       pressedButton = "null"
-   elif pressedButton == "button_3":    
+   elif pressedButton == BUTTONS.BUTTON_C:    
        buttonshim.set_pixel(0x00, 0xff, 0x00)
-       pressedButton = "null"
-   elif pressedButton == "button_4":       
+   elif pressedButton == BUTTONS.BUTTON_D:       
        buttonshim.set_pixel(0xff, 0xff, 0x00)
-       pressedButton = "null"
-   elif pressedButton == "button_5":   
+   elif pressedButton == BUTTONS.BUTTON_E:   
        buttonshim.set_pixel(0xff, 0x00, 0x00)
-       pressedButton = "null"
+   pressedButton = "null"
 
 
 

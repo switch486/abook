@@ -1,5 +1,5 @@
 from RPLCD.i2c import CharLCD
-import types
+import constants.DIALOGS as DIALOGS
 
 # driver constants:
 I2C_UC='PCF8574'
@@ -11,15 +11,6 @@ LCD_DOTSIZE=8
 LCD_CHARMAP='A02'
 LCD_AUTOLINEBREAKS=True
 LCD_BACKLIGHTENABLED=True
-
-# dialog constants
-DIALOGS = types.SimpleNamespace()
-DIALOGS.WELCOME=0
-DIALOGS.CHOOSE_CAST=1
-DIALOGS.CHOOSE_WIFI=2
-DIALOGS.CHOOSE_AUDIOBOOK=3
-DIALOGS.AUDIOBOOK_PLAY=4
-DIALOGS.TEST=99
 
 class LCD:
     def __init__(self):
