@@ -7,6 +7,8 @@ import mechanics
 from constants import BUTTONS
 from constants import DIALOGS
 
+#TODO - HOLD!
+
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_a(button, pressed):
     global pressedButton

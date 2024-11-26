@@ -36,3 +36,6 @@ def getAvailableChromecasts(currentDialogContext):
 #    )
 #    if args.verbose:
 #        print(f"  service: {device}")
+
+
+# TODO - sort list alphabetically so that the lastly used is on top

@@ -12,6 +12,13 @@ LCD_CHARMAP='A02'
 LCD_AUTOLINEBREAKS=True
 LCD_BACKLIGHTENABLED=True
 
+# Headers
+# Template              'X   X    X    X    X'
+CHOOSE_CAST_HEADER=     ' | UP  DOWN       OK'
+CHOOSE_AUDIOBOOK_HEADER='<| UP  DOWN       OK'
+#TODO - back option on hold?
+PLAY_AUDIOBOOK_HEADER=  '<| [<  >]  - V + ||>'
+
 class LCD:
     def __init__(self):
         self.lcd = CharLCD(i2c_expander=I2C_UC, 
@@ -27,22 +34,52 @@ class LCD:
 
     def displayWelcome(self):
         self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
+        
+    def displayChooseCast(self, currentDialogContext):
+        self.lcd.write_string(CHOOSE_CAST_HEADER)
+        castOptionRows = self.getViewportCastDevicesFormatted(currentDialogContext)
+        self.lcd.write_string(castOptionRows[0] + '\n\r')
+        self.lcd.write_string(castOptionRows[1] + '\n\r')
+        self.lcd.write_string(castOptionRows[2] + '\n\r')
+        
+    def getViewportCastDevicesFormatted(self, currentDialogContext):
+        if currentDialogContext.menu_chooseCast_ViewpointStart > currentDialogContext.menu_chooseCast_CursorLocationAbsolute:
+            currentDialogContext.menu_chooseCast_ViewpointStart = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
+            currentDialogContext.menu_chooseCast_ViewpointEnd = currentDialogContext.menu_chooseCast_ViewpointStart + 2
+        elif currentDialogContext.menu_chooseCast_ViewpointEnd < currentDialogContext.menu_chooseCast_CursorLocationAbsolute:
+            currentDialogContext.menu_chooseCast_ViewpointEnd = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
+            currentDialogContext.menu_chooseCast_ViewpointStart = currentDialogContext.menu_chooseCast_ViewpointStart - 2
+        
+        index = currentDialogContext.menu_chooseCast_ViewpointStart
+        selected = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
+        
+        return [
+            self.trunc20(''.join(['> ' if index     == selected else '  ', currentDialogContext.chromecastDevices[index    ]])),
+            self.trunc20(''.join(['> ' if index + 1 == selected else '  ', currentDialogContext.chromecastDevices[index + 1]])),
+            self.trunc20(''.join(['> ' if index + 2 == selected else '  ', currentDialogContext.chromecastDevices[index + 2]]))]
+         
+    def trunc20(self, stringToCut):
+        return (stringToCut[:18] + '..') if len(stringToCut) > 20 else stringToCut
 
-    def display(self, dialog, arguments=''):
+    def display(self, currentDialogContext):
         self.lcd.clear()
-        match dialog:
+        match currentDialogContext.currentDialogName:
             case DIALOGS.WELCOME:
-                return self.displayWelcome()
+                self.displayWelcome()
             case DIALOGS.CHOOSE_CAST:
-                return "one"
+                self.displayChooseCast(currentDialogContext)
             case DIALOGS.CHOOSE_WIFI:
-                return "two"
+                #TODO Implement
+                "two"
             case DIALOGS.CHOOSE_AUDIOBOOK:
-                return "two"
+                #TODO Implement
+                "two"
             case DIALOGS.AUDIOBOOK_PLAY:
-                return "two"
+                #TODO Implement
+                "two"
             case default:
-                return self.lcd.write_string(arguments)
+                #TODO Implement
+                self.lcd.write_string(arguments)
 
 
 
