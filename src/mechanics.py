@@ -1,7 +1,6 @@
-# handle filesystem, chromecast, ...
-
-
-from constants import ACTIONS, DIALOGS
+from constants import ACTIONS, DIALOGS, SYSTEM_PROPERTIES
+import filesystem
+import chromecast
 
 def handleAction(currentDialog):
     print ('Action: ' + currentDialog.action)
@@ -23,6 +22,8 @@ def handleAction_Navigate(currentDialog):
         return handle_loadAudiobooks(currentDialog)
     
 def handle_loadCastDevices(currentDialog): 
+    currentDialog.lastCastDevice = filesystem.loadSystemProperty(SYSTEM_PROPERTIES.LAST_CAST_DEVICE)
+    currentDialog.chromecastDevices = chromecast.getAvailableChromecasts(currentDialog)
     print('load cast devices')
     
 def handle_loadAudiobooks(currentDialog): 

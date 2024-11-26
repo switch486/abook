@@ -1,6 +1,5 @@
 
-from constants import DIALOGS
-from constants import BUTTONS
+from constants import DIALOGS, BUTTONS, ACTIONS
 
 def handleButtonPress(currentDialog, pressedButton):
     print ('Dialog: ' + currentDialog.currentDialogName)
@@ -20,7 +19,7 @@ def handleButtonPress_Welcome(currentDialog, pressedButton):
     print ('Handle Button' + pressedButton)
     # any button navigates further
     currentDialog.currentDialogName = DIALOGS.CHOOSE_CAST
-    currentDialog.dialogChanged = True
+    currentDialog.action = ACTIONS.NAVIGATE
     return currentDialog
 
 def handleButtonPress_ChooseCast(currentDialog, pressedButton):

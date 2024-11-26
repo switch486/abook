@@ -3,3 +3,14 @@
 # TODO load property files for last cast device, volume settings, audiobook played
 # TODO save property files with updated values
 # TODO HTTP server setting 
+
+from constants import SYSTEM_PROPERTIES
+
+DEFAULT_CAST_DEVICE = 'Attic Hub'
+
+def loadSystemProperty(propertyName):
+    print ('loading Property: ' + propertyName)
+    # TODO - read file
+
+    return DEFAULT_CAST_DEVICE
+

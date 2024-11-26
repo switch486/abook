@@ -5,3 +5,5 @@ class DialogContext:
    
    lastCastDevice = ''
    chromecastDevices = ''
+   
+   # helper instances
