@@ -1,5 +1,5 @@
 from RPLCD.i2c import CharLCD
-import constants.DIALOGS as DIALOGS
+from constants import DIALOGS
 
 # driver constants:
 I2C_UC='PCF8574'

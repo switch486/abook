@@ -1,4 +1,7 @@
 class DialogContext:
-   dialogName = ''
+   currentDialogName = ''
+   action = 'null'
    currentDialogData = ''
+   
    lastCastDevice = ''
+   chromecastDevices = ''
