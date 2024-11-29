@@ -60,7 +60,7 @@ currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
 
 while True:
-   time.sleep(2.5)
+   time.sleep(.5)
    # Button press implies potential action ...
    if pressedButton != 'null':
        currentDialogContext = currentDialogContext.currentDialog.handleButton(currentDialogContext, pressedButton)
