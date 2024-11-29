@@ -23,6 +23,7 @@ class WELCOME:
       return currentDialogContext
    
    def displayDialog(self, currentDialogContext):
+      self.lcd.clear()
       self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
    
 class CHOOSE_CAST:
@@ -51,6 +52,7 @@ class CHOOSE_CAST:
          return currentDialogContext      
       
    def displayDialog(self, currentDialogContext):
+      self.lcd.clear()
       self.lcd.write_string(CHOOSE_CAST_HEADER)
       castOptionRows = self.getViewportCastDevicesFormatted(currentDialogContext)
       self.lcd.write_string(castOptionRows[0] + '\n\r')
