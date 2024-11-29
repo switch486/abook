@@ -1,5 +1,5 @@
 from RPLCD.i2c import CharLCD
-import DialogContext
+import DialogContext as dc
 import dialogs as DIALOGS
 import time
 import buttonshim
@@ -54,7 +54,7 @@ gui = CharLCD(i2c_expander=I2C_UC,
                     charmap=LCD_CHARMAP, 
                     auto_linebreaks=LCD_AUTOLINEBREAKS, 
                     backlight_enabled=LCD_BACKLIGHTENABLED)
-currentDialogContext = DialogContext()
+currentDialogContext = dc.DialogContext()
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
