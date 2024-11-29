@@ -1,6 +1,7 @@
 from constants import BUTTONS
 import actions as ACTIONS
 
+#BUTTONS                 E   D    C    B    A     
 # Headers
 # Template              'X   X    X    X    X'
 CHOOSE_CAST_HEADER=     ' | UP  DOWN       OK'
@@ -34,17 +35,17 @@ class CHOOSE_CAST:
    def handleButton(self, currentDialogContext, pressedButton):
       print ('ChooseCast ' + pressedButton)
       # navigation within options here
-      if pressedButton == BUTTONS.BUTTON_A:
+      if pressedButton == BUTTONS.BUTTON_E:
          # UP
          if currentDialogContext.menu_chooseCast_CursorLocationAbsolute > 0:
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute -= 1
             return currentDialogContext
-      elif pressedButton == BUTTONS.BUTTON_B:
+      elif pressedButton == BUTTONS.BUTTON_D:
          #DOWN
          if currentDialogContext.menu_chooseCast_CursorLocationAbsolute < len(currentDialogContext.chromecastDevices)-1:
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute += 1
             return currentDialogContext
-      elif pressedButton == BUTTONS.BUTTON_E: 
+      elif pressedButton == BUTTONS.BUTTON_A: 
          # accept cast Device at cursor 
          currentDialogContext.lastCastDevice = currentDialogContext.chromecastDevices[currentDialogContext.menu_chooseCast_CursorLocationAbsolute]
          currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
