@@ -6,7 +6,7 @@
 
 from constants import SYSTEM_PROPERTIES
 
-DEFAULT_CAST_DEVICE = 'Attic Hub'
+DEFAULT_CAST_DEVICE = 'Attic hub'
 
 def loadSystemProperty(propertyName):
     print ('loading Property: ' + propertyName)
