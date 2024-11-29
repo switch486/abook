@@ -6,7 +6,7 @@ def LOAD_CAST_DEVICES(currentDialogContext) :
     currentDialogContext.lastCastDevice = filesystem.loadSystemProperty(SYSTEM_PROPERTIES.LAST_CAST_DEVICE)
     currentDialogContext.chromecastDevices = chromecast.getAvailableChromecasts(currentDialogContext)
     print('Last Cast Device: ' + currentDialogContext.lastCastDevice)
-    print('all cast devices ' + currentDialogContext.chromecastDevices)
+    print(currentDialogContext.chromecastDevices)
     if currentDialogContext.lastCastDevice in currentDialogContext.chromecastDevices:
         currentDialogContext.menu_chooseCast_CursorLocationAbsolute = currentDialogContext.chromecastDevices.index(currentDialogContext.lastCastDevice)
     return currentDialogContext
