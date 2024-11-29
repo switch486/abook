@@ -73,6 +73,9 @@ class CHOOSE_CAST:
       
       index = currentDialogContext.menu_chooseCast_ViewpointStart
       selected = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
+      print(index)
+      print(selected)
+      print(currentDialogContext.menu_chooseCast_ViewpointEnd)
       
       return [
          trunc20(''.join(['> ' if index     == selected else '  ', currentDialogContext.chromecastDevices[index    ]])),
