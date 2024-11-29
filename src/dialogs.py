@@ -51,6 +51,7 @@ class CHOOSE_CAST:
          currentDialogContext.action.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
          currentDialogContext.action.put(ACTIONS.LOAD_AUDIOBOOKS)
          return currentDialogContext      
+      return currentDialogContext
       
    def displayDialog(self, currentDialogContext):
       print ('Dialog: Choose Cast ')

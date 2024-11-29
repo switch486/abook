@@ -23,7 +23,7 @@ def getAvailableChromecasts(currentDialogContext):
             f"  '{device.friendly_name}' ({device.model_name}) @ {device.host}:{device.port} uuid: {device.uuid}"
         )
 
-    return ['asdf', 'sdfg', 'dfgh']
+    return map(lambda o: o.friendly_name, devices)
     
     
     
