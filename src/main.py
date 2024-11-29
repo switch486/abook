@@ -1,11 +1,20 @@
-import gui_lib
+from RPLCD.i2c import CharLCD
 import DialogContext
-import logic
+import dialogs as DIALOGS
 import time
 import buttonshim
-import mechanics
 from constants import BUTTONS
-from constants import DIALOGS
+
+# driver constants:
+I2C_UC='PCF8574'
+I2C_ADDRESS=0x27
+I2C_PORT=1
+LCD_COLS=20
+LCD_ROWS=4
+LCD_DOTSIZE=8
+LCD_CHARMAP='A02'
+LCD_AUTOLINEBREAKS=True
+LCD_BACKLIGHTENABLED=True
 
 #TODO - HOLD!
 
@@ -36,21 +45,29 @@ def button_e(button, pressed):
 
 pressedButton = 'null' 
 
-gui = gui_lib.LCD()
+gui = CharLCD(i2c_expander=I2C_UC, 
+                    address=I2C_ADDRESS, 
+                    port=I2C_PORT, 
+                    cols=LCD_COLS, 
+                    rows=LCD_ROWS, 
+                    dotsize=LCD_DOTSIZE,
+                    charmap=LCD_CHARMAP, 
+                    auto_linebreaks=LCD_AUTOLINEBREAKS, 
+                    backlight_enabled=LCD_BACKLIGHTENABLED)
 currentDialogContext = DialogContext()
-currentDialogContext.currentDialogName = DIALOGS.WELCOME
+currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
-gui.display(currentDialogContext)
+currentDialogContext.currentDialog.displayDialog(currentDialogContext)
 
 while True:
    time.sleep(.5)
    # Button press implies potential action ...
    if pressedButton != 'null':
-       currentDialogContext = logic.handleButtonPress(currentDialogContext, pressedButton)
+       currentDialogContext = currentDialogContext.currentDialog.handleButton(currentDialogContext, pressedButton)
        pressedButton = 'null'
 
-   if currentDialogContext.action != 'null':   
-       currentDialogContext = mechanics.handleAction(currentDialogContext)
-       currentDialogContext.action = 'null'
+   while currentDialogContext.action.empty() == False:   
+       action = currentDialogContext.action.get()
+       currentDialogContext = action(currentDialogContext)
 
-   gui.display(currentDialogContext)
+   currentDialogContext.currentDialog.displayDialog(currentDialogContext)

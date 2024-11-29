@@ -7,6 +7,11 @@ import time
 import pychromecast
 import zeroconf
 
+def connectToCastDevice (currentDialogContext):
+    chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[currentDialogContext.lastCastDevice])
+    currentDialogContext.chromecast_device = chromecasts[0]
+    currentDialogContext.chromecast_device.wait()
+
 def getAvailableChromecasts(currentDialogContext):
     currentDialogContext.zeroconf = zeroconf.Zeroconf()
     browser = pychromecast.CastBrowser(
