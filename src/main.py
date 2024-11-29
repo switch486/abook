@@ -1,6 +1,7 @@
 from RPLCD.i2c import CharLCD
 import DialogContext as dc
 import dialogs as DIALOGS
+import actions as ACTIONS
 import time
 import buttonshim
 from constants import BUTTONS
@@ -58,6 +59,7 @@ currentDialogContext = dc.DialogContext()
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
+currentDialogContext.action.put(ACTIONS.LOAD_CAST_DEVICES)
 
 while True:
    time.sleep(.5)

@@ -20,7 +20,6 @@ class WELCOME:
       print ('Handle Button ' + pressedButton)
       # any button navigates further
       currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
-      currentDialogContext.action.put(ACTIONS.LOAD_CAST_DEVICES)
       return currentDialogContext
    
    def displayDialog(self, currentDialogContext):
