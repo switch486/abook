@@ -1,7 +1,6 @@
-from constants import DIALOGS, SYSTEM_PROPERTIES
+from constants import SYSTEM_PROPERTIES
 import filesystem
 import chromecast
-import types
 
 def LOAD_CAST_DEVICES(currentDialogContext) : 
     currentDialogContext.lastCastDevice = filesystem.loadSystemProperty(SYSTEM_PROPERTIES.LAST_CAST_DEVICE)
