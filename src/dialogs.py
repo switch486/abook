@@ -16,13 +16,14 @@ class WELCOME:
         self.lcd = lcd
    
    def handleButton(self, currentDialogContext, pressedButton):
-      print ('Handle Button' + pressedButton)
+      print ('Handle Button ' + pressedButton)
       # any button navigates further
       currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
       currentDialogContext.action.put(ACTIONS.LOAD_CAST_DEVICES)
       return currentDialogContext
    
    def displayDialog(self, currentDialogContext):
+      print ('Dialog: Welcome ')
       self.lcd.clear()
       self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
    
@@ -31,7 +32,7 @@ class CHOOSE_CAST:
       self.lcd = lcd
 
    def handleButton(self, currentDialogContext, pressedButton):
-      print ('ChooseCast')
+      print ('ChooseCast ' + pressedButton)
       # navigation within options here
       if pressedButton == BUTTONS.BUTTON_A:
          # UP
@@ -52,6 +53,7 @@ class CHOOSE_CAST:
          return currentDialogContext      
       
    def displayDialog(self, currentDialogContext):
+      print ('Dialog: Choose Cast ')
       self.lcd.clear()
       self.lcd.write_string(CHOOSE_CAST_HEADER)
       castOptionRows = self.getViewportCastDevicesFormatted(currentDialogContext)

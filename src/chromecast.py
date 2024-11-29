@@ -13,16 +13,35 @@ def connectToCastDevice (currentDialogContext):
     currentDialogContext.chromecast_device.wait()
 
 def getAvailableChromecasts(currentDialogContext):
-    currentDialogContext.zeroconf = zeroconf.Zeroconf()
-    browser = pychromecast.CastBrowser(
-        pychromecast.SimpleCastListener(
-            lambda uuid, 
-            service: print(browser.devices[uuid].friendly_name)), 
-        currentDialogContext.zeroconf)
-    browser.start_discovery()
-    #TODO - somehow gather the serach results
-    pychromecast.discovery.stop_discovery(browser)
-    return 'some List'
+    devices, browser = pychromecast.discovery.discover_chromecasts()
+    # Shut down discovery
+    browser.stop_discovery()
+    
+    print(f"Discovered {len(devices)} device(s):")
+    for device in devices:
+        print(
+            f"  '{device.friendly_name}' ({device.model_name}) @ {device.host}:{device.port} uuid: {device.uuid}"
+        )
+
+    return ['asdf', 'sdfg', 'dfgh']
+    
+    
+    
+    
+    
+    
+    
+    
+    #currentDialogContext.zeroconf = zeroconf.Zeroconf()
+    #browser = pychromecast.CastBrowser(
+    #    pychromecast.SimpleCastListener(
+    #        lambda uuid, 
+    #        service: print(browser.devices[uuid].friendly_name)), 
+    #    currentDialogContext.zeroconf)
+    #browser.start_discovery()
+    ##TODO - somehow gather the serach results
+    #pychromecast.discovery.stop_discovery(browser)
+    #return 'some List'
 
 
 #TODO - test it!
