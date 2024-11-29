@@ -1,11 +1,7 @@
-# TODO - list available cast devices
-# connect , play , 
+# TODO - connect , play , 
 # volume up, volume down
 
-
-import time
 import pychromecast
-import zeroconf
 
 def connectToCastDevice (currentDialogContext):
     chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[currentDialogContext.lastCastDevice])
@@ -13,9 +9,10 @@ def connectToCastDevice (currentDialogContext):
     currentDialogContext.chromecast_device.wait()
 
 def getAvailableChromecasts(currentDialogContext):
+    print('Chromecast - start discovery')
     devices, browser = pychromecast.discovery.discover_chromecasts()
-    # Shut down discovery
     browser.stop_discovery()
+    print('Chromecast - stop discovery')
     
     print(f"Discovered {len(devices)} device(s):")
     for device in devices:
