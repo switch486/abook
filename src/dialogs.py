@@ -69,7 +69,7 @@ class CHOOSE_CAST:
          currentDialogContext.menu_chooseCast_ViewpointEnd = currentDialogContext.menu_chooseCast_ViewpointStart + 2
       elif currentDialogContext.menu_chooseCast_ViewpointEnd < currentDialogContext.menu_chooseCast_CursorLocationAbsolute:
          currentDialogContext.menu_chooseCast_ViewpointEnd = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
-         currentDialogContext.menu_chooseCast_ViewpointStart = currentDialogContext.menu_chooseCast_ViewpointStart - 2
+         currentDialogContext.menu_chooseCast_ViewpointStart = currentDialogContext.menu_chooseCast_ViewpointEnd - 2
       
       index = currentDialogContext.menu_chooseCast_ViewpointStart
       selected = currentDialogContext.menu_chooseCast_CursorLocationAbsolute
