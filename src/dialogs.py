@@ -100,6 +100,9 @@ class CHOOSE_AUDIOBOOK:
       return currentDialogContext
       
    def displayDialog(self, currentDialogContext):
+      print ('Dialog: Choose Audiobook ')
+      self.lcd.clear()
+      self.lcd.write_string(CHOOSE_AUDIOBOOK_HEADER)
       print ('TBD, Choose Audiobook')
     
 class AUDIOBOOK_PLAY:

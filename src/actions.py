@@ -9,17 +9,14 @@ def LOAD_CAST_DEVICES(currentDialogContext) :
     print(currentDialogContext.chromecastDevices)
     if currentDialogContext.lastCastDevice in currentDialogContext.chromecastDevices:
         currentDialogContext.menu_chooseCast_CursorLocationAbsolute = currentDialogContext.chromecastDevices.index(currentDialogContext.lastCastDevice)
-    return currentDialogContext
 
 def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     print('CONNECT_TO_CAST_DEVICE')
     chromecast.connectToCastDevice(currentDialogContext)
-    return currentDialogContext
     
 def LOAD_AUDIOBOOKS(currentDialogContext): 
     print('LOAD_AUDIOBOOKS')
     currentDialogContext = filesystem.loadAudiobooks(currentDialogContext)
-    return currentDialogContext
         
 def VOL_UP(currentDialogContext): 
     # TODO implement

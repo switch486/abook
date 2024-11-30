@@ -29,9 +29,12 @@ def updateSystemProperty(currentDialogContext, key, new_value):
             file.write(f'{key}={value}\n')
             
 def loadAudiobooks(currentDialogContext) :
-    dirs = os.listdir(currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER])
-    for file in dirs:
-        print(file)
+    audiobookFolder = currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
+    print('read audiobooks from: ' + audiobookFolder)
+    dirs = os.listdir(audiobookFolder)
+    print(dirs)
+    currentDialogContext.audiobooks = dirs
+    
     
     
 

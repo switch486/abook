@@ -80,7 +80,7 @@ while True:
 
    while currentDialogContext.actions.empty() == False:   
        action = currentDialogContext.actions.get()
-       currentDialogContext = action(currentDialogContext)
+       action(currentDialogContext)
        repaintNeeded = True
 
    if (repaintNeeded) :

@@ -3,9 +3,13 @@ import queue
 class DialogContext:
    currentDialog = None
    actions = queue.Queue()
+   systemPropertiesPath = None
    
    lastCastDevice = ''
    chromecastDevices = ''
+   
+   lastAudiobook = ''
+   audiobooks = ''
    
    # helper variables
    menu_chooseCast_ViewpointStart=0
