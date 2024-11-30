@@ -1,9 +1,8 @@
 from constants import SYSTEM_PROPERTIES
-import filesystem
 import chromecast
 
 def LOAD_CAST_DEVICES(currentDialogContext) : 
-    currentDialogContext.lastCastDevice = filesystem.loadSystemProperty(SYSTEM_PROPERTIES.LAST_CAST_DEVICE)
+    currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
     currentDialogContext.chromecastDevices = chromecast.getAvailableChromecasts(currentDialogContext)
     print('Last Cast Device: ' + currentDialogContext.lastCastDevice)
     print(currentDialogContext.chromecastDevices)

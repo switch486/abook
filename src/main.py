@@ -4,6 +4,7 @@ import dialogs as DIALOGS
 import actions as ACTIONS
 import time
 import buttonshim
+import filesystem
 from constants import BUTTONS
 
 # driver constants:
@@ -16,6 +17,9 @@ LCD_DOTSIZE=8
 LCD_CHARMAP='A02'
 LCD_AUTOLINEBREAKS=True
 LCD_BACKLIGHTENABLED=True
+
+# default property file path
+PROPERTY_FILE_PATH='./general.properties'
 
 #TODO - HOLD!
 
@@ -56,6 +60,7 @@ gui = CharLCD(i2c_expander=I2C_UC,
                     auto_linebreaks=LCD_AUTOLINEBREAKS, 
                     backlight_enabled=LCD_BACKLIGHTENABLED)
 currentDialogContext = dc.DialogContext()
+currentDialogContext.systemProperties = filesystem.loadSystemProperties(PROPERTY_FILE_PATH)
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
