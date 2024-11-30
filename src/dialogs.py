@@ -14,7 +14,7 @@ def trunc20(stringToCut):
     return (stringToCut[:18] + '..') if len(stringToCut) > 20 else stringToCut
 
 
-def getViewportListFormatted(self, list, selectedIndex):
+def getViewportListFormatted(list, selectedIndex):
     startIndex = 0
     endIndex = 2
 
