@@ -1,19 +1,22 @@
-# TODO - connect , play , 
+# TODO - connect , play ,
 # volume up, volume down
 
 import pychromecast
 
-def connectToCastDevice (currentDialogContext):
-    chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[currentDialogContext.lastCastDevice])
+
+def connectToCastDevice(currentDialogContext):
+    chromecasts, browser = pychromecast.get_listed_chromecasts(
+        friendly_names=[currentDialogContext.lastCastDevice])
     currentDialogContext.chromecast_device = chromecasts[0]
     currentDialogContext.chromecast_device.wait()
+
 
 def getAvailableChromecasts(currentDialogContext):
     print('Chromecast - start discovery')
     devices, browser = pychromecast.discovery.discover_chromecasts()
     browser.stop_discovery()
     print('Chromecast - stop discovery')
-    
+
     print(f"Discovered {len(devices)} device(s):")
     for device in devices:
         print(
@@ -21,5 +24,5 @@ def getAvailableChromecasts(currentDialogContext):
         )
 
     return list(map(lambda o: o.friendly_name, devices))
-    
+
 # TODO - sort list alphabetically so that the lastly used is on top
