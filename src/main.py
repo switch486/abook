@@ -64,17 +64,23 @@ currentDialogContext.systemProperties = filesystem.loadSystemProperties(PROPERTY
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
-currentDialogContext.action.put(ACTIONS.LOAD_CAST_DEVICES)
+currentDialogContext.actions.put(ACTIONS.LOAD_CAST_DEVICES)
 
 while True:
+   repaintNeeded = False
+   ## TODO - potentially paint only on demand!
    time.sleep(.5)
    # Button press implies potential action ...
    if pressedButton != 'null':
        currentDialogContext = currentDialogContext.currentDialog.handleButton(currentDialogContext, pressedButton)
+       repaintNeeded = True
        pressedButton = 'null'
 
-   while currentDialogContext.action.empty() == False:   
-       action = currentDialogContext.action.get()
+   while currentDialogContext.actions.empty() == False:   
+       action = currentDialogContext.actions.get()
        currentDialogContext = action(currentDialogContext)
+       repaintNeeded=True
 
-   currentDialogContext.currentDialog.displayDialog(currentDialogContext)
+   if (repaintNeeded) :
+       print('--Repaint')
+       currentDialogContext.paintDialog()

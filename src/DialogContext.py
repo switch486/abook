@@ -1,9 +1,8 @@
 import queue
 
 class DialogContext:
-   currentDialogName = ''
-   action = queue.Queue()
-   currentDialogData = ''
+   currentDialog = None
+   actions = queue.Queue()
    
    lastCastDevice = ''
    chromecastDevices = ''
@@ -14,3 +13,6 @@ class DialogContext:
    menu_chooseCast_CursorLocationAbsolute=0
    
    chromecast_device=None
+   
+   def paintDialog(self):
+      self.currentDialog.displayDialog(self)
