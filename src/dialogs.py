@@ -14,6 +14,26 @@ def trunc20(stringToCut):
     return (stringToCut[:18] + '..') if len(stringToCut) > 20 else stringToCut
 
 
+def getViewportListFormatted(self, list, selectedIndex):
+    startIndex = 0
+    endIndex = 2
+
+    if startIndex > selectedIndex:
+        startIndex = selectedIndex
+        endIndex = startIndex + 2
+    elif endIndex < selectedIndex:
+        endIndex = selectedIndex
+        startIndex = endIndex - 2
+
+    return [
+        trunc20(''.join(['> ' if startIndex == selectedIndex else '  ',
+                         list[startIndex]])),
+        trunc20(''.join(['> ' if startIndex + 1 == selectedIndex else '  ',
+                         list[startIndex + 1]])),
+        trunc20(''.join(['> ' if startIndex + 2 == selectedIndex else '  ',
+                         list[startIndex + 2]]))]
+
+
 class WELCOME:
     def __init__(self, lcd):
         self.lcd = lcd
@@ -61,30 +81,12 @@ class CHOOSE_CAST:
         print('Dialog: Choose Cast ')
         self.lcd.clear()
         self.lcd.write_string(CHOOSE_CAST_HEADER)
-        castOptionRows = self.getViewportCastDevicesFormatted(
-            currentDialogContext, currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
+        castOptionRows = getViewportListFormatted(
+            currentDialogContext.chromecastDevices,
+            currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
         self.lcd.write_string(castOptionRows[0] + '\n\r')
         self.lcd.write_string(castOptionRows[1] + '\n\r')
         self.lcd.write_string(castOptionRows[2] + '\n\r')
-
-    def getViewportCastDevicesFormatted(self, currentDialogContext, selectedIndex):
-        startIndex = 0
-        endIndex = 2
-
-        if startIndex > selectedIndex:
-            startIndex = selectedIndex
-            endIndex = startIndex + 2
-        elif endIndex < selectedIndex:
-            endIndex = selectedIndex
-            startIndex = endIndex - 2
-
-        return [
-            trunc20(''.join(['> ' if startIndex == selectedIndex else '  ',
-                    currentDialogContext.chromecastDevices[startIndex]])),
-            trunc20(''.join(['> ' if startIndex + 1 == selectedIndex else '  ',
-                    currentDialogContext.chromecastDevices[startIndex + 1]])),
-            trunc20(''.join(['> ' if startIndex + 2 == selectedIndex else '  ', 
-                    currentDialogContext.chromecastDevices[startIndex + 2]]))]
 
 
 class CHOOSE_AUDIOBOOK:
@@ -111,7 +113,12 @@ class CHOOSE_AUDIOBOOK:
         print('Dialog: Choose Audiobook ')
         self.lcd.clear()
         self.lcd.write_string(CHOOSE_AUDIOBOOK_HEADER)
-        print('TBD, Choose Audiobook')
+        castOptionRows = getViewportListFormatted(
+            currentDialogContext.audiobooks,
+            currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
+        self.lcd.write_string(castOptionRows[0] + '\n\r')
+        self.lcd.write_string(castOptionRows[1] + '\n\r')
+        self.lcd.write_string(castOptionRows[2] + '\n\r')
 
 
 class AUDIOBOOK_PLAY:
