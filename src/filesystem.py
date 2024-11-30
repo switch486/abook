@@ -1,3 +1,7 @@
+import os
+from constants import SYSTEM_PROPERTIES
+
+
 # TODO load MP3 folders, with their metadata if present
 # TODO - load folder MP3s to be played
 # TODO load property files for last cast device, volume settings, audiobook played
@@ -6,15 +10,10 @@
 
 # TODO - read file -- https://blog.finxter.com/python-read-and-write-to-a-properties-file/
 
-
-def updateSystemProperty(propertyName, propertyValue):
-    print('update Property: ' + propertyName + ' with value: ' + propertyValue)
-    # TODO - update property
-    
-def loadSystemProperties(file_path):
-    print('read properties from: ' + file_path)
+def loadSystemProperties(currentDialogContext):
+    print('read properties from: ' + currentDialogContext.systemPropertiesPath)
     properties = {}
-    with open(file_path, 'r') as file:
+    with open(currentDialogContext.systemPropertiesPath, 'r') as file:
         for line in file:
             if line.startswith('#') or not line.strip():
                 continue  # Skip comments and blank lines
@@ -22,7 +21,19 @@ def loadSystemProperties(file_path):
             properties[key] = value
     return properties
     
-
+def updateSystemProperty(currentDialogContext, key, new_value):
+    properties = loadSystemProperties(currentDialogContext)
+    properties[key] = new_value
+    with open(currentDialogContext.systemPropertiesPath, 'w') as file:
+        for key, value in properties.items():
+            file.write(f'{key}={value}\n')
+            
+def loadAudiobooks(currentDialogContext) :
+    dirs = os.listdir(currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER])
+    for file in dirs:
+        print(file)
+    
+    
 
 
 

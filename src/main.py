@@ -60,7 +60,9 @@ gui = CharLCD(i2c_expander=I2C_UC,
                     auto_linebreaks=LCD_AUTOLINEBREAKS, 
                     backlight_enabled=LCD_BACKLIGHTENABLED)
 currentDialogContext = dc.DialogContext()
-currentDialogContext.systemProperties = filesystem.loadSystemProperties(PROPERTY_FILE_PATH)
+currentDialogContext.systemPropertiesPath = PROPERTY_FILE_PATH
+
+currentDialogContext.systemProperties = filesystem.loadSystemProperties(currentDialogContext)
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
@@ -79,7 +81,7 @@ while True:
    while currentDialogContext.actions.empty() == False:   
        action = currentDialogContext.actions.get()
        currentDialogContext = action(currentDialogContext)
-       repaintNeeded=True
+       repaintNeeded = True
 
    if (repaintNeeded) :
        print('--Repaint')

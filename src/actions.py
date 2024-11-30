@@ -1,5 +1,6 @@
 from constants import SYSTEM_PROPERTIES
 import chromecast
+import filesystem
 
 def LOAD_CAST_DEVICES(currentDialogContext) : 
     currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
@@ -10,16 +11,13 @@ def LOAD_CAST_DEVICES(currentDialogContext) :
         currentDialogContext.menu_chooseCast_CursorLocationAbsolute = currentDialogContext.chromecastDevices.index(currentDialogContext.lastCastDevice)
     return currentDialogContext
 
-def CONNECT_TO_CAST_DEVICE():
-    #TODO implement
+def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     print('CONNECT_TO_CAST_DEVICE')
+    chromecast.connectToCastDevice(currentDialogContext)
     
 def LOAD_AUDIOBOOKS(currentDialogContext): 
-    # chromecast device should conditionally reconnect
-    chromecast.connectToCastDevice(currentDialogContext)
-    ##### filesystem.readAudiobooksOnTheDevice
-    # TODO update last cast device
-    print('load audiobooks')
+    print('LOAD_AUDIOBOOKS')
+    currentDialogContext = filesystem.loadAudiobooks(currentDialogContext)
         
 def VOL_UP(currentDialogContext): 
     # TODO implement
