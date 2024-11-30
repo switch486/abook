@@ -48,8 +48,8 @@ class CHOOSE_CAST:
          # accept cast Device at cursor 
          currentDialogContext.lastCastDevice = currentDialogContext.chromecastDevices[currentDialogContext.menu_chooseCast_CursorLocationAbsolute]
          currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
-         currentDialogContext.action.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
-         currentDialogContext.action.put(ACTIONS.LOAD_AUDIOBOOKS)
+         currentDialogContext.actions.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
+         currentDialogContext.actions.put(ACTIONS.LOAD_AUDIOBOOKS)
          return currentDialogContext      
       return currentDialogContext
       
