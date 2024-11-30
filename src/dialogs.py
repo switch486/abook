@@ -93,20 +93,20 @@ class CHOOSE_AUDIOBOOK:
     def __init__(self, lcd):
         self.lcd = lcd
 
-    def handleButton(currentDialogContext, pressedButton):
-        print('TBD, Choose Audiobook')
+    def handleButton(self, currentDialogContext, pressedButton):
+        print('ChooseAudiobook ' + pressedButton)
         # TODO Implement
         # navigation within options here
         if pressedButton == BUTTONS.BUTTON_A:
-            print('A')
-        elif pressedButton == BUTTONS.BUTTON_B:
-            print('B')
-        elif pressedButton == BUTTONS.BUTTON_C:
-            print('C')
+            print('AA')
         elif pressedButton == BUTTONS.BUTTON_D:
-            print('D')
+            # DOWN
+            if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.audiobooks)-1:
+                currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute += 1
         elif pressedButton == BUTTONS.BUTTON_E:
-            print('E')
+            # UP
+            if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute > 0:
+                currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute -= 1
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
@@ -125,7 +125,7 @@ class AUDIOBOOK_PLAY:
     def __init__(self, lcd):
         self.lcd = lcd
 
-    def handleButton(currentDialogContext, pressedButton):
+    def handleButton(self, currentDialogContext, pressedButton):
         print('TBD, Audiobook play')
         # TODO Implement
         # formulate action and pass further
@@ -149,7 +149,7 @@ class TEST:
     def __init__(self, lcd):
         self.lcd = lcd
 
-    def TEST(currentDialogContext, pressedButton):
+    def handleButton(self, currentDialogContext, pressedButton):
         print('TBD, Test')
         # TODO Implement
         if pressedButton == BUTTONS.BUTTON_A:
