@@ -30,7 +30,7 @@ def getFolderDetails(rootPath, folder):
     progressDetails = None
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
-        print(progressDetails)
+        # calculateProgress and add to result structure
 
     files.sort()
 
