@@ -101,7 +101,7 @@ class CHOOSE_AUDIOBOOK:
             print('AA')
         elif pressedButton == BUTTONS.BUTTON_D:
             # DOWN
-            if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.audiobooks)-1:
+            if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.currentFolderDetails())-1:
                 currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute += 1
         elif pressedButton == BUTTONS.BUTTON_E:
             # UP
@@ -114,8 +114,9 @@ class CHOOSE_AUDIOBOOK:
         self.lcd.clear()
         self.lcd.write_string(CHOOSE_AUDIOBOOK_HEADER)
         castOptionRows = getViewportListFormatted(
-            currentDialogContext.audiobooks,
+            currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
+        # TODO move trimming to writeString method from viewport
         self.lcd.write_string(castOptionRows[0] + '\n\r')
         self.lcd.write_string(castOptionRows[1] + '\n\r')
         self.lcd.write_string(castOptionRows[2] + '\n\r')

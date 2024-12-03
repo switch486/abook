@@ -116,19 +116,23 @@ def getFolderDetails(rootPath, folder):
             'percentage': percentage}
 
 
-def computeFolders(audiobookFolder):
-    dirs = [f for f in listdir(audiobookFolder)
-            if isdir(join(audiobookFolder, f))]
+def computeFolders(rootPath):
+    directories = [f for f in listdir(rootPath)
+            if isdir(join(rootPath, f))]
 
-    return [getFolderDetails(audiobookFolder, folder) for folder in dirs]
+    return [getFolderDetails(rootPath, directory) for directory in directories]
 
 
 def loadAudiobooks(currentDialogContext):
-    audiobookFolder = currentDialogContext.systemProperties[
+    rootPath = currentDialogContext.systemProperties[
         SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
-    print('read audiobooks from: ' + audiobookFolder)
+    print('read audiobooks from: ' + rootPath)
 
-    print(computeFolders(audiobookFolder))
+    currentDialogContext.folderDetails[rootPath] = computeFolders(rootPath)
+    # TODO - sorting based on percentage
+    #currentDialogContext.folderDetails[rootPath].sort() - sorting!
+    currentDialogContext.currentRootPath=rootPath
+    
 
 
 # testing purposes

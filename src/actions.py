@@ -22,7 +22,7 @@ def CONNECT_TO_CAST_DEVICE(currentDialogContext):
 
 def LOAD_AUDIOBOOKS(currentDialogContext):
     print('LOAD_AUDIOBOOKS')
-    currentDialogContext = filesystem.loadAudiobooks(currentDialogContext)
+    filesystem.loadAudiobooks(currentDialogContext)
 
 
 def VOL_UP(currentDialogContext):
