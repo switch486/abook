@@ -11,9 +11,13 @@ from constants import SYSTEM_PROPERTIES
 # TODO - read file -- https://blog.finxter.com/python-read-and-write-to-a-properties-file/
 
 def loadSystemProperties(currentDialogContext):
-    print('read properties from: ' + currentDialogContext.systemPropertiesPath)
+    return loadPropertyFile(currentDialogContext.systemPropertiesPath)
+
+
+def loadPropertyFile(path):
+    print('read properties from: ' + path)
     properties = {}
-    with open(currentDialogContext.systemPropertiesPath, 'r') as file:
+    with open(path, 'r') as file:
         for line in file:
             if line.startswith('#') or not line.strip():
                 continue  # Skip comments and blank lines
