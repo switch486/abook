@@ -45,15 +45,6 @@ def loadAudiobooks(currentDialogContext):
 
 # read details of the MP3s with audiobooks
 # //bash command
-# mp3info -p "%f: %m:%02s\n" *.mp3
-# Titanic cz.2.mp3: 46:49
-#
-#
-
-
-# list detailed contents of the file
-# import os
-# os.listdir('/Users/apuchalski/Downloads/-kidsSongs')
-#
-#
-#
+# mp3info -p "%f#%S\n" *.mp3
+# 23 - Piesek Z Kresek.mp3#63
+# 24 - Czarodziejska Rybka.mp3#150

@@ -1,4 +1,4 @@
-from os import listdir
+from os import listdir, popen
 from os.path import isdir, isfile, join, expanduser
 from filesystem import loadPropertyFile
 
@@ -30,11 +30,19 @@ def getFolderDetails(rootPath, folder):
     progressDetails = None
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
-        # calculateProgress and add to result structure
 
-    files.sort()
+    mp3Lengths=None
+    if containsMp3Files:
+        resultRows = popen('cd "' + joinedPath + '" && mp3info -p "%f#%S\n" *.mp3').read().splitlines()
+        mp3Lengths = {}
+        for line in resultRows:
+            key, value = line.strip().split('#', 1)
+            mp3Lengths[key] = value
+    # calculateProgress and add to result structure
 
-    return {'rootPath': rootPath, 'folder': folder, 'mp3Files': mp3Files, 'progressDetails': progressDetails}
+    mp3Files.sort()
+
+    return {'rootPath': rootPath, 'folder': folder, 'mp3Files': mp3Files, 'mp3Lengths': mp3Lengths, 'progressDetails': progressDetails}
 
 
 print('read audiobooks from: ' + audiobookFolder)
@@ -43,5 +51,3 @@ dirs = [f for f in listdir(audiobookFolder) if isdir(join(audiobookFolder, f))]
 for folder in dirs:
     folderDetails = getFolderDetails(audiobookFolder, folder)
     print(folderDetails)
-
-# print(dirs)
