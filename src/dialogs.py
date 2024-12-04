@@ -11,7 +11,24 @@ PLAY_AUDIOBOOK_HEADER = '<| [<  >]  - V + ||>'
 
 
 def trunc20(stringToCut):
-    return (stringToCut[:18] + '..') if len(stringToCut) > 20 else stringToCut
+    return trunc(stringToCut, 20)
+
+
+def trunc(stringToCut, maxLength):
+    return (stringToCut[:maxLength-2] + '..') if len(stringToCut) > maxLength else stringToCut
+
+
+def selectionIndicator(startIndex, selectedIndex):
+    return '> ' if startIndex == selectedIndex else '  '
+
+
+def join(str1, str2, str3='', str4=''):
+    return ''.join([str1, str2, str3, str4])
+
+
+def formatPercentage3(string):
+    number = int(string)
+    return f"{number:02}%"
 
 
 def getViewportListFormatted(list, selectedIndex):
@@ -26,12 +43,10 @@ def getViewportListFormatted(list, selectedIndex):
         startIndex = endIndex - 2
 
     return [
-        trunc20(''.join(['> ' if startIndex == selectedIndex else '  ',
-                         list[startIndex]])),
-        trunc20(''.join(['> ' if startIndex + 1 == selectedIndex else '  ',
-                         list[startIndex + 1]])),
-        trunc20(''.join(['> ' if startIndex + 2 == selectedIndex else '  ',
-                         list[startIndex + 2]]))]
+        [selectionIndicator(startIndex, selectedIndex), list[startIndex]],
+        [selectionIndicator(startIndex + 1, selectedIndex),
+         list[startIndex + 1]],
+        [selectionIndicator(startIndex + 2, selectedIndex), list[startIndex + 2]]]
 
 
 class WELCOME:
@@ -84,9 +99,9 @@ class CHOOSE_CAST:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.chromecastDevices,
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
-        self.lcd.write_string(castOptionRows[0] + '\n\r')
-        self.lcd.write_string(castOptionRows[1] + '\n\r')
-        self.lcd.write_string(castOptionRows[2] + '\n\r')
+        self.lcd.write_string(trunc20(join(castOptionRows[0])) + '\n\r')
+        self.lcd.write_string(trunc20(join(castOptionRows[1])) + '\n\r')
+        self.lcd.write_string(trunc20(join(castOptionRows[2])) + '\n\r')
 
 
 class CHOOSE_AUDIOBOOK:
@@ -116,10 +131,12 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        # TODO move trimming to writeString method from viewport
-        self.lcd.write_string(castOptionRows[0] + '\n\r')
-        self.lcd.write_string(castOptionRows[1] + '\n\r')
-        self.lcd.write_string(castOptionRows[2] + '\n\r')
+        self.lcd.write_string(join(castOptionRows[0][0], trunc(
+            castOptionRows[0][1]['folder'], 15), formatPercentage3(castOptionRows[0][1]['percentage'])) + '\n\r')
+        self.lcd.write_string(join(castOptionRows[1][0], trunc(
+            castOptionRows[1][1]['folder'], 15), formatPercentage3(castOptionRows[1][1]['percentage'])) + '\n\r')
+        self.lcd.write_string(join(castOptionRows[2][0], trunc(
+            castOptionRows[2][1]['folder'], 15), formatPercentage3(castOptionRows[2][1]['percentage'])) + '\n\r')
 
 
 class AUDIOBOOK_PLAY:
