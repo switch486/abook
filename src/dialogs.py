@@ -192,7 +192,7 @@ class AUDIOBOOK_PLAY:
         trackStatus = str(book['currentMp3Idx']) + '/' + str(len(book['mp3Files']))
         mc, sc = divmod(book['currentMp3Progress'], 60)
         mt, st = divmod(int(book['mp3Lengths'][book['currentMp3']]), 60)
-        timeStatus = '{mc:02d}:{sc:02d} / {mt:02d}:{st:02d}'.format()
+        timeStatus = '{0:02d}:{1:02d} / {2:02d}:{3:02d}'.format(mc, sc, mt, st)
 
         spacesBetween = 20 - len(trackStatus) - len(timeStatus)
 
