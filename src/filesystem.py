@@ -149,4 +149,4 @@ def loadAudiobooks(currentDialogContext):
 
 
 # testing purposes
-print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
+#print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
