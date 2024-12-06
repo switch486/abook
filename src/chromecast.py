@@ -24,5 +24,3 @@ def getAvailableChromecasts(currentDialogContext):
         )
 
     return list(map(lambda o: o.friendly_name, devices))
-
-# TODO - sort list alphabetically so that the lastly used is on top

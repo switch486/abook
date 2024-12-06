@@ -23,6 +23,11 @@ def CONNECT_TO_CAST_DEVICE(currentDialogContext):
 def LOAD_AUDIOBOOKS(currentDialogContext):
     print('LOAD_AUDIOBOOKS')
     filesystem.loadAudiobooks(currentDialogContext)
+    
+
+def PLAY_AUDIOBOOK_PAINT(paintMethod):
+    print('PLAY_AUDIOBOOK_PAINT')
+    return paintMethod
 
 
 def VOL_UP(currentDialogContext):

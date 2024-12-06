@@ -1,9 +1,9 @@
 from constants import BUTTONS
 import actions as ACTIONS
 
-# BUTTONS                 E   D    C    B    A
+# BUTTONS                  E   D    C    B    A
 # Headers
-# Template              'X   X    X    X    X'
+# Template                'X   X    X    X    X'
 CHOOSE_CAST_HEADER = ' | UP  DOWN       OK'
 CHOOSE_AUDIOBOOK_HEADER = '<| UP  DOWN       OK'
 # TODO - back option on hold?
@@ -62,7 +62,9 @@ class WELCOME:
     def displayDialog(self, currentDialogContext):
         print('Dialog: Welcome ')
         self.lcd.clear()
-        self.lcd.write_string('* Welcome to abook *\n\rthe audiobook reader')
+        self.lcd.write_string(
+            '* Welcome to abook *\n\rthe audiobook reader\n\n\r')
+        self.lcd.write_string('press any key...'.rjust(20, ' '))
 
 
 class CHOOSE_CAST:
@@ -110,10 +112,11 @@ class CHOOSE_AUDIOBOOK:
 
     def handleButton(self, currentDialogContext, pressedButton):
         print('ChooseAudiobook ' + pressedButton)
-        # TODO Implement
-        # navigation within options here
         if pressedButton == BUTTONS.BUTTON_A:
-            print('AA')
+            # play audiobook
+            currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
+            # TODO - add action to setup the HTTP server for playing
+            # TODO - add action to trigger the play of the audiobook selected at the specific place, with the specific title, ...
         elif pressedButton == BUTTONS.BUTTON_D:
             # DOWN
             if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.currentFolderDetails())-1:
@@ -144,23 +147,49 @@ class AUDIOBOOK_PLAY:
         self.lcd = lcd
 
     def handleButton(self, currentDialogContext, pressedButton):
-        print('TBD, Audiobook play')
+        print('Audiobook play: handle button action ' + pressedButton)
         # TODO Implement
-        # formulate action and pass further
         if pressedButton == BUTTONS.BUTTON_A:
-            print('A')
+            print('A - Play/pause')
         elif pressedButton == BUTTONS.BUTTON_B:
-            print('B')
+            print('B - volup')
         elif pressedButton == BUTTONS.BUTTON_C:
-            print('C')
+            print('C - voldown')
         elif pressedButton == BUTTONS.BUTTON_D:
-            print('D')
+            print('D - FF - next track')
         elif pressedButton == BUTTONS.BUTTON_E:
-            print('E')
+            print('E - RR - previous track /// back on hold')
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
-        print('TBD, Choose Audiobook')
+        print('Dialog: Play Audiobook ')
+        # TODO - painting should be animated:
+        # -- scroll titles / folders if they are too long
+        # -- switch between track time / total time
+        # -- add easteregg?
+        # -- -- animated equalizer?
+        self.lcd.clear()
+        self.lcd.write_string(PLAY_AUDIOBOOK_HEADER)
+        book = currentDialogContext.currentlySelectedAudiobook()
+        self.lcd.write_string(
+            join(trunc(book['folder'], 17), formatPercentage3(book['percentage']), '\n\r'))
+        self.lcd.write_string(join(trunc(book['currentMp3'], 20), '\n\r'))
+
+        # TrackNo/TrackCount currentTrackTime / totalTrackTime
+        trackStatus = book['currentMp3Idx'] + '/' + len(book['mp3Files'])
+        mc, sc = divmod(book['currentMp3Progress'], 60)
+        mt, st = divmod(book['mp3Lengths'][book['currentMp3']], 60)
+        timeStatus = print(f'{mc:02d}:{sc:02d} / {mt:02d}:{st:02d}')
+
+        spacesBetween = 20 - len(trackStatus) - len(timeStatus)
+
+        self.lcd.write_string(
+            join(trackStatus,  ' ' * spacesBetween, timeStatus, '\n\r'))
+
+        # TODO - add action to get current play time from cast device and update the current state
+        # TODO - add action to see if the track is not finished
+        currentDialogContext.actions.put(
+            ACTIONS.PLAY_AUDIOBOOK_PAINT(self.displayDialog))
 
 
 class TEST:

@@ -19,8 +19,16 @@ class DialogContext:
     folderDetails = {}
     currentRootPath = ''
 
+    currentAudiobook = None
+
     def paintDialog(self):
         self.currentDialog.displayDialog(self)
-        
-    def currentFolderDetails(self): 
-       return self.folderDetails[self.currentRootPath]
+
+    def currentFolderDetails(self):
+        return self.folderDetails[self.currentRootPath]
+
+    def currentlySelectedAudiobook(self):
+        return self.currentFolderDetails()[self.menu_chooseAudiobook_CursorLocationAbsolute]
+
+    def handleButton(self, pressedButton):
+        return self.currentDialog.handleButton(self, pressedButton)

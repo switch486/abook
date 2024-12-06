@@ -94,10 +94,19 @@ def getFolderDetails(rootPath, folder):
     # total and elapsed times
     totalTime = calculateTime(mp3Files, mp3Lengths)
     elapsedTime = 0
+    previousMp3Progress = 0
+    currentMp3Progress = 0
     if progressDetails != None:
-        elapsedTime = calculateTime(sublist_up_to(
+        previousMp3Progress = calculateTime(sublist_up_to(
             mp3Files, progressDetails['currentMp3']), mp3Lengths)
-        elapsedTime += int(progressDetails['second'])
+        currentMp3Progress += int(progressDetails['second'])
+        elapsedTime = previousMp3Progress + currentMp3Progress
+        
+    # determine play mp3 title
+    if len(mp3Files) > 0:
+        playpointMp3Name = mp3Files[0]
+        if progressDetails != None:
+            playpointMp3Name = progressDetails['currentMp3']
 
     # percentage
     e = int(elapsedTime)
@@ -110,9 +119,13 @@ def getFolderDetails(rootPath, folder):
             'folder': folder,
             'mp3Files': mp3Files,
             'mp3Lengths': mp3Lengths,
+            'currentMp3': playpointMp3Name,
+            'currentMp3Idx': mp3Files(playpointMp3Name),
             'progressDetails': progressDetails,
             'totalTime': totalTime,
             'elapsedTime': elapsedTime,
+            'previousMp3Progress': previousMp3Progress,
+            'currentMp3Progress': currentMp3Progress,
             'percentage': percentage}
 
 

@@ -77,12 +77,10 @@ currentDialogContext.actions.put(ACTIONS.LOAD_CAST_DEVICES)
 
 while True:
     repaintNeeded = False
-    # TODO - potentially paint only on demand!
     time.sleep(.5)
     # Button press implies potential action ...
     if pressedButton != 'null':
-        currentDialogContext = currentDialogContext.currentDialog.handleButton(
-            currentDialogContext, pressedButton)
+        currentDialogContext = currentDialogContext.handleButton(pressedButton)
         repaintNeeded = True
         pressedButton = 'null'
 
