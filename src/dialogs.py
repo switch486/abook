@@ -134,8 +134,12 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        self.lcd.write_string(''.join([castOptionRows[0][0], trunc(
-            castOptionRows[0][1]['folder'], 15), formatPercentage3(castOptionRows[0][1]['percentage']), '\n\r']))
+        
+        title1 = ''.join([castOptionRows[0][0], trunc(castOptionRows[0][1]['folder'], 15)])
+        percentage1 = formatPercentage3(castOptionRows[0][1]['percentage'])
+        spacesBetween0 = 20 - len(title1) - len(percentage1)
+        self.lcd.write_string(''.join([title1, ' ' * spacesBetween0, percentage1, '\n\r']))
+        
         self.lcd.write_string(''.join([castOptionRows[1][0], trunc(
             castOptionRows[1][1]['folder'], 15), formatPercentage3(castOptionRows[1][1]['percentage']), '\n\r']))
         self.lcd.write_string(''.join([castOptionRows[2][0], trunc(
