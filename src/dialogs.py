@@ -185,7 +185,7 @@ class AUDIOBOOK_PLAY:
         spacesBetween = 20 - len(folderName) - len(percentage)
 
         self.lcd.write_string(
-            '', join([folderName, ' '*spacesBetween, percentage, '\n\r']))
+            ''.join([folderName, ' '*spacesBetween, percentage, '\n\r']))
         self.lcd.write_string(join(trunc(book['currentMp3'], 20), '\n\r'))
 
         # TrackNo/TrackCount currentTrackTime / totalTrackTime
