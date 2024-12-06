@@ -30,6 +30,12 @@ def formatPercentage3(string):
     number = int(string)
     return f"{number:02}%"
 
+def formatStringForAudiobooksDisplay(selectionMarker, title, percentage):
+        title = ''.join([selectionMarker, trunc(title, 15)])
+        percentage = formatPercentage3(percentage)
+        spacesBetween = 20 - len(title) - len(percentage)
+        return ''.join([title, ' ' * spacesBetween, percentage, '\n\r'])
+
 
 def getViewportListFormatted(list, selectedIndex):
     startIndex = 0
@@ -135,15 +141,10 @@ class CHOOSE_AUDIOBOOK:
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
         
-        title1 = ''.join([castOptionRows[0][0], trunc(castOptionRows[0][1]['folder'], 15)])
-        percentage1 = formatPercentage3(castOptionRows[0][1]['percentage'])
-        spacesBetween0 = 20 - len(title1) - len(percentage1)
-        self.lcd.write_string(''.join([title1, ' ' * spacesBetween0, percentage1, '\n\r']))
-        
-        self.lcd.write_string(''.join([castOptionRows[1][0], trunc(
-            castOptionRows[1][1]['folder'], 15), formatPercentage3(castOptionRows[1][1]['percentage']), '\n\r']))
-        self.lcd.write_string(''.join([castOptionRows[2][0], trunc(
-            castOptionRows[2][1]['folder'], 15), formatPercentage3(castOptionRows[2][1]['percentage']), '\n\r']))
+        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[0][0], castOptionRows[0][1]['folder'], castOptionRows[0][1]['percentage']))
+        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[1][0], castOptionRows[1][1]['folder'], castOptionRows[1][1]['percentage']))
+        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[2][0], castOptionRows[2][1]['folder'], castOptionRows[2][1]['percentage']))
+
 
 
 class AUDIOBOOK_PLAY:
