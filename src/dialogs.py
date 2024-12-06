@@ -189,11 +189,10 @@ class AUDIOBOOK_PLAY:
         self.lcd.write_string(join(trunc(book['currentMp3'], 20), '\n\r'))
 
         # TrackNo/TrackCount currentTrackTime / totalTrackTime
-        trackStatus = str(book['currentMp3Idx']) + \
-            '/' + str(len(book['mp3Files']))
+        trackStatus = str(book['currentMp3Idx']) + '/' + str(len(book['mp3Files']))
         mc, sc = divmod(book['currentMp3Progress'], 60)
         mt, st = divmod(int(book['mp3Lengths'][book['currentMp3']]), 60)
-        timeStatus = print(f'{mc:02d}:{sc:02d} / {mt:02d}:{st:02d}')
+        timeStatus = '{mc:02d}:{sc:02d} / {mt:02d}:{st:02d}'.format()
 
         spacesBetween = 20 - len(trackStatus) - len(timeStatus)
 
