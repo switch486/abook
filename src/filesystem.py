@@ -121,7 +121,7 @@ def getFolderDetails(rootPath, folder):
             'mp3Files': mp3Files,
             'mp3Lengths': mp3Lengths,
             'currentMp3': playpointMp3Name,
-            'currentMp3Idx': mp3Files(playpointMp3Name),
+            'currentMp3Idx': mp3Files[playpointMp3Name],
             'progressDetails': progressDetails,
             'totalTime': totalTime,
             'elapsedTime': elapsedTime,
