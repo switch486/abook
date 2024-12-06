@@ -101,8 +101,9 @@ def getFolderDetails(rootPath, folder):
             mp3Files, progressDetails['currentMp3']), mp3Lengths)
         currentMp3Progress += int(progressDetails['second'])
         elapsedTime = previousMp3Progress + currentMp3Progress
-        
+
     # determine play mp3 title
+    playpointMp3Name = None
     if len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
         if progressDetails != None:
@@ -131,7 +132,7 @@ def getFolderDetails(rootPath, folder):
 
 def computeFolders(rootPath):
     directories = [f for f in listdir(rootPath)
-            if isdir(join(rootPath, f))]
+                   if isdir(join(rootPath, f))]
 
     return [getFolderDetails(rootPath, directory) for directory in directories]
 
@@ -143,10 +144,9 @@ def loadAudiobooks(currentDialogContext):
 
     currentDialogContext.folderDetails[rootPath] = computeFolders(rootPath)
     # TODO - sorting based on percentage
-    #currentDialogContext.folderDetails[rootPath].sort() - sorting!
-    currentDialogContext.currentRootPath=rootPath
-    
+    # currentDialogContext.folderDetails[rootPath].sort() - sorting!
+    currentDialogContext.currentRootPath = rootPath
 
 
 # testing purposes
-#print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
+# print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
