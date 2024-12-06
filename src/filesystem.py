@@ -56,6 +56,8 @@ def sublist_up_to(lst, element):
 
 def calculateTime(mp3Files, mp3Lengths):
     time = 0
+    print(mp3Files)
+    print(mp3Lengths)
     for s in mp3Files:
         time += int(mp3Lengths[s])
     return time
