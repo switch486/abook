@@ -201,8 +201,8 @@ class AUDIOBOOK_PLAY:
 
         # TODO - add action to get current play time from cast device and update the current state
         # TODO - add action to see if the track is not finished
-        currentDialogContext.actions.put(
-            ACTIONS.PLAY_AUDIOBOOK_PAINT(self.displayDialog))
+        #currentDialogContext.actions.put(
+        #    ACTIONS.PLAY_AUDIOBOOK_PAINT(self.displayDialog))
 
 
 class TEST:
