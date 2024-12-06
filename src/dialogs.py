@@ -101,9 +101,9 @@ class CHOOSE_CAST:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.chromecastDevices,
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
-        self.lcd.write_string(trunc20(join(castOptionRows[0])) + '\n\r')
-        self.lcd.write_string(trunc20(join(castOptionRows[1])) + '\n\r')
-        self.lcd.write_string(trunc20(join(castOptionRows[2])) + '\n\r')
+        self.lcd.write_string(trunc20(''.join(castOptionRows[0])) + '\n\r')
+        self.lcd.write_string(trunc20(''.join(castOptionRows[1])) + '\n\r')
+        self.lcd.write_string(trunc20(''.join(castOptionRows[2])) + '\n\r')
 
 
 class CHOOSE_AUDIOBOOK:
@@ -134,11 +134,11 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        self.lcd.write_string(join(castOptionRows[0][0], trunc(
+        self.lcd.write_string(''.join(castOptionRows[0][0], trunc(
             castOptionRows[0][1]['folder'], 15), formatPercentage3(castOptionRows[0][1]['percentage'])) + '\n\r')
-        self.lcd.write_string(join(castOptionRows[1][0], trunc(
+        self.lcd.write_string(''.join(castOptionRows[1][0], trunc(
             castOptionRows[1][1]['folder'], 15), formatPercentage3(castOptionRows[1][1]['percentage'])) + '\n\r')
-        self.lcd.write_string(join(castOptionRows[2][0], trunc(
+        self.lcd.write_string(''.join(castOptionRows[2][0], trunc(
             castOptionRows[2][1]['folder'], 15), formatPercentage3(castOptionRows[2][1]['percentage'])) + '\n\r')
 
 
