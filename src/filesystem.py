@@ -103,7 +103,7 @@ def getFolderDetails(rootPath, folder):
         elapsedTime = previousMp3Progress + currentMp3Progress
 
     # determine play mp3 title
-    playpointMp3Name = None
+    playpointMp3Name = ''
     if len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
         if progressDetails != None:
