@@ -30,11 +30,12 @@ def formatPercentage3(string):
     number = int(string)
     return f"{number:02}%"
 
+
 def formatStringForAudiobooksDisplay(selectionMarker, title, percentage):
-        title = ''.join([selectionMarker, trunc(title, 15)])
-        percentage = formatPercentage3(percentage)
-        spacesBetween = 20 - len(title) - len(percentage)
-        return ''.join([title, ' ' * spacesBetween, percentage, '\n\r'])
+    title = ''.join([selectionMarker, trunc(title, 15)])
+    percentage = formatPercentage3(percentage)
+    spacesBetween = 20 - len(title) - len(percentage)
+    return ''.join([title, ' ' * spacesBetween, percentage, '\n\r'])
 
 
 def getViewportListFormatted(list, selectedIndex):
@@ -140,11 +141,13 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        
-        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[0][0], castOptionRows[0][1]['folder'], castOptionRows[0][1]['percentage']))
-        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[1][0], castOptionRows[1][1]['folder'], castOptionRows[1][1]['percentage']))
-        self.lcd.write_string(formatStringForAudiobooksDisplay(castOptionRows[2][0], castOptionRows[2][1]['folder'], castOptionRows[2][1]['percentage']))
 
+        self.lcd.write_string(formatStringForAudiobooksDisplay(
+            castOptionRows[0][0], castOptionRows[0][1]['folder'], castOptionRows[0][1]['percentage']))
+        self.lcd.write_string(formatStringForAudiobooksDisplay(
+            castOptionRows[1][0], castOptionRows[1][1]['folder'], castOptionRows[1][1]['percentage']))
+        self.lcd.write_string(formatStringForAudiobooksDisplay(
+            castOptionRows[2][0], castOptionRows[2][1]['folder'], castOptionRows[2][1]['percentage']))
 
 
 class AUDIOBOOK_PLAY:
@@ -176,8 +179,13 @@ class AUDIOBOOK_PLAY:
         self.lcd.clear()
         self.lcd.write_string(PLAY_AUDIOBOOK_HEADER)
         book = currentDialogContext.currentlySelectedAudiobook()
+
+        folderName = trunc(book['folder'], 17)
+        percentage = formatPercentage3(book['percentage'])
+        spacesBetween = 20 - len(folderName) - len(percentage)
+
         self.lcd.write_string(
-            join(trunc(book['folder'], 17), formatPercentage3(book['percentage']), '\n\r'))
+            '', join([folderName, ' '*spacesBetween, percentage, '\n\r']))
         self.lcd.write_string(join(trunc(book['currentMp3'], 20), '\n\r'))
 
         # TrackNo/TrackCount currentTrackTime / totalTrackTime
