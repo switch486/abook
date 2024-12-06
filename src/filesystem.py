@@ -104,10 +104,12 @@ def getFolderDetails(rootPath, folder):
 
     # determine play mp3 title
     playpointMp3Name = ''
+    currentMp3Idx = 0
     if len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
         if progressDetails != None:
             playpointMp3Name = progressDetails['currentMp3']
+            currentMp3Idx = mp3Files[playpointMp3Name]
 
     # percentage
     e = int(elapsedTime)
@@ -121,7 +123,7 @@ def getFolderDetails(rootPath, folder):
             'mp3Files': mp3Files,
             'mp3Lengths': mp3Lengths,
             'currentMp3': playpointMp3Name,
-            'currentMp3Idx': mp3Files[playpointMp3Name],
+            'currentMp3Idx': currentMp3Idx,
             'progressDetails': progressDetails,
             'totalTime': totalTime,
             'elapsedTime': elapsedTime,
