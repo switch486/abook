@@ -176,6 +176,7 @@ class AUDIOBOOK_PLAY:
         # -- switch between track time / total time
         # -- add easteregg?
         # -- -- animated equalizer?
+        #TODO - conditionally repaint everything
         self.lcd.clear()
         self.lcd.write_string(PLAY_AUDIOBOOK_HEADER)
         book = currentDialogContext.currentlySelectedAudiobook()
