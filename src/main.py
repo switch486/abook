@@ -1,22 +1,14 @@
-from RPLCD.i2c import CharLCD
+
 import DialogContext as dc
 import dialogs as DIALOGS
 import actions as ACTIONS
 import time
+from gui import Gui
 import buttonshim
 import filesystem
 from constants import BUTTONS
 
-# driver constants:
-I2C_UC = 'PCF8574'
-I2C_ADDRESS = 0x27
-I2C_PORT = 1
-LCD_COLS = 20
-LCD_ROWS = 4
-LCD_DOTSIZE = 8
-LCD_CHARMAP = 'A02'
-LCD_AUTOLINEBREAKS = True
-LCD_BACKLIGHTENABLED = True
+
 
 # default property file path
 PROPERTY_FILE_PATH = './general.properties'
@@ -56,15 +48,8 @@ def button_e(button, pressed):
 
 pressedButton = 'null'
 
-gui = CharLCD(i2c_expander=I2C_UC,
-              address=I2C_ADDRESS,
-              port=I2C_PORT,
-              cols=LCD_COLS,
-              rows=LCD_ROWS,
-              dotsize=LCD_DOTSIZE,
-              charmap=LCD_CHARMAP,
-              auto_linebreaks=LCD_AUTOLINEBREAKS,
-              backlight_enabled=LCD_BACKLIGHTENABLED)
+gui = Gui()
+
 currentDialogContext = dc.DialogContext()
 currentDialogContext.systemPropertiesPath = PROPERTY_FILE_PATH
 

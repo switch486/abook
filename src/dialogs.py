@@ -10,14 +10,6 @@ CHOOSE_AUDIOBOOK_HEADER = '<| UP  DOWN       OK'
 PLAY_AUDIOBOOK_HEADER = '<| [<  >]  - V + ||>'
 
 
-def trunc20(stringToCut):
-    return trunc(stringToCut, 20)
-
-
-def trunc(stringToCut, maxLength):
-    return (stringToCut[:maxLength-2] + '..') if len(stringToCut) > maxLength else stringToCut
-
-
 def selectionIndicator(startIndex, selectedIndex):
     return '> ' if startIndex == selectedIndex else '  '
 
@@ -69,9 +61,9 @@ class WELCOME:
     def displayDialog(self, currentDialogContext):
         print('Dialog: Welcome ')
         self.lcd.clear()
-        self.lcd.write_string(
+        self.lcd.writeHeader(
             '* Welcome to abook *\n\rthe audiobook reader\n\n\r')
-        self.lcd.write_string('press any key...'.rjust(20, ' '))
+        self.lcd.write(3, 4, 'press any key...', 16)
 
 
 class CHOOSE_CAST:
@@ -104,13 +96,13 @@ class CHOOSE_CAST:
     def displayDialog(self, currentDialogContext):
         print('Dialog: Choose Cast ')
         self.lcd.clear()
-        self.lcd.write_string(CHOOSE_CAST_HEADER)
+        self.lcd.writeHeader(CHOOSE_CAST_HEADER)
         castOptionRows = getViewportListFormatted(
             currentDialogContext.chromecastDevices,
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
-        self.lcd.write_string(trunc20(''.join(castOptionRows[0])) + '\n\r')
-        self.lcd.write_string(trunc20(''.join(castOptionRows[1])) + '\n\r')
-        self.lcd.write_string(trunc20(''.join(castOptionRows[2])) + '\n\r')
+        self.lcd.write(1, 0, ''.join(castOptionRows[0]))
+        self.lcd.write(2, 0, ''.join(castOptionRows[1]))
+        self.lcd.write(3, 0, ''.join(castOptionRows[2]))
 
 
 class CHOOSE_AUDIOBOOK:
@@ -137,17 +129,22 @@ class CHOOSE_AUDIOBOOK:
     def displayDialog(self, currentDialogContext):
         print('Dialog: Choose Audiobook ')
         self.lcd.clear()
-        self.lcd.write_string(CHOOSE_AUDIOBOOK_HEADER)
+        self.lcd.writeHeader(CHOOSE_AUDIOBOOK_HEADER)
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
 
-        self.lcd.write_string(formatStringForAudiobooksDisplay(
-            castOptionRows[0][0], castOptionRows[0][1]['folder'], castOptionRows[0][1]['percentage']))
-        self.lcd.write_string(formatStringForAudiobooksDisplay(
-            castOptionRows[1][0], castOptionRows[1][1]['folder'], castOptionRows[1][1]['percentage']))
-        self.lcd.write_string(formatStringForAudiobooksDisplay(
-            castOptionRows[2][0], castOptionRows[2][1]['folder'], castOptionRows[2][1]['percentage']))
+        self.lcd.write(1, 0, castOptionRows[0][0], 2) # selectionMarker
+        self.lcd.write(1, 2, castOptionRows[0][1]['folder'], 15) # folderName
+        self.lcd.write(1, 17, castOptionRows[0][1]['percentage'], 3) # percentage
+        
+        self.lcd.write(2, 0, castOptionRows[1][0], 2) # selectionMarker
+        self.lcd.write(2, 2, castOptionRows[1][1]['folder'], 15) # folderName
+        self.lcd.write(2, 17, castOptionRows[1][1]['percentage'], 3) # percentage
+        
+        self.lcd.write(3, 0, castOptionRows[2][0], 2) # selectionMarker
+        self.lcd.write(3, 2, castOptionRows[2][1]['folder'], 15) # folderName
+        self.lcd.write(3, 17, castOptionRows[2][1]['percentage'], 3) # percentage
 
 
 class AUDIOBOOK_PLAY:
@@ -178,27 +175,22 @@ class AUDIOBOOK_PLAY:
         # -- -- animated equalizer?
         #TODO - conditionally repaint everything
         self.lcd.clear()
-        self.lcd.write_string(PLAY_AUDIOBOOK_HEADER)
+        self.lcd.writeHeader(PLAY_AUDIOBOOK_HEADER)
         book = currentDialogContext.currentlySelectedAudiobook()
-
-        folderName = trunc(book['folder'], 17)
-        percentage = formatPercentage3(book['percentage'])
-        spacesBetween = 20 - len(folderName) - len(percentage)
-
-        self.lcd.write_string(
-            ''.join([folderName, ' '*spacesBetween, percentage, '\n\r']))
-        self.lcd.write_string(join(trunc(book['currentMp3'], 20), '\n\r'))
-
-        # TrackNo/TrackCount currentTrackTime / totalTrackTime
-        trackStatus = str(book['currentMp3Idx']) + '/' + str(len(book['mp3Files']))
+        
+        self.lcd.write(1, 0, book['folder'], 17) # folderName
+        self.lcd.write(1, 17, formatPercentage3(book['percentage']), 3) # percentage
+        self.lcd.write(2, 0, book['currentMp3'], 20) # mp3Name
+        
+        # TrackNo/TrackCount 
+        self.lcd.write(3, 0, str(book['currentMp3Idx']) + '/' + str(len(book['mp3Files'])), 7)
+        
+        # currentTrackTime / totalTrackTime
         mc, sc = divmod(book['currentMp3Progress'], 60)
         mt, st = divmod(int(book['mp3Lengths'][book['currentMp3']]), 60)
-        timeStatus = '{0:02d}:{1:02d} / {2:02d}:{3:02d}'.format(mc, sc, mt, st)
+        timeStatus = '{0:02d}:{1:02d}/{2:02d}:{3:02d}'.format(mc, sc, mt, st)
 
-        spacesBetween = 20 - len(trackStatus) - len(timeStatus)
-
-        self.lcd.write_string(
-            join(trackStatus,  ' ' * spacesBetween, timeStatus, '\n\r'))
+        self.lcd.write(3, 7, timeStatus, 13)
 
         # TODO - add action to get current play time from cast device and update the current state
         # TODO - add action to see if the track is not finished
