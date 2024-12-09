@@ -9,7 +9,6 @@ import filesystem
 from constants import BUTTONS
 
 
-
 # default property file path
 PROPERTY_FILE_PATH = './general.properties'
 
@@ -74,6 +73,6 @@ while True:
         action(currentDialogContext)
         repaintNeeded = True
 
-    if (repaintNeeded):
+    if repaintNeeded:
         print('--Repaint')
         currentDialogContext.paintDialog()

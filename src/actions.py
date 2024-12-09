@@ -1,4 +1,4 @@
-from constants import SYSTEM_PROPERTIES
+from constants import SYSTEM_PROPERTIES, PA as paintAction
 import chromecast
 import filesystem
 
@@ -23,11 +23,17 @@ def CONNECT_TO_CAST_DEVICE(currentDialogContext):
 def LOAD_AUDIOBOOKS(currentDialogContext):
     print('LOAD_AUDIOBOOKS')
     filesystem.loadAudiobooks(currentDialogContext)
-    
 
-def PLAY_AUDIOBOOK_PAINT(paintMethod):
+
+def PLAY_AUDIOBOOK(currentDialogContext):
     print('PLAY_AUDIOBOOK_PAINT')
-    return paintMethod
+    currentDialogContext.repaintParts.append(paintAction.ALL)
+    # TODO start playing / setup HTTP Server
+    
+    
+def CHECK_PLAY_STATUS(currentDialogContext):
+    print('CHECK_PLAY_STATUS')
+    # TODO add paint actions depending on state
 
 
 def VOL_UP(currentDialogContext):

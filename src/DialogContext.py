@@ -21,6 +21,12 @@ class DialogContext:
 
     currentAudiobook = None
 
+    # repaint fields in the dialog, handled by its own dialog and cleared after repaint.
+    repaintParts = []
+
+    def clearRepaintParts(self):
+        repaintParts = []
+
     def paintDialog(self):
         self.currentDialog.displayDialog(self)
 

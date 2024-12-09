@@ -13,3 +13,18 @@ BUTTONS.BUTTON_E = 'BUTTON_E'
 SYSTEM_PROPERTIES = types.SimpleNamespace()
 SYSTEM_PROPERTIES.LAST_CAST_DEVICE = 'last-cast-device'
 SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER = 'last-audiobook-root-folder'
+
+# Play audiobook partial paint actions
+PA = types.SimpleNamespace()
+# 0123
+PA.ALL = 'all'
+# 0
+PA.HEADER = 'header'
+# 1
+PA.AUDIOBOOK_TITLE = 'audiobook-title'
+PA.AUDIOBOOK_PERCENTAGE = 'audiobook-percentage'
+# 2
+PA.AUDIOBOOK_TRACK_NAME = 'audiobook-track-name'
+# 3
+PA.AUDIOBOOK_TRACK_NUMBERS = 'audiobook-track-numbers'
+PA.AUDIOBOOK_TIME_NUMBERS = 'audiobook-time-numbers'
