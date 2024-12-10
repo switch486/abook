@@ -158,17 +158,21 @@ class AUDIOBOOK_PLAY:
 
     def handleButton(self, currentDialogContext, pressedButton):
         print('Audiobook play: handle button action ' + pressedButton)
-        # TODO Implement
         if pressedButton == BUTTONS.BUTTON_A:
             print('A - Play/pause')
+            currentDialogContext.actions.put(ACTIONS.PLAY_PAUSE)
         elif pressedButton == BUTTONS.BUTTON_B:
             print('B - volup')
+            currentDialogContext.actions.put(ACTIONS.VOL_UP)
         elif pressedButton == BUTTONS.BUTTON_C:
             print('C - voldown')
+            currentDialogContext.actions.put(ACTIONS.VOL_DOWN)
         elif pressedButton == BUTTONS.BUTTON_D:
             print('D - FF - next track')
+            currentDialogContext.actions.put(ACTIONS.NEXT_TRACK)
         elif pressedButton == BUTTONS.BUTTON_E:
             print('E - RR - previous track /// back on hold')
+            currentDialogContext.actions.put(ACTIONS.PREVIOUS_TRACK)
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
