@@ -98,7 +98,6 @@ def getFolderDetails(rootPath, folder):
             'mp3Lengths': mp3Lengths,
             'currentMp3': playpointMp3Name,
             'currentMp3Idx': currentMp3Idx,
-            'progressDetails': progressDetails,
             'totalTime': totalTime,
             'elapsedTime': elapsedTime,
             'previousMp3Progress': previousMp3Progress,
