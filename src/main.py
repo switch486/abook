@@ -73,6 +73,6 @@ while True:
         action(currentDialogContext)
         repaintNeeded = True
 
-    if repaintNeeded:
+    if repaintNeeded or currentDialogContext.repaintParts:
         print('--Repaint')
         currentDialogContext.paintDialog()

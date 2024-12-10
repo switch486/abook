@@ -1,4 +1,4 @@
-from constants import SYSTEM_PROPERTIES, PA as paintAction
+from constants import SYSTEM_PROPERTIES, MS, PA as paintAction
 import chromecast
 import filesystem
 import httpServer
@@ -53,6 +53,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
     contentType = 'audio/mp3'
     title = currentBook['folder']
     # TODO - rewind 5 seconds of audiobook at resume start
+    # TODO - start at beginning if no progress
     current_time = currentBook['currentMp3Progress']
     stream_type = 'STREAM_TYPE_BUFFERED'
 
@@ -60,6 +61,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=current_time, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
+    currentDialogContext.isPlaying = True
 
 
 def startHttpServer(currentDialogContext):
@@ -70,19 +72,34 @@ def startHttpServer(currentDialogContext):
 
 def PLAY_PAUSE(currentDialogContext):
     print('play/pause')
-    # mc = curre™ntDialogContext.chromecast_device.media_controller
-    # mc.play()
-    # mc.pause()
-    # TODO implement
+    mc = currentDialogContext.chromecast_device.media_controller
+    if currentDialogContext.isPlaying:
+        mc.pause()
+        currentDialogContext.isPlaying = False
+    else:
+        mc.play()
+        currentDialogContext.isPlaying = True
 
 
 def CHECK_PLAY_STATUS(currentDialogContext):
     print('CHECK_PLAY_STATUS')
-    # TODO get current play time
-    # TODO in case idle, add next track
-    # TODO add paint actions depending on state
-    # TODO update progress of audiobook
-    # TODO save progress of audiobook
+    mc = currentDialogContext.chromecast_device.media_controller
+    player_status = mc.status
+
+    if player_status.player_state != MS.PLAYING:
+        # in case idle, add next track
+        NEXT_TRACK(currentDialogContext)
+    else:
+        CURRENT_TRACK(currentDialogContext, player_status)
+
+
+def CURRENT_TRACK(currentDialogContext, player_status):
+    currentTrackTime = player_status.duration
+    book = currentDialogContext.currentlySelectedAudiobook()
+    book['currentMp3Progress'] = currentTrackTime
+    currentDialogContext.repaintParts.append(
+        paintAction.AUDIOBOOK_TIME_NUMBERS)
+    recalculateAndUpdateAudiobookProgress(currentDialogContext)
 
 
 def VOL_UP(currentDialogContext):
@@ -97,15 +114,21 @@ def VOL_DOWN(currentDialogContext):
 
 def NEXT_TRACK(currentDialogContext):
     print('NEXT_TRACK')
-    # TODO - move currentAudiobook +1 and reset time to 0
-    audiobook = currentDialogContext.currentlySelectedAudiobook()
-    playPassedAudiobook(
-        currentDialogContext, audiobook)
+    audiobook = currentDialogContext.moveAudiobookPointerAndGet(1)
+    playPassedAudiobook(currentDialogContext, audiobook)
+    currentDialogContext.repaintParts.append(paintAction.ALL)
+    recalculateAndUpdateAudiobookProgress(currentDialogContext)
 
 
 def PREVIOUS_TRACK(currentDialogContext):
     print('PREVIOUS_TRACK')
-    # TODO - move currentAudiobook -1 and reset time to 0 -- at start of chapter first
-    audiobook = currentDialogContext.currentlySelectedAudiobook()
-    playPassedAudiobook(
-        currentDialogContext, audiobook)
+    audiobook = currentDialogContext.moveAudiobookPointerAndGet(-1)
+    playPassedAudiobook(currentDialogContext, audiobook)
+    currentDialogContext.repaintParts.append(paintAction.ALL)
+    recalculateAndUpdateAudiobookProgress(currentDialogContext)
+
+
+def recalculateAndUpdateAudiobookProgress(currentDialogContext):
+    print('Recalculate Progress of Audiobook')
+    # TODO - calculate audiobook progress again
+    # TODO - save audiobook progress in file

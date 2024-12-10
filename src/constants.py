@@ -29,3 +29,7 @@ PA.AUDIOBOOK_TRACK_NAME = 'audiobook-track-name'
 # 3
 PA.AUDIOBOOK_TRACK_NUMBERS = 'audiobook-track-numbers'
 PA.AUDIOBOOK_TIME_NUMBERS = 'audiobook-time-numbers'
+
+# MEDIA PLAYER STATUSES
+MS = type.SimpleNamespace()
+MS.PLAYING='PLAYING'
