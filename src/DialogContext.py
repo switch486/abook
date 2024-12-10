@@ -21,6 +21,8 @@ class DialogContext:
 
     currentAudiobook = None
 
+    httpServer = None
+
     # repaint fields in the dialog, handled by its own dialog and cleared after repaint.
     repaintParts = []
 
