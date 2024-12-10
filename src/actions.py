@@ -52,9 +52,9 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                        currentBook['folder'], '/', currentBook['currentMp3']])
     contentType = 'audio/mp3'
     title = currentBook['folder']
-    # TODO - rewind 5 seconds of audiobook at resume start
-    # TODO - start at beginning if no progress
     current_time = currentBook['currentMp3Progress']
+    if current_time > 5:
+        current_time -= 5
     stream_type = 'STREAM_TYPE_BUFFERED'
 
     mc.play_media(url=trackUrl, content_type=contentType, title=title,
@@ -122,7 +122,7 @@ def NEXT_TRACK(currentDialogContext):
 
 def PREVIOUS_TRACK(currentDialogContext):
     print('PREVIOUS_TRACK')
-    audiobook = currentDialogContext.moveAudiobookPointerAndGet(-1)
+    audiobook = currentDialogContext.moveAudiobookTracPointerAndGet(-1)
     playPassedAudiobook(currentDialogContext, audiobook)
     currentDialogContext.repaintParts.append(paintAction.ALL)
     recalculateAndUpdateAudiobookProgress(currentDialogContext)
@@ -130,5 +130,8 @@ def PREVIOUS_TRACK(currentDialogContext):
 
 def recalculateAndUpdateAudiobookProgress(currentDialogContext):
     print('Recalculate Progress of Audiobook')
+    currentDialogContext
+    
+    
     # TODO - calculate audiobook progress again
     # TODO - save audiobook progress in file

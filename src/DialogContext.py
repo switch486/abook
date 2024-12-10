@@ -40,3 +40,33 @@ class DialogContext:
 
     def handleButton(self, pressedButton):
         return self.currentDialog.handleButton(self, pressedButton)
+    
+    def moveAudiobookPointerAndGet(self, jump):
+        currentBook = self.currentlySelectedAudiobook()
+        
+        mp3Index = currentBook['currentMp3Idx']
+        if mp3Index == 0 and jump < 0:
+            return
+        if mp3Index == len(currentBook['mp3Files']) + 1 and jump > 0:
+            return
+        
+        mp3Index += jump
+        
+        # replace currentBook properties completely with new properties:
+        self.currentFolderDetails()[self.menu_chooseAudiobook_CursorLocationAbsolute] = 
+        {'rootPath': currentBook['rootPath'],
+            'folder': currentBook['folder'],
+            'mp3Files': currentBook['mp3Files'],
+            'mp3Lengths': currentBook['mp3Lengths'],
+            'currentMp3': playpointMp3Name,
+            'currentMp3Idx': currentMp3Idx,
+            'progressDetails': progressDetails,
+            'totalTime': currentBook['totalTime'],
+            'elapsedTime': elapsedTime,
+            'previousMp3Progress': previousMp3Progress,
+            'currentMp3Progress': currentMp3Progress,
+            'percentage': percentage}
+        
+
+        
+        

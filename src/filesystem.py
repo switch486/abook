@@ -2,6 +2,7 @@ import os
 from constants import SYSTEM_PROPERTIES
 from os import listdir, popen
 from os.path import isdir, isfile, join, expanduser
+from calculator import calculateTimes
 
 
 # TODO load MP3 folders, with their metadata if present
@@ -46,23 +47,6 @@ def isAbookProgress(filepath):
     return filepath.endswith('abook.progress')
 
 
-def sublist_up_to(lst, element):
-    try:
-        index = lst.index(element)
-        return lst[:index]
-    except ValueError:
-        return []
-
-
-def calculateTime(mp3Files, mp3Lengths):
-    time = 0
-    print(mp3Files)
-    print(mp3Lengths)
-    for s in mp3Files:
-        time += int(mp3Lengths[s])
-    return time
-
-
 def getFolderDetails(rootPath, folder):
     joinedPath = join(rootPath, folder)
     print('check Folder for file contents: ' + joinedPath)
@@ -79,9 +63,20 @@ def getFolderDetails(rootPath, folder):
     print('progressFile: ' + str(progressFile))
 
     # progress file handling
+    playpointMp3Name = ''
+    playpointMp3Seconds = 0
     progressDetails = None
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
+        playpointMp3Name = progressDetails['currentMp3']
+        playpointMp3Seconds = progressDetails['second']
+
+    # set startup if no progress
+    if playpointMp3Name == '':
+        playpointMp3Name = mp3Files[0]
+        currentMp3Idx = 0
+    else:
+        currentMp3Idx = mp3Files.index(playpointMp3Name)
 
     # mp3 durations
     mp3Lengths = None
@@ -94,31 +89,8 @@ def getFolderDetails(rootPath, folder):
             mp3Lengths[key] = value
 
     # total and elapsed times
-    totalTime = calculateTime(mp3Files, mp3Lengths)
-    elapsedTime = 0
-    previousMp3Progress = 0
-    currentMp3Progress = 0
-    if progressDetails != None:
-        previousMp3Progress = calculateTime(sublist_up_to(
-            mp3Files, progressDetails['currentMp3']), mp3Lengths)
-        currentMp3Progress += int(progressDetails['second'])
-        elapsedTime = previousMp3Progress + currentMp3Progress
-
-    # determine play mp3 title
-    playpointMp3Name = ''
-    currentMp3Idx = 0
-    if len(mp3Files) > 0:
-        playpointMp3Name = mp3Files[0]
-        if progressDetails != None:
-            playpointMp3Name = progressDetails['currentMp3']
-            currentMp3Idx = mp3Files.index(playpointMp3Name)
-
-    # percentage
-    e = int(elapsedTime)
-    t = int(totalTime)
-    percentage = 0
-    if t != 0:
-        percentage = int((100*e)/t)
+    totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage = calculateTimes(
+        playpointMp3Name, playpointMp3Seconds, mp3Files, mp3Lengths)
 
     return {'rootPath': rootPath,
             'folder': folder,
