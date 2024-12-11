@@ -89,17 +89,19 @@ def CHECK_PLAY_STATUS(currentDialogContext):
     if player_status.player_state != MS.PLAYING:
         # in case idle, add next track
         NEXT_TRACK(currentDialogContext)
+
     else:
         CURRENT_TRACK(currentDialogContext, player_status)
 
 
 def CURRENT_TRACK(currentDialogContext, player_status):
     currentTrackTime = player_status.duration
-    book = currentDialogContext.currentlySelectedAudiobook()
-    book['currentMp3Progress'] = currentTrackTime
+    currentDialogContext.updateTrackCalculateAudiobook(currentTrackTime)
     currentDialogContext.repaintParts.append(
         paintAction.AUDIOBOOK_TIME_NUMBERS)
-    recalculateAndUpdateAudiobookProgress(currentDialogContext)
+    currentDialogContext.repaintParts.append(
+        paintAction.AUDIOBOOK_PERCENTAGE)
+    saveAudiobookProgress(currentDialogContext)
 
 
 def VOL_UP(currentDialogContext):
@@ -117,21 +119,21 @@ def NEXT_TRACK(currentDialogContext):
     audiobook = currentDialogContext.moveAudiobookPointerAndGet(1)
     playPassedAudiobook(currentDialogContext, audiobook)
     currentDialogContext.repaintParts.append(paintAction.ALL)
-    recalculateAndUpdateAudiobookProgress(currentDialogContext)
+    saveAudiobookProgress(currentDialogContext)
 
 
 def PREVIOUS_TRACK(currentDialogContext):
     print('PREVIOUS_TRACK')
-    audiobook = currentDialogContext.moveAudiobookTracPointerAndGet(-1)
+    audiobook = currentDialogContext.moveAudiobookPointerAndGet(-1)
     playPassedAudiobook(currentDialogContext, audiobook)
     currentDialogContext.repaintParts.append(paintAction.ALL)
-    recalculateAndUpdateAudiobookProgress(currentDialogContext)
+    saveAudiobookProgress(currentDialogContext)
 
 
-def recalculateAndUpdateAudiobookProgress(currentDialogContext):
-    print('Recalculate Progress of Audiobook')
+def saveAudiobookProgress(currentDialogContext):
+    print('Save Progress of Audiobook')
     currentDialogContext
-    
-    
-    # TODO - calculate audiobook progress again
+
     # TODO - save audiobook progress in file
+
+    filesystem.saveProgress(currentDialogContext)

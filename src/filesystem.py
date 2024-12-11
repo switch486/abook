@@ -122,6 +122,12 @@ def loadAudiobooks(currentDialogContext):
     # currentDialogContext.folderDetails[rootPath].sort() - sorting!
     currentDialogContext.currentRootPath = rootPath
 
+def saveProgress(currentDialogContext):
+    book = currentDialogContext.currentlySelectedAudiobook()
+    print ('progress save')
+    
+    #TODO - check if progress file is present
+    #TODO - save progress
 
 # testing purposes
 # print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
