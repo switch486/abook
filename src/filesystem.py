@@ -1,17 +1,11 @@
 import os
-from constants import SYSTEM_PROPERTIES
+from constants import SYSTEM_PROPERTIES, CONSTANTS, FD
 from os import listdir, popen
 from os.path import isdir, isfile, join, expanduser
 from calculator import calculateTimes
 
+# TODO load property files for last cast device, volume settings
 
-# TODO load MP3 folders, with their metadata if present
-# TODO - load folder MP3s to be played
-# TODO load property files for last cast device, volume settings, audiobook played
-# TODO save property files with updated values
-# TODO HTTP server setting
-
-# TODO - read file -- https://blog.finxter.com/python-read-and-write-to-a-properties-file/
 
 def loadSystemProperties(currentDialogContext):
     return loadPropertyFile(currentDialogContext.systemPropertiesPath)
@@ -37,14 +31,24 @@ def updateSystemProperty(currentDialogContext, key, new_value):
             file.write(f'{key}={value}\n')
 
 
+def updatePropertyFile(path, key1, new_value1, key2, new_value2):
+    # TODO - check for presence
+    properties = loadPropertyFile(path)
+    properties[key1] = new_value1
+    properties[key2] = new_value2
+    # TODO - create file if not present
+    with open(path, 'w') as file:
+        for key, value in properties.items():
+            file.write(f'{key}={value}\n')
+
+
 def isMp3File(filepath):
     # TODO - constant
     return filepath.endswith('.mp3')
 
 
 def isAbookProgress(filepath):
-    # TODO - constant
-    return filepath.endswith('abook.progress')
+    return filepath.endswith(CONSTANTS.PROGRESS_FILE)
 
 
 def getFolderDetails(rootPath, folder):
@@ -68,8 +72,8 @@ def getFolderDetails(rootPath, folder):
     progressDetails = None
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
-        playpointMp3Name = progressDetails['currentMp3']
-        playpointMp3Seconds = progressDetails['second']
+        playpointMp3Name = progressDetails[CONSTANTS.PROGRESS_MP3_KEY]
+        playpointMp3Seconds = progressDetails[CONSTANTS.PROGRESS_SECOND_KEY]
 
     # set startup if no progress
     if playpointMp3Name == '':
@@ -92,17 +96,17 @@ def getFolderDetails(rootPath, folder):
     totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage = calculateTimes(
         playpointMp3Name, playpointMp3Seconds, mp3Files, mp3Lengths)
 
-    return {'rootPath': rootPath,
-            'folder': folder,
-            'mp3Files': mp3Files,
-            'mp3Lengths': mp3Lengths,
-            'currentMp3': playpointMp3Name,
-            'currentMp3Idx': currentMp3Idx,
-            'totalTime': totalTime,
-            'elapsedTime': elapsedTime,
-            'previousMp3Progress': previousMp3Progress,
-            'currentMp3Progress': currentMp3Progress,
-            'percentage': percentage}
+    return {FD.ROOT_PATH: rootPath,
+            FD.FOLDER: folder,
+            FD.MP3_FILES: mp3Files,
+            FD.MP3_LENGTHS: mp3Lengths,
+            FD.CURRENT_MP3: playpointMp3Name,
+            FD.CURRENT_MP3_IDX: currentMp3Idx,
+            FD.TOTAL_TIME: totalTime,
+            FD.ELAPSED_TIME: elapsedTime,
+            FD.PREVIOS_MP3_PROGRESS: previousMp3Progress,
+            FD.CURRENT_MP3_PROGRESS: currentMp3Progress,
+            FD.PERCENTAGE: percentage}
 
 
 def computeFolders(rootPath):
@@ -122,12 +126,14 @@ def loadAudiobooks(currentDialogContext):
     # currentDialogContext.folderDetails[rootPath].sort() - sorting!
     currentDialogContext.currentRootPath = rootPath
 
-def saveProgress(currentDialogContext):
-    book = currentDialogContext.currentlySelectedAudiobook()
-    print ('progress save')
-    
-    #TODO - check if progress file is present
-    #TODO - save progress
 
-# testing purposes
-# print(computeFolders(expanduser('~/Downloads/-kidsSongs/')))
+def saveProgress(currentDialogContext):
+    currentBook = currentDialogContext.currentlySelectedAudiobook()
+    print('progress save')
+    progressFilePath = currentDialogContext.getCurrentAudiobookProgressFilePath()
+
+    updatePropertyFile(progressFilePath,
+                       CONSTANTS.PROGRESS_MP3_KEY,
+                       currentBook['currentMp3'],
+                       CONSTANTS.PROGRESS_SECOND_KEY,
+                       currentBook['currentMp3Progress'])

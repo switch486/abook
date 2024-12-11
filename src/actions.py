@@ -132,8 +132,4 @@ def PREVIOUS_TRACK(currentDialogContext):
 
 def saveAudiobookProgress(currentDialogContext):
     print('Save Progress of Audiobook')
-    currentDialogContext
-
-    # TODO - save audiobook progress in file
-
     filesystem.saveProgress(currentDialogContext)

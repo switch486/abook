@@ -13,7 +13,7 @@ BUTTONS.BUTTON_E = 'BUTTON_E'
 SYSTEM_PROPERTIES = types.SimpleNamespace()
 SYSTEM_PROPERTIES.LAST_CAST_DEVICE = 'last-cast-device'
 SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER = 'last-audiobook-root-folder'
-SYSTEM_PROPERTIES.HTTP_STARTUP_PORT='http-startup-port'
+SYSTEM_PROPERTIES.HTTP_STARTUP_PORT = 'http-startup-port'
 
 # Play audiobook partial paint actions
 PA = types.SimpleNamespace()
@@ -32,4 +32,24 @@ PA.AUDIOBOOK_TIME_NUMBERS = 'audiobook-time-numbers'
 
 # MEDIA PLAYER STATUSES
 MS = type.SimpleNamespace()
-MS.PLAYING='PLAYING'
+MS.PLAYING = 'PLAYING'
+
+# Filehandling
+CONSTANTS = types.SimpleNamespace()
+CONSTANTS.PROGRESS_FILE = 'abook.progress'
+CONSTANTS.PROGRESS_MP3_KEY = 'currentMp3'
+CONSTANTS.PROGRESS_SECOND_KEY = 'second'
+
+# FOLER DETAILS KEYS
+FD = types.SimpleNamespace()
+FD.ROOT_PATH = 'rootPath'
+FD.FOLDER = 'folder'
+FD.MP3_FILES = 'mp3Files'
+FD.MP3_LENGTHS = 'mp3Lengths'
+FD.CURRENT_MP3 = 'currentMp3'
+FD.CURRENT_MP3_IDX = 'currentMp3Idx'
+FD.TOTAL_TIME = 'totalTime'
+FD.ELAPSED_TIME = 'elapsedTime'
+FD.PREVIOS_MP3_PROGRESS = 'previousMp3Progress'
+FD.CURRENT_MP3_PROGRESS = 'currentMp3Progress'
+FD.PERCENTAGE = 'percentage'

@@ -1,5 +1,6 @@
 import queue
 from calculator import calculateTimes
+from constants import CONSTANTS, FD
 
 
 class DialogContext:
@@ -28,7 +29,7 @@ class DialogContext:
     repaintParts = []
 
     def clearRepaintParts(self):
-        repaintParts = []
+        self.repaintParts = []
 
     def paintDialog(self):
         self.currentDialog.displayDialog(self)
@@ -70,17 +71,17 @@ class DialogContext:
             playpointMp3Name, playpointMp3Seconds, currentBook['mp3Files'], currentBook['mp3Lengths'])
 
         # replace currentBook properties completely with new properties:
-        return {'rootPath': currentBook['rootPath'],
-                'folder': currentBook['folder'],
-                'mp3Files': currentBook['mp3Files'],
-                'mp3Lengths': currentBook['mp3Lengths'],
-                'currentMp3': playpointMp3Name,
-                'currentMp3Idx': currentMp3Idx,
-                'totalTime': totalTime,
-                'elapsedTime': elapsedTime,
-                'previousMp3Progress': previousMp3Progress,
-                'currentMp3Progress': currentMp3Progress,
-                'percentage': percentage}
+        return {FD.ROOT_PATH: currentBook[FD.ROOT_PATH],
+                FD.FOLDER: currentBook[FD.FOLDER],
+                FD.MP3_FILES: currentBook[FD.MP3_FILES],
+                FD.MP3_LENGTHS: currentBook[FD.MP3_LENGTHS],
+                FD.CURRENT_MP3: playpointMp3Name,
+                FD.CURRENT_MP3_IDX: currentMp3Idx,
+                FD.TOTAL_TIME: totalTime,
+                FD.ELAPSED_TIME: elapsedTime,
+                FD.PREVIOS_MP3_PROGRESS: previousMp3Progress,
+                FD.CURRENT_MP3_PROGRESS: currentMp3Progress,
+                FD.PERCENTAGE: percentage}
 
     def updateTrackCalculateAudiobook(self, currentMp3Progress):
         currentBook = self.currentlySelectedAudiobook()
@@ -90,3 +91,7 @@ class DialogContext:
             currentBook['currentMp3Idx'], currentBook['currentMp3'], currentMp3Progress, currentBook))
 
         return self.currentlySelectedAudiobook()
+
+    def getCurrentAudiobookProgressFilePath(self):
+        book = self.currentlySelectedAudiobook()
+        return ''.join([book['rootPath'], '/', book['folder'], '/', CONSTANTS.PROGRESS_FILE])
