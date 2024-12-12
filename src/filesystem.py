@@ -14,12 +14,13 @@ def loadSystemProperties(currentDialogContext):
 def loadPropertyFile(path):
     print('read properties from: ' + path)
     properties = {}
-    with open(path, 'r') as file:
-        for line in file:
-            if line.startswith('#') or not line.strip():
-                continue  # Skip comments and blank lines
-            key, value = line.strip().split('=', 1)
-            properties[key] = value
+    if os.path.isfile(path):
+        with open(path, 'r') as file:
+            for line in file:
+                if line.startswith('#') or not line.strip():
+                    continue  # Skip comments and blank lines
+                key, value = line.strip().split('=', 1)
+                properties[key] = value
     return properties
 
 
@@ -32,12 +33,13 @@ def updateSystemProperty(currentDialogContext, key, new_value):
 
 
 def updatePropertyFile(path, key1, new_value1, key2, new_value2):
-    # TODO - check for presence
-    properties = loadPropertyFile(path)
+    properties = {}
+    if os.path.isfile(path):
+        properties = loadPropertyFile(path)
+
     properties[key1] = new_value1
     properties[key2] = new_value2
-    # TODO - create file if not present
-    with open(path, 'w') as file:
+    with open(path, 'w+') as file:
         for key, value in properties.items():
             file.write(f'{key}={value}\n')
 
