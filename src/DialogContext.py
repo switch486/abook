@@ -46,14 +46,14 @@ class DialogContext:
     def moveAudiobookPointerAndGet(self, jump):
         currentBook = self.currentlySelectedAudiobook()
 
-        currentMp3Idx = currentBook['currentMp3Idx']
+        currentMp3Idx = currentBook[FD.CURRENT_MP3_IDX]
         if currentMp3Idx == 0 and jump < 0:
             return
-        if currentMp3Idx == len(currentBook['mp3Files']) + 1 and jump > 0:
+        if currentMp3Idx == len(currentBook[FD.MP3_FILES]) + 1 and jump > 0:
             return
 
         currentMp3Idx += jump
-        playpointMp3Name = currentBook['mp3Files'][currentMp3Idx]
+        playpointMp3Name = currentBook[FD.MP3_FILES][currentMp3Idx]
 
         # replace currentBook properties completely with new properties:
         self.setCurrentFolderProgress(self.calculateCurrentFolderProgress(
@@ -68,7 +68,7 @@ class DialogContext:
     def calculateCurrentFolderProgress(self, currentMp3Idx, playpointMp3Name, playpointMp3Seconds, currentBook):
         # total and elapsed times
         totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage = calculateTimes(
-            playpointMp3Name, playpointMp3Seconds, currentBook['mp3Files'], currentBook['mp3Lengths'])
+            playpointMp3Name, playpointMp3Seconds, currentBook[FD.MP3_FILES], currentBook[FD.MP3_LENGTHS])
 
         # replace currentBook properties completely with new properties:
         return {FD.ROOT_PATH: currentBook[FD.ROOT_PATH],
@@ -88,10 +88,10 @@ class DialogContext:
 
         # replace currentBook properties completely with new properties:
         self.setCurrentFolderProgress(self.calculateCurrentFolderProgress(
-            currentBook['currentMp3Idx'], currentBook['currentMp3'], currentMp3Progress, currentBook))
+            currentBook[FD.CURRENT_MP3_IDX], currentBook[FD.CURRENT_MP3], currentMp3Progress, currentBook))
 
         return self.currentlySelectedAudiobook()
 
     def getCurrentAudiobookProgressFilePath(self):
         book = self.currentlySelectedAudiobook()
-        return ''.join([book['rootPath'], '/', book['folder'], '/', CONSTANTS.PROGRESS_FILE])
+        return ''.join([book[FD.ROOT_PATH], '/', book[FD.FOLDER], '/', CONSTANTS.PROGRESS_FILE])

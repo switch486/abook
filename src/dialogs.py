@@ -1,4 +1,4 @@
-from constants import BUTTONS, PA as paintAction
+from constants import BUTTONS, PA as paintAction, FD
 import actions as ACTIONS
 
 # BUTTONS                  E   D    C    B    A
@@ -115,7 +115,6 @@ class CHOOSE_AUDIOBOOK:
             # play audiobook
             currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
             currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
-            # TODO - add action to trigger the play of the audiobook selected at the specific place, with the specific title, ...
         elif pressedButton == BUTTONS.BUTTON_D:
             # DOWN
             if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.currentFolderDetails())-1:
@@ -135,19 +134,19 @@ class CHOOSE_AUDIOBOOK:
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
 
         self.lcd.write(1, 0, castOptionRows[0][0], 2)  # selectionMarker
-        self.lcd.write(1, 2, castOptionRows[0][1]['folder'], 15)  # folderName
+        self.lcd.write(1, 2, castOptionRows[0][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(1, 17, castOptionRows[0][1]['percentage'], 3)
+        self.lcd.write(1, 17, castOptionRows[0][1][FD.PERCENTAGE], 3)
 
         self.lcd.write(2, 0, castOptionRows[1][0], 2)  # selectionMarker
-        self.lcd.write(2, 2, castOptionRows[1][1]['folder'], 15)  # folderName
+        self.lcd.write(2, 2, castOptionRows[1][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(2, 17, castOptionRows[1][1]['percentage'], 3)
+        self.lcd.write(2, 17, castOptionRows[1][1][FD.PERCENTAGE], 3)
 
         self.lcd.write(3, 0, castOptionRows[2][0], 2)  # selectionMarker
-        self.lcd.write(3, 2, castOptionRows[2][1]['folder'], 15)  # folderName
+        self.lcd.write(3, 2, castOptionRows[2][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(3, 17, castOptionRows[2][1]['percentage'], 3)
+        self.lcd.write(3, 17, castOptionRows[2][1][FD.PERCENTAGE], 3)
 
         self.lcd.clearRepaintParts()
 
@@ -182,7 +181,6 @@ class AUDIOBOOK_PLAY:
         # -- switch between track time / total time
         # -- add easteregg?
         # -- -- animated equalizer?
-        # TODO - conditionally repaint everything
         if shouldPaint(paintAction.ALL, currentDialogContext):
             self.lcd.clear()
 
@@ -192,24 +190,25 @@ class AUDIOBOOK_PLAY:
         book = currentDialogContext.currentlySelectedAudiobook()
 
         if shouldPaint(paintAction.AUDIOBOOK_TITLE, currentDialogContext):
-            self.lcd.write(1, 0, book['folder'], 17)  # folderName
+            self.lcd.write(1, 0, book[FD.FOLDER], 17)  # folderName
 
         if shouldPaint(paintAction.AUDIOBOOK_PERCENTAGE, currentDialogContext):
             self.lcd.write(1, 17, formatPercentage3(
-                book['percentage']), 3)  # percentage
+                book[FD.PERCENTAGE]), 3)  # percentage
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NAME, currentDialogContext):
-            self.lcd.write(2, 0, book['currentMp3'], 20)  # mp3Name
+            self.lcd.write(2, 0, book[FD.CURRENT_MP3], 20)  # mp3Name
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NUMBERS, currentDialogContext):
             # TrackNo/TrackCount
             self.lcd.write(
-                3, 0, str(book['currentMp3Idx']) + '/' + str(len(book['mp3Files'])), 7)
+                3, 0, str(book[FD.CURRENT_MP3_IDX]) + '/' + str(len(book[FD.MP3_FILES])), 7)
 
         if shouldPaint(paintAction.AUDIOBOOK_TIME_NUMBERS, currentDialogContext):
             # currentTrackTime / totalTrackTime
-            mc, sc = divmod(book['currentMp3Progress'], 60)
-            mt, st = divmod(int(book['mp3Lengths'][book['currentMp3']]), 60)
+            mc, sc = divmod(book[FD.CURRENT_MP3_PROGRESS], 60)
+            mt, st = divmod(
+                int(book[FD.MP3_LENGTHS][book[FD.CURRENT_MP3]]), 60)
             timeStatus = '{0:02d}:{1:02d}/{2:02d}:{3:02d}'.format(
                 mc, sc, mt, st)
 

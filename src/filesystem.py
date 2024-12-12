@@ -136,6 +136,6 @@ def saveProgress(currentDialogContext):
 
     updatePropertyFile(progressFilePath,
                        CONSTANTS.PROGRESS_MP3_KEY,
-                       currentBook['currentMp3'],
+                       currentBook[FD.CURRENT_MP3],
                        CONSTANTS.PROGRESS_SECOND_KEY,
-                       currentBook['currentMp3Progress'])
+                       currentBook[FD.CURRENT_MP3_PROGRESS])
