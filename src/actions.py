@@ -93,7 +93,7 @@ def CHECK_PLAY_STATUS(currentDialogContext):
         NEXT_TRACK(currentDialogContext)
 
     else:
-        CURRENT_TRACK(currentDialogContext, mc.status.player_status.duration)
+        CURRENT_TRACK(currentDialogContext, mc.status.duration)
 
 
 def CURRENT_TRACK(currentDialogContext, duration):
