@@ -38,8 +38,8 @@ class Gui:
         #    XXXXXXXXXXXXXXXXXXXX
         #    123456789...
     def write(self, y, x, value, maxLength) :
-        string = value
-        if len(value) > maxLength :
+        string = str(value)
+        if len(string) > maxLength :
             string = trunc(value, maxLength)
         self.lcd.cursor_pos = (y, x)
         self.lcd.write_string(string)
