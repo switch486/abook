@@ -37,7 +37,7 @@ class Gui:
         # 3 Y....................
         #    XXXXXXXXXXXXXXXXXXXX
         #    123456789...
-    def write(self, x, y, value, maxLength) :
+    def write(self, y, x, value, maxLength) :
         string = value
         if len(value) > maxLength :
             string = trunc(value, maxLength)
