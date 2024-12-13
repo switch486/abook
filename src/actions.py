@@ -72,7 +72,7 @@ def startHttpServer(currentDialogContext):
 def PLAY_PAUSE(currentDialogContext):
     print('play/pause')
     mc = currentDialogContext.chromecast_device.media_controller
-    if mc.status.player_is_playing():
+    if mc.status.player_is_playing:
         mc.pause()
     else:
         mc.play()
@@ -88,7 +88,7 @@ def CHECK_PLAY_STATUS(currentDialogContext):
     print('CHECK_PLAY_STATUS')
     mc = currentDialogContext.chromecast_device.media_controller
 
-    if mc.status.player_is_playing():
+    if mc.status.player_is_playing:
         # in case idle, add next track
         NEXT_TRACK(currentDialogContext)
 
