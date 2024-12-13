@@ -22,7 +22,7 @@ def calculateTimes(mp3Name, mp3Seconds, mp3Files, mp3Lengths):
     if mp3Name != None:
         previousMp3Progress = calculateTime(sublist_up_to(
             mp3Files, mp3Name), mp3Lengths)
-        currentMp3Progress += mp3Seconds
+        currentMp3Progress += int(mp3Seconds)
         elapsedTime = previousMp3Progress + currentMp3Progress
 
     # percentage
