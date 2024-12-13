@@ -77,10 +77,10 @@ def getFolderDetails(rootPath, folder):
         playpointMp3Seconds = progressDetails[CONSTANTS.PROGRESS_SECOND_KEY]
 
     # set startup if no progress
+    currentMp3Idx = 0
     if playpointMp3Name == '' and len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
-        currentMp3Idx = 0
-    else:
+    elif len(mp3Files) > 0 :
         currentMp3Idx = mp3Files.index(playpointMp3Name)
 
     # mp3 durations
