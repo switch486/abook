@@ -60,7 +60,7 @@ class WELCOME:
         self.lcd.clear()
         self.lcd.writeHeader(
             '* Welcome to abook *\n\rthe audiobook reader\n\n\r')
-        self.lcd.write(3, 4, 'press any key...', 16)
+        self.lcd.write(4, 3, 'press any key...', 16)
         self.lcd.clearRepaintParts()
 
 
