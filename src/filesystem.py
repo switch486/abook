@@ -1,5 +1,5 @@
 import os
-from constants import SYSTEM_PROPERTIES, CONSTANTS, FD
+from constants import SYSTEM_PROPERTIES, CONSTANTS, FD, FO
 from os import listdir, popen
 from os.path import isdir, isfile, join, expanduser
 from calculator import calculateTimes
@@ -15,11 +15,11 @@ def loadPropertyFile(path):
     print('read properties from: ' + path)
     properties = {}
     if os.path.isfile(path):
-        with open(path, 'r') as file:
+        with open(path, FO.READ) as file:
             for line in file:
-                if line.startswith('#') or not line.strip():
-                    continue  # Skip comments and blank lines
-                key, value = line.strip().split('=', 1)
+                if line.startswith(FO.COMMENT) or not line.strip():
+                    continue 
+                key, value = line.strip().split(FO.EQUALS, 1)
                 properties[key] = value
     return properties
 
@@ -27,9 +27,9 @@ def loadPropertyFile(path):
 def updateSystemProperty(currentDialogContext, key, new_value):
     properties = loadSystemProperties(currentDialogContext)
     properties[key] = new_value
-    with open(currentDialogContext.systemPropertiesPath, 'w') as file:
+    with open(currentDialogContext.systemPropertiesPath, FO.WRITE) as file:
         for key, value in properties.items():
-            file.write(f'{key}={value}\n')
+            file.write(f'{key}{FO.EQUALS}{value}{FO.NEWLINE}')
 
 
 def updatePropertyFile(path, key1, new_value1, key2, new_value2):
@@ -39,14 +39,13 @@ def updatePropertyFile(path, key1, new_value1, key2, new_value2):
 
     properties[key1] = new_value1
     properties[key2] = new_value2
-    with open(path, 'w+') as file:
+    with open(path, FO.WRITE_CREATE) as file:
         for key, value in properties.items():
-            file.write(f'{key}={value}\n')
+            file.write(f'{key}{FO.EQUALS}{value}{FO.NEWLINE}')
 
 
 def isMp3File(filepath):
-    # TODO - constant
-    return filepath.endswith('.mp3')
+    return filepath.endswith(CONSTANTS.MP3_FILETYPE)
 
 
 def isAbookProgress(filepath):

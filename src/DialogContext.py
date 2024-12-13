@@ -94,4 +94,4 @@ class DialogContext:
 
     def getCurrentAudiobookProgressFilePath(self):
         book = self.currentlySelectedAudiobook()
-        return ''.join([book[FD.ROOT_PATH], '/', book[FD.FOLDER], '/', CONSTANTS.PROGRESS_FILE])
+        return ''.join([book[FD.ROOT_PATH], FD.PATH_SEPARATOR, book[FD.FOLDER], FD.PATH_SEPARATOR, CONSTANTS.PROGRESS_FILE])

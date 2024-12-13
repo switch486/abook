@@ -1,6 +1,3 @@
-# TODO - connect , play ,
-# volume up, volume down
-
 import pychromecast
 
 

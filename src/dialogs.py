@@ -6,7 +6,6 @@ import actions as ACTIONS
 # Template                'X   X    X    X    X'
 CHOOSE_CAST_HEADER = ' | UP  DOWN       OK'
 CHOOSE_AUDIOBOOK_HEADER = '<| UP  DOWN       OK'
-# TODO - back option on hold?
 PLAY_AUDIOBOOK_HEADER = '<| [<  >]  - V + ||>'
 
 
@@ -217,26 +216,3 @@ class AUDIOBOOK_PLAY:
         self.lcd.clearRepaintParts()
 
         currentDialogContext.actions.put(ACTIONS.CHECK_PLAY_STATUS)
-
-
-class TEST:
-    def __init__(self, lcd):
-        self.lcd = lcd
-
-    def handleButton(self, currentDialogContext, pressedButton):
-        print('TBD, Test')
-        # TODO Implement
-        if pressedButton == BUTTONS.BUTTON_A:
-            print('A')
-        elif pressedButton == BUTTONS.BUTTON_B:
-            print('B')
-        elif pressedButton == BUTTONS.BUTTON_C:
-            print('C')
-        elif pressedButton == BUTTONS.BUTTON_D:
-            print('D')
-        elif pressedButton == BUTTONS.BUTTON_E:
-            print('E')
-        return currentDialogContext
-
-    def displayDialog(self, currentDialogContext):
-        print('TBD, Choose Audiobook')

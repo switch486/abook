@@ -1,4 +1,4 @@
-from constants import SYSTEM_PROPERTIES, MS, PA as paintAction
+from constants import SYSTEM_PROPERTIES, MS, PA as paintAction, FD, CONSTANTS
 import chromecast
 import filesystem
 import httpServer
@@ -48,14 +48,14 @@ def playPassedAudiobook(currentDialogContext, currentBook):
     port = currentDialogContext.systemProperties[
         SYSTEM_PROPERTIES.HTTP_STARTUP_PORT]
 
-    trackUrl = ''.join(['http://localhost:', port, '/',
-                       currentBook['folder'], '/', currentBook['currentMp3']])
-    contentType = 'audio/mp3'
-    title = currentBook['folder']
-    current_time = currentBook['currentMp3Progress']
+    trackUrl = ''.join([CONSTANTS.LOCALHOST_URL_PART, port, CONSTANTS.URL_DIR_SEPARATOR,
+                       currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.CURRENT_MP3]])
+    contentType = CONSTANTS.CONTENT_TYPE
+    title = currentBook[FD.FOLDER]
+    current_time = currentBook[FD.CURRENT_MP3_PROGRESS]
     if current_time > 5:
         current_time -= 5
-    stream_type = 'STREAM_TYPE_BUFFERED'
+    stream_type = CONSTANTS.STREAM_TYPE_BUFFERED
 
     mc.play_media(url=trackUrl, content_type=contentType, title=title,
                   current_time=current_time, stream_type=stream_type)

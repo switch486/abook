@@ -39,6 +39,11 @@ CONSTANTS = types.SimpleNamespace()
 CONSTANTS.PROGRESS_FILE = 'abook.progress'
 CONSTANTS.PROGRESS_MP3_KEY = 'currentMp3'
 CONSTANTS.PROGRESS_SECOND_KEY = 'second'
+CONSTANTS.CONTENT_TYPE = 'audio/mp3'
+CONSTANTS.STREAM_TYPE_BUFFERED = 'STREAM_TYPE_BUFFERED'
+CONSTANTS.LOCALHOST_URL_PART = 'http://localhost:'
+CONSTANTS.MP3_FILETYPE = '.mp3'
+CONSTANTS.URL_DIR_SEPARATOR = '/'
 
 # FOLER DETAILS KEYS
 FD = types.SimpleNamespace()
@@ -53,3 +58,13 @@ FD.ELAPSED_TIME = 'elapsedTime'
 FD.PREVIOS_MP3_PROGRESS = 'previousMp3Progress'
 FD.CURRENT_MP3_PROGRESS = 'currentMp3Progress'
 FD.PERCENTAGE = 'percentage'
+FD.PATH_SEPARATOR = '/'
+
+# File Open Actions
+FO = types.SimpleNamespace()
+FO.READ = 'r'
+FO.WRITE_CREATE = 'w+'
+FO.WRITE = 'w'
+FO.COMMENT = '#'
+FO.EQUALS = '='
+FO.NEWLINE = '\n'
