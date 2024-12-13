@@ -122,6 +122,9 @@ class CHOOSE_AUDIOBOOK:
             # UP
             if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute > 0:
                 currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute -= 1
+        elif pressedButton == BUTTONS.HOLD_BUTTON_E:
+            # Hold E -> Back to previous dialog
+            currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
@@ -171,6 +174,11 @@ class AUDIOBOOK_PLAY:
         elif pressedButton == BUTTONS.BUTTON_E:
             print('E - RR - previous track /// back on hold')
             currentDialogContext.actions.put(ACTIONS.PREVIOUS_TRACK)
+        elif pressedButton == BUTTONS.HOLD_BUTTON_E:
+            # Hold E -> Back to previous dialog
+            currentDialogContext.actions.put(ACTIONS.PAUSE)
+            currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
+            
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):

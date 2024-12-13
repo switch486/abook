@@ -14,6 +14,11 @@ PROPERTY_FILE_PATH = './general.properties'
 
 # TODO - HOLD to navigate back!
 
+@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
+def hold_handler_e(button):
+    global heldButton
+    heldButton = BUTTONS.HOLD_BUTTON_E
+
 
 @buttonshim.on_press(buttonshim.BUTTON_A)
 def button_a(button, pressed):
@@ -46,6 +51,7 @@ def button_e(button, pressed):
 
 
 pressedButton = 'null'
+heldButton = 'null'
 
 gui = Gui()
 

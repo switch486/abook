@@ -61,7 +61,6 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=current_time, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
-    currentDialogContext.isPlaying = True
 
 
 def startHttpServer(currentDialogContext):
@@ -73,29 +72,32 @@ def startHttpServer(currentDialogContext):
 def PLAY_PAUSE(currentDialogContext):
     print('play/pause')
     mc = currentDialogContext.chromecast_device.media_controller
-    if currentDialogContext.isPlaying:
+    if mc.status.player_is_playing():
         mc.pause()
-        currentDialogContext.isPlaying = False
     else:
         mc.play()
-        currentDialogContext.isPlaying = True
+
+
+def PAUSE(currentDialogContext):
+    print('pause')
+    mc = currentDialogContext.chromecast_device.media_controller
+    mc.pause()
 
 
 def CHECK_PLAY_STATUS(currentDialogContext):
     print('CHECK_PLAY_STATUS')
     mc = currentDialogContext.chromecast_device.media_controller
-    player_status = mc.status
 
-    if player_status.player_state != MS.PLAYING:
+    if mc.status.player_is_playing():
         # in case idle, add next track
         NEXT_TRACK(currentDialogContext)
 
     else:
-        CURRENT_TRACK(currentDialogContext, player_status)
+        CURRENT_TRACK(currentDialogContext, mc.status.player_status.duration)
 
 
-def CURRENT_TRACK(currentDialogContext, player_status):
-    currentTrackTime = player_status.duration
+def CURRENT_TRACK(currentDialogContext, duration):
+    currentTrackTime = duration
     currentDialogContext.updateTrackCalculateAudiobook(currentTrackTime)
     currentDialogContext.repaintParts.append(
         paintAction.AUDIOBOOK_TIME_NUMBERS)
