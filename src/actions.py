@@ -2,6 +2,7 @@ from constants import SYSTEM_PROPERTIES, MS, PA as paintAction, FD, CONSTANTS
 import chromecast
 import filesystem
 import httpServer
+import socket
 
 
 def LOAD_CAST_DEVICES(currentDialogContext):
@@ -42,13 +43,21 @@ def PLAY_AUDIOBOOK(currentDialogContext):
         currentDialogContext, currentDialogContext.currentlySelectedAudiobook())
 
 
+def getIPOfCurrentMachine():
+    hostname = socket.gethostname()
+    return socket.gethostbyname(hostname)
+
+
 def playPassedAudiobook(currentDialogContext, currentBook):
     mc = currentDialogContext.chromecast_device.media_controller
 
     port = currentDialogContext.systemProperties[
         SYSTEM_PROPERTIES.HTTP_STARTUP_PORT]
 
-    trackUrl = ''.join([CONSTANTS.LOCALHOST_URL_PART, port, CONSTANTS.URL_DIR_SEPARATOR,
+    currentIP = getIPOfCurrentMachine()
+    print('determine current host ip: ' + currentIP)
+
+    trackUrl = ''.join([CONSTANTS.HTTP_STRING, currentIP, CONSTANTS.COLON, port, CONSTANTS.URL_DIR_SEPARATOR,
                        currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.CURRENT_MP3]])
     contentType = CONSTANTS.CONTENT_TYPE
     title = currentBook[FD.FOLDER]
@@ -94,7 +103,7 @@ def CHECK_PLAY_STATUS(currentDialogContext):
         # in case idle, add next track
         NEXT_TRACK(currentDialogContext)
 
-    elif mc.status.player_is_playing :
+    elif mc.status.player_is_playing:
         CURRENT_TRACK(currentDialogContext, mc.status.duration)
 
 
