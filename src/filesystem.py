@@ -18,7 +18,7 @@ def loadPropertyFile(path):
         with open(path, FO.READ) as file:
             for line in file:
                 if line.startswith(FO.COMMENT) or not line.strip():
-                    continue 
+                    continue
                 key, value = line.strip().split(FO.EQUALS, 1)
                 properties[key] = value
     return properties
@@ -77,7 +77,7 @@ def getFolderDetails(rootPath, folder):
         playpointMp3Seconds = progressDetails[CONSTANTS.PROGRESS_SECOND_KEY]
 
     # set startup if no progress
-    if playpointMp3Name == '':
+    if playpointMp3Name == '' and len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
         currentMp3Idx = 0
     else:
