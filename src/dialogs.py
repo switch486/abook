@@ -98,9 +98,9 @@ class CHOOSE_CAST:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.chromecastDevices,
             currentDialogContext.menu_chooseCast_CursorLocationAbsolute)
-        self.lcd.write(1, 0, ''.join(castOptionRows[0]))
-        self.lcd.write(2, 0, ''.join(castOptionRows[1]))
-        self.lcd.write(3, 0, ''.join(castOptionRows[2]))
+        self.lcd.write(1, 0, ''.join(castOptionRows[0]), 20)
+        self.lcd.write(2, 0, ''.join(castOptionRows[1]), 20)
+        self.lcd.write(3, 0, ''.join(castOptionRows[2]), 20)
         currentDialogContext.clearRepaintParts()
 
 
