@@ -61,7 +61,7 @@ class WELCOME:
         self.lcd.writeHeader(
             '* Welcome to abook *\n\rthe audiobook reader\n\n\r')
         self.lcd.write(4, 3, 'press any key...', 16)
-        self.lcd.clearRepaintParts()
+        currentDialogContext.clearRepaintParts()
 
 
 class CHOOSE_CAST:
@@ -101,7 +101,7 @@ class CHOOSE_CAST:
         self.lcd.write(1, 0, ''.join(castOptionRows[0]))
         self.lcd.write(2, 0, ''.join(castOptionRows[1]))
         self.lcd.write(3, 0, ''.join(castOptionRows[2]))
-        self.lcd.clearRepaintParts()
+        currentDialogContext.clearRepaintParts()
 
 
 class CHOOSE_AUDIOBOOK:
@@ -150,7 +150,7 @@ class CHOOSE_AUDIOBOOK:
         # percentage
         self.lcd.write(3, 17, castOptionRows[2][1][FD.PERCENTAGE], 3)
 
-        self.lcd.clearRepaintParts()
+        currentDialogContext.clearRepaintParts()
 
 
 class AUDIOBOOK_PLAY:
@@ -178,7 +178,7 @@ class AUDIOBOOK_PLAY:
             # Hold E -> Back to previous dialog
             currentDialogContext.actions.put(ACTIONS.PAUSE)
             currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
-            
+
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
@@ -221,6 +221,6 @@ class AUDIOBOOK_PLAY:
 
             self.lcd.write(3, 7, timeStatus, 13)
 
-        self.lcd.clearRepaintParts()
+        currentDialogContext.clearRepaintParts()
 
         currentDialogContext.actions.put(ACTIONS.CHECK_PLAY_STATUS)
