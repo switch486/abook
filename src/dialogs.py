@@ -22,8 +22,8 @@ def formatPercentage3(string):
     return f"{number:02}%"
 
 
-def shouldPaint(paintAction, currentDialogContext):
-    return paintAction in currentDialogContext.repaintParts or paintAction.ALL in currentDialogContext.repaintParts
+def shouldPaint(actionValue, currentDialogContext):
+    return actionValue in currentDialogContext.repaintParts or paintAction.ALL in currentDialogContext.repaintParts
 
 
 def getViewportListFormatted(list, selectedIndex):
