@@ -46,9 +46,11 @@ def PLAY_AUDIOBOOK(currentDialogContext):
 def getIPOfCurrentMachine():
     local_hostname = socket.gethostname()
     ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
-    filtered_ips = [ip for ip in ip_addresses if not ip.startswith("127.")]
+    filtered_ips = [ip for ip in ip_addresses if not ip.startswith(
+        "127.") and not ip.startswith("local")]
     first_ip = filtered_ips[:1]
-    return first_ip
+    print(first_ip)
+    return first_ip[0]
 
 
 def playPassedAudiobook(currentDialogContext, currentBook):
