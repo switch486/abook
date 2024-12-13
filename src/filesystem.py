@@ -74,7 +74,7 @@ def getFolderDetails(rootPath, folder):
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
         playpointMp3Name = progressDetails[CONSTANTS.PROGRESS_MP3_KEY]
-        playpointMp3Seconds = progressDetails[CONSTANTS.PROGRESS_SECOND_KEY]
+        playpointMp3Seconds = int(progressDetails[CONSTANTS.PROGRESS_SECOND_KEY])
 
     # set startup if no progress
     currentMp3Idx = 0
