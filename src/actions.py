@@ -49,7 +49,7 @@ def getIPOfCurrentMachine():
     ipAddress = popen(
         'ip -f inet addr show wlan0 | grep -Po \'inet \K[\d.]+\'').read()
     print('IP ADDRESS: ' + ipAddress)
-    return ipAddress
+    return ipAddress.strip()
 
 
 def playPassedAudiobook(currentDialogContext, currentBook):
