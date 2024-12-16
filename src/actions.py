@@ -3,6 +3,7 @@ import chromecast
 import filesystem
 import httpServer
 import socket
+from os import popen
 
 
 def LOAD_CAST_DEVICES(currentDialogContext):
@@ -44,13 +45,11 @@ def PLAY_AUDIOBOOK(currentDialogContext):
 
 
 def getIPOfCurrentMachine():
-    local_hostname = socket.gethostname()
-    ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
-    filtered_ips = [ip for ip in ip_addresses if not ip.startswith(
-        "127.") and not ip.startswith("local")]
-    first_ip = filtered_ips[:1]
-    print(first_ip)
-    return first_ip[0]
+    # TODO - assumes WIFI and that it is connected to one
+    ipAddress = popen(
+        'ip -f inet addr show wlan0 | grep -Po \'inet \K[\d.]+\'').read()
+    print('IP ADDRESS: ' + ipAddress)
+    return ipAddress
 
 
 def playPassedAudiobook(currentDialogContext, currentBook):
@@ -60,7 +59,6 @@ def playPassedAudiobook(currentDialogContext, currentBook):
         SYSTEM_PROPERTIES.HTTP_STARTUP_PORT]
 
     currentIP = getIPOfCurrentMachine()
-    print('determine current host ip: ' + currentIP)
 
     trackUrl = ''.join([CONSTANTS.HTTP_STRING, currentIP, CONSTANTS.COLON, port, CONSTANTS.URL_DIR_SEPARATOR,
                        currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.CURRENT_MP3]])
