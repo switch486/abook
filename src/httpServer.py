@@ -5,10 +5,10 @@ from functools import partial
 from os.path import abspath
 
 
-def launchHttpServerInDirectory(port, path):
+def launchHttpServerInDirectory(hostIP, port, path):
     print('Launch HTTP Server for localhost and port:' +
           port + ' and path: ' + path)
-    httpd, thread = ServeDirectoryWithHTTP(path, int(port))
+    httpd, thread = ServeDirectoryWithHTTP(hostIP, path, int(port))
     return httpd
 
 
@@ -16,9 +16,9 @@ def stopHttpServer(httpd):
     httpd.shutdown()
 
 
-def ServeDirectoryWithHTTP(directory=".", port=9000):
+def ServeDirectoryWithHTTP(machineIP='localhost', directory=".", port=9000):
 
-    hostname = "localhost"
+    hostname = machineIP
     directory = abspath(directory)
     handler = partial(_SimpleRequestHandler, directory=directory)
     httpd = http.server.HTTPServer((hostname, port), handler, False)

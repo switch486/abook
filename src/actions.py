@@ -79,8 +79,10 @@ def playPassedAudiobook(currentDialogContext, currentBook):
 
 def startHttpServer(currentDialogContext):
     print('Start HTTP Server')
-    currentDialogContext.httpServer = httpServer.launchHttpServerInDirectory(currentDialogContext.systemProperties[
-        SYSTEM_PROPERTIES.HTTP_STARTUP_PORT], currentDialogContext.currentRootPath)
+    currentDialogContext.httpServer = httpServer.launchHttpServerInDirectory(
+        getIPOfCurrentMachine(),
+        currentDialogContext.systemProperties[SYSTEM_PROPERTIES.HTTP_STARTUP_PORT],
+        currentDialogContext.currentRootPath)
 
 
 def PLAY_PAUSE(currentDialogContext):
