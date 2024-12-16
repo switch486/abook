@@ -33,6 +33,9 @@ def updateSystemProperty(currentDialogContext, key, new_value):
 
 
 def updatePropertyFile(path, key1, new_value1, key2, new_value2):
+    print('progress file: ' + path)
+    print(f'{key1}{FO.EQUALS}{new_value1}')
+    print(f'{key2}{FO.EQUALS}{new_value2}')
     properties = {}
     if os.path.isfile(path):
         properties = loadPropertyFile(path)
@@ -74,13 +77,14 @@ def getFolderDetails(rootPath, folder):
     if progressFile != None:
         progressDetails = loadPropertyFile(join(joinedPath, progressFile))
         playpointMp3Name = progressDetails[CONSTANTS.PROGRESS_MP3_KEY]
-        playpointMp3Seconds = int(progressDetails[CONSTANTS.PROGRESS_SECOND_KEY])
+        playpointMp3Seconds = int(
+            progressDetails[CONSTANTS.PROGRESS_SECOND_KEY])
 
     # set startup if no progress
     currentMp3Idx = 0
     if playpointMp3Name == '' and len(mp3Files) > 0:
         playpointMp3Name = mp3Files[0]
-    elif len(mp3Files) > 0 :
+    elif len(mp3Files) > 0:
         currentMp3Idx = mp3Files.index(playpointMp3Name)
 
     # mp3 durations

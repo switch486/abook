@@ -102,8 +102,6 @@ def PAUSE(currentDialogContext):
 def CHECK_PLAY_STATUS(currentDialogContext):
     print('CHECK_PLAY_STATUS')
     mc = currentDialogContext.chromecast_device.media_controller
-    print('status: ')
-    print(mc.status)
 
     if not mc.status.player_is_playing:
         # in case idle, add next track
