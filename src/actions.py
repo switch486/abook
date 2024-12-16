@@ -74,7 +74,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=current_time, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
-    time.sleep(3)
+    time.sleep(33)
 
 
 def startHttpServer(currentDialogContext):
