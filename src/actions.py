@@ -74,7 +74,6 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=current_time, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
-    time.sleep(33)
 
 
 def startHttpServer(currentDialogContext):
@@ -111,7 +110,7 @@ def CHECK_PLAY_STATUS(currentDialogContext):
         NEXT_TRACK(currentDialogContext)
 
     elif mc.status.player_is_playing:
-        CURRENT_TRACK(currentDialogContext, mc.status.duration)
+        CURRENT_TRACK(currentDialogContext, mc.status.adjusted_current_time)
 
 
 def CURRENT_TRACK(currentDialogContext, duration):
