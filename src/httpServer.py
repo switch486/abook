@@ -19,7 +19,6 @@ def stopHttpServer(httpd):
 def ServeDirectoryWithHTTP(directory=".", port=9000):
 
     hostname = "localhost"
-    port = 0
     directory = abspath(directory)
     handler = partial(_SimpleRequestHandler, directory=directory)
     httpd = http.server.HTTPServer((hostname, port), handler, False)
