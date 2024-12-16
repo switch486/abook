@@ -42,3 +42,13 @@ TBD
 ## select audiobook - TBD
 ## playback manipulations - TBD
 
+
+# MVP TODOs:
+- back into audiobook from playback possible
+- tests
+-- startup from middle of the track
+- pause audiobook on back
+- audiobook sorting
+- update last cast device
+- select media?!
+- only media in usb?!
