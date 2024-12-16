@@ -4,6 +4,7 @@ import filesystem
 import httpServer
 import socket
 from os import popen
+import time
 
 
 def LOAD_CAST_DEVICES(currentDialogContext):
@@ -73,6 +74,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=current_time, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
+    time.sleep(3)
 
 
 def startHttpServer(currentDialogContext):
