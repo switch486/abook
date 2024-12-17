@@ -49,5 +49,6 @@ TBD
 - TEST: pause audiobook on back
 - TEST: audiobook sorting
 - TEST: update last cast device
-- select media?!
+- TEST: select media?!
+- TEST: Volume selection
 - shortcut for the last used configurations?

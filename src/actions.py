@@ -145,8 +145,12 @@ def PREVIOUS_TRACK(currentDialogContext):
 
 
 def saveAudiobookProgress(currentDialogContext):
-    print('Save Progress of Audiobook')
-    filesystem.saveProgress(currentDialogContext)
+    if currentDialogContext.progressSaveEveryXPaints <= currentDialogContext.progressSaveCounter:
+        print('Save Progress of Audiobook')
+        currentDialogContext.progressSaveCounter = 0
+        filesystem.saveProgress(currentDialogContext)
+    else:
+        currentDialogContext.progressSaveCounter += 1
 
 
 def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):

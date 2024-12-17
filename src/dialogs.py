@@ -1,6 +1,7 @@
-from constants import BUTTONS, PA as paintAction, FD
+from constants import BUTTONS, PA as paintAction, FD, SYSTEM_PROPERTIES
 import actions as ACTIONS
 from os.path import join
+from pathlib import PurePosixPath
 
 # BUTTONS                  E   D    C    B    A
 # Headers
@@ -132,15 +133,21 @@ class CHOOSE_AUDIOBOOK:
                 currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute -= 1
         elif pressedButton == BUTTONS.HOLD_BUTTON_E:
             # Hold E -> Back to previous dialog
-            #TODO - reimplement
-            # if current folder == default folder - navigate to Choose Cast?
-            
-            # if current folder <> default folder - navigate UP in the folder hierarchy?
-            currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
+            defaultPath = currentDialogContext.systemProperties[
+                SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER]
+            currentPath = currentDialogContext.currentRootPath
+            if defaultPath == currentPath:
+                # we are at root, change dialog
+                currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
+            else:
+                # we are not at root, navigate up in the folder structure
+                currentDialogContext.currentRootPath = PurePosixPath(
+                    currentPath).parent.as_posix()
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
-        print('Dialog: Choose Audiobook ')
+        print('Dialog: Choose Audiobook at: ' +
+              currentDialogContext.currentRootPath)
         self.lcd.clear()
         self.lcd.writeHeader(CHOOSE_AUDIOBOOK_HEADER)
         castOptionRows = getViewportListFormatted(

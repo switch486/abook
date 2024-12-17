@@ -27,6 +27,9 @@ class DialogContext:
 
     # repaint fields in the dialog, handled by its own dialog and cleared after repaint.
     repaintParts = []
+    
+    progressSaveEveryXPaints = 10 # about 5 seconds
+    progressSaveCounter = 0
 
     def clearRepaintParts(self):
         self.repaintParts = []

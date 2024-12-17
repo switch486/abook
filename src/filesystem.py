@@ -126,9 +126,14 @@ def loadAudiobooks(currentDialogContext):
     if currentDialogContext.currentRootPath == '':
         currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
             SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
+        print('start with last audiobook folder :' +
+              currentDialogContext.currentRootPath)
+    if not isdir(currentDialogContext.currentRootPath):
+        currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
+            SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER]
+        print('last audiobook folder is missing, reset to default :' +
+              currentDialogContext.currentRootPath)
 
-    # TODO reimplement
-    # if last directory does not exist - select default
     print('read audiobooks from: ' + currentDialogContext.currentRootPath)
 
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
@@ -138,7 +143,6 @@ def loadAudiobooks(currentDialogContext):
 
 def saveProgress(currentDialogContext):
     currentBook = currentDialogContext.currentlySelectedAudiobook()
-    print('progress save')
     progressFilePath = currentDialogContext.getCurrentAudiobookProgressFilePath()
 
     updatePropertyFile(progressFilePath,
@@ -153,9 +157,10 @@ def sortFolderList(folderListToBeSorted):
         if folder1[FD.PERCENTAGE] > folder2[FD.PERCENTAGE]:
             return 1
         if folder1[FD.PERCENTAGE] == folder2[FD.PERCENTAGE]:
-            # TODO - filename also to be considered - alphabetically
             f1Len = len(folder1[FD.MP3_FILES])
             f2Len = len(folder2[FD.MP3_FILES])
+            if f1Len == f2Len:
+                return folder1[FD.FOLDER] > folder1[FD.FOLDER]
             return f1Len - f2Len
         return -1
 
