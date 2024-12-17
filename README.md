@@ -44,11 +44,10 @@ TBD
 
 
 # MVP TODOs:
-- back into audiobook from playback possible
-- tests
--- startup from middle of the track
-- pause audiobook on back
-- audiobook sorting
-- update last cast device
+- TEST: back into audiobook from playback possible
+- TEST: startup from middle of the track
+- TEST: pause audiobook on back
+- TEST: audiobook sorting
+- TEST: update last cast device
 - select media?!
-- only media in usb?!
+- shortcut for the last used configurations?

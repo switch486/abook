@@ -134,21 +134,25 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
+        # TODO do not show percentage on folders without MP3s
 
         self.lcd.write(1, 0, castOptionRows[0][0], 2)  # selectionMarker
         self.lcd.write(1, 2, castOptionRows[0][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(1, 17, castOptionRows[0][1][FD.PERCENTAGE], 3)
+        self.lcd.write(1, 17, formatPercentage3(
+            castOptionRows[0][1][FD.PERCENTAGE]), 3)
 
         self.lcd.write(2, 0, castOptionRows[1][0], 2)  # selectionMarker
         self.lcd.write(2, 2, castOptionRows[1][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(2, 17, castOptionRows[1][1][FD.PERCENTAGE], 3)
+        self.lcd.write(2, 17, formatPercentage3(
+            castOptionRows[1][1][FD.PERCENTAGE]), 3)
 
         self.lcd.write(3, 0, castOptionRows[2][0], 2)  # selectionMarker
         self.lcd.write(3, 2, castOptionRows[2][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(3, 17, castOptionRows[2][1][FD.PERCENTAGE], 3)
+        self.lcd.write(3, 17, formatPercentage3(
+            castOptionRows[2][1][FD.PERCENTAGE]), 3)
 
         currentDialogContext.clearRepaintParts()
 

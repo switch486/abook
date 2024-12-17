@@ -150,3 +150,9 @@ def PREVIOUS_TRACK(currentDialogContext):
 def saveAudiobookProgress(currentDialogContext):
     print('Save Progress of Audiobook')
     filesystem.saveProgress(currentDialogContext)
+
+
+def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
+    print('Update last cast device to: ' + deviceName)
+    filesystem.updateSystemProperty(
+        currentDialogContext, SYSTEM_PROPERTIES.LAST_CAST_DEVICE, deviceName)

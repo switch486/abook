@@ -3,8 +3,9 @@ from constants import SYSTEM_PROPERTIES, CONSTANTS, FD, FO
 from os import listdir, popen
 from os.path import isdir, isfile, join, expanduser
 from calculator import calculateTimes
+import functools
 
-# TODO load property files for last cast device, volume settings
+# TODO load property files for volume settings?
 
 
 def loadSystemProperties(currentDialogContext):
@@ -122,13 +123,18 @@ def computeFolders(rootPath):
 
 
 def loadAudiobooks(currentDialogContext):
+    #TODO - implement again
+    # start at the last audiobook location 
+    ## if not present, start at default
+    ## if present, continue
+    # 
+    # allow to move in and out to the directories
     rootPath = currentDialogContext.systemProperties[
         SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
     print('read audiobooks from: ' + rootPath)
 
     currentDialogContext.folderDetails[rootPath] = computeFolders(rootPath)
-    # TODO - sorting based on percentage
-    # currentDialogContext.folderDetails[rootPath].sort() - sorting!
+    sortFolderList(currentDialogContext.folderDetails[rootPath])
     currentDialogContext.currentRootPath = rootPath
 
 
@@ -142,3 +148,16 @@ def saveProgress(currentDialogContext):
                        currentBook[FD.CURRENT_MP3],
                        CONSTANTS.PROGRESS_SECOND_KEY,
                        currentBook[FD.CURRENT_MP3_PROGRESS])
+    
+def sortFolderList(folderListToBeSorted):
+    def compare(folder1, folder2):
+        if folder1[FD.PERCENTAGE] > folder2[FD.PERCENTAGE]:
+            return 1
+        if folder1[FD.PERCENTAGE] == folder2[FD.PERCENTAGE]:
+            # TODO - filename also to be considered!
+            f1Len = len(folder1[FD.MP3_FILES])
+            f2Len = len(folder2[FD.MP3_FILES])
+            return f1Len - f2Len
+        return -1
+
+    sorted(folderListToBeSorted, key=functools.cmp_to_key(compare))
