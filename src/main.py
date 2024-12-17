@@ -12,7 +12,6 @@ from constants import BUTTONS
 # default property file path
 PROPERTY_FILE_PATH = './general.properties'
 
-# TODO - HOLD to navigate back!
 
 @buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
 def hold_handler_e(button):

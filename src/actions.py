@@ -2,9 +2,7 @@ from constants import SYSTEM_PROPERTIES, MS, PA as paintAction, FD, CONSTANTS
 import chromecast
 import filesystem
 import httpServer
-import socket
 from os import popen
-import time
 
 
 def LOAD_CAST_DEVICES(currentDialogContext):
@@ -46,7 +44,6 @@ def PLAY_AUDIOBOOK(currentDialogContext):
 
 
 def getIPOfCurrentMachine():
-    # TODO - assumes WIFI and that it is connected to one
     ipAddress = popen(
         'ip -f inet addr show wlan0 | grep -Po \'inet \K[\d.]+\'').read()
     print('IP ADDRESS: ' + ipAddress)

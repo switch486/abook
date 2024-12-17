@@ -1,5 +1,6 @@
 from constants import BUTTONS, PA as paintAction, FD
 import actions as ACTIONS
+from os.path import join
 
 # BUTTONS                  E   D    C    B    A
 # Headers
@@ -111,9 +112,16 @@ class CHOOSE_AUDIOBOOK:
     def handleButton(self, currentDialogContext, pressedButton):
         print('ChooseAudiobook ' + pressedButton)
         if pressedButton == BUTTONS.BUTTON_A:
-            # play audiobook
-            currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
-            currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
+            book = currentDialogContext.currentlySelectedAudiobook()
+            if len(book[FD.MP3_FILES]) > 0:
+                # if audiobook selected - play
+                currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
+                currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
+            else:
+                # if folder selected - load audiobooks in it
+                currentDialogContext.currentRootPath = join(
+                    currentDialogContext.currentRootPath, book[FD.FOLDER])
+                currentDialogContext.actions.put(ACTIONS.LOAD_AUDIOBOOKS)
         elif pressedButton == BUTTONS.BUTTON_D:
             # DOWN
             if currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute < len(currentDialogContext.currentFolderDetails())-1:
@@ -124,6 +132,10 @@ class CHOOSE_AUDIOBOOK:
                 currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute -= 1
         elif pressedButton == BUTTONS.HOLD_BUTTON_E:
             # Hold E -> Back to previous dialog
+            #TODO - reimplement
+            # if current folder == default folder - navigate to Choose Cast?
+            
+            # if current folder <> default folder - navigate UP in the folder hierarchy?
             currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
         return currentDialogContext
 
@@ -134,25 +146,27 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        # TODO do not show percentage on folders without MP3s
 
         self.lcd.write(1, 0, castOptionRows[0][0], 2)  # selectionMarker
         self.lcd.write(1, 2, castOptionRows[0][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(1, 17, formatPercentage3(
-            castOptionRows[0][1][FD.PERCENTAGE]), 3)
+        if len(castOptionRows[0][1][FD.MP3_FILES]) > 0:
+            self.lcd.write(1, 17, formatPercentage3(
+                castOptionRows[0][1][FD.PERCENTAGE]), 3)
 
         self.lcd.write(2, 0, castOptionRows[1][0], 2)  # selectionMarker
         self.lcd.write(2, 2, castOptionRows[1][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(2, 17, formatPercentage3(
-            castOptionRows[1][1][FD.PERCENTAGE]), 3)
+        if len(castOptionRows[1][1][FD.MP3_FILES]) > 0:
+            self.lcd.write(2, 17, formatPercentage3(
+                castOptionRows[1][1][FD.PERCENTAGE]), 3)
 
         self.lcd.write(3, 0, castOptionRows[2][0], 2)  # selectionMarker
         self.lcd.write(3, 2, castOptionRows[2][1][FD.FOLDER], 15)  # folderName
         # percentage
-        self.lcd.write(3, 17, formatPercentage3(
-            castOptionRows[2][1][FD.PERCENTAGE]), 3)
+        if len(castOptionRows[2][1][FD.MP3_FILES]) > 0:
+            self.lcd.write(3, 17, formatPercentage3(
+                castOptionRows[2][1][FD.PERCENTAGE]), 3)
 
         currentDialogContext.clearRepaintParts()
 
@@ -187,7 +201,7 @@ class AUDIOBOOK_PLAY:
 
     def displayDialog(self, currentDialogContext):
         print('Dialog: Play Audiobook ')
-        # TODO - painting should be animated:
+        # TODO V2 - painting should be animated:
         # -- scroll titles / folders if they are too long
         # -- switch between track time / total time
         # -- add easteregg?

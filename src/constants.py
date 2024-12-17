@@ -15,6 +15,7 @@ BUTTONS.HOLD_BUTTON_E = 'HOLD_BUTTON_E'
 SYSTEM_PROPERTIES = types.SimpleNamespace()
 SYSTEM_PROPERTIES.LAST_CAST_DEVICE = 'last-cast-device'
 SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER = 'last-audiobook-root-folder'
+SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER = 'default-audiobook-root-folder'
 SYSTEM_PROPERTIES.HTTP_STARTUP_PORT = 'http-startup-port'
 
 # Play audiobook partial paint actions
