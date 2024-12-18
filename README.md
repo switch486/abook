@@ -18,7 +18,7 @@ TBD
 ## SW installation
 
 - RPI
-- internet
+- internet - WIFI
 - SSH? i2c?
 - python
 - python libs
@@ -38,10 +38,9 @@ TBD
 # Supported Use Cases within abook
 
 ## select cast device - TBD
-## select wifi - TBD
+## folder structure jumping around - TBD
 ## select audiobook - TBD
 ## playback manipulations - TBD
-
 
 # MVP TODOs:
 - TEST: back into audiobook from playback possible
@@ -51,4 +50,5 @@ TBD
 - TEST: update last cast device
 - TEST: select media?!
 - TEST: Volume selection
-- shortcut for the last used configurations?
+- TEST: write logs to a file
+- TODO V2 shortcut for the last used configurations?

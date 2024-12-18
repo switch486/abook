@@ -207,6 +207,11 @@ class AUDIOBOOK_PLAY:
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
+        mc = currentDialogContext.chromecast_device.media_controller
+        if not mc.status.player_is_playing:
+            print('Dialog: Play Audiobook - paused')
+            return
+
         print('Dialog: Play Audiobook ')
         # TODO V2 - painting should be animated:
         # -- scroll titles / folders if they are too long
