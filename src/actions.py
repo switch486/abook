@@ -22,6 +22,11 @@ def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     chromecast.connectToCastDevice(currentDialogContext)
 
 
+def LOAD_SINGLE_AUDIOBOOK_DETAILS(currentDialogContext):
+    print('LOAD_SINGLE_AUDIOBOOK_DETAILS')
+    filesystem.loadSingleAudiobookDetails(currentDialogContext)
+
+
 def LOAD_AUDIOBOOKS(currentDialogContext):
     print('LOAD_AUDIOBOOKS')
     filesystem.loadAudiobooks(currentDialogContext)
@@ -157,3 +162,10 @@ def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
     print('Update last cast device to: ' + deviceName)
     filesystem.updateSystemProperty(
         currentDialogContext, SYSTEM_PROPERTIES.LAST_CAST_DEVICE, deviceName)
+    
+def UPDATE_LAST_PLAYED_AUDIOBOOK(currentDialogContext):
+    print('Update last played audiobook: ' + currentDialogContext)
+    filesystem.updateSystemProperty(
+        currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, currentDialogContext.currentRootPath)
+    filesystem.updateSystemProperty(
+        currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY, currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])

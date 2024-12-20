@@ -53,16 +53,33 @@ class WELCOME:
 
     def handleButton(self, currentDialogContext, pressedButton):
         print('Handle Button ' + pressedButton)
-        # any button navigates further
-        currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
+        if pressedButton == BUTTONS.BUTTON_A:
+            print('short circuit logic - last audiobook')
+            currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[
+                SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
+            currentDialogContext.actions.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
+            currentDialogContext.actions.put(
+                ACTIONS.LOAD_SINGLE_AUDIOBOOK_DETAILS)
+            currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
+            currentDialogContext.actions.put(ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
+
+        else:
+            print('standard navigation case')
+            currentDialogContext.currentDialog = CHOOSE_CAST(self.lcd)
         return currentDialogContext
 
     def displayDialog(self, currentDialogContext):
         print('Dialog: Welcome ')
         self.lcd.clear()
-        self.lcd.writeHeader(
-            '* Welcome to abook *\n\rthe audiobook reader\n\n\r')
-        self.lcd.write(3, 4, 'press any key...', 16)
+        lastAudiobookFolder = currentDialogContext.systemProperties[
+            SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER]
+
+        self.lcd.write(1, 0, '-OK-', 4)
+        if lastAudiobookFolder is not None:
+            self.lcd.write(1, 11, '-RESUME-', 8)
+        self.lcd.write(1, 0, '* Welcome to abook *', 20)
+        self.lcd.write(2, 0, 'the audiobook reader', 20)
+        self.lcd.write(3, 0, 'Select option above^', 20)
         currentDialogContext.clearRepaintParts()
 
 
@@ -118,6 +135,7 @@ class CHOOSE_AUDIOBOOK:
                 # if audiobook selected - play
                 currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
                 currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
+                currentDialogContext.actions.put(ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
             else:
                 # if folder selected - load audiobooks in it
                 currentDialogContext.currentRootPath = join(

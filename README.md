@@ -51,4 +51,4 @@ TBD
 - TEST: select media?!
 - TEST: Volume selection
 - TEST: write logs to a file
-- TODO V2 shortcut for the last used configurations?
+- TEST: shortcut for the last used configurations?

@@ -139,6 +139,17 @@ def loadAudiobooks(currentDialogContext):
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
         currentDialogContext.currentRootPath)
     sortFolderList(currentDialogContext.currentFolderDetails())
+    
+    
+
+def loadSingleAudiobookDetails(currentDialogContext):
+    currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
+            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
+    directory = currentDialogContext.systemProperties[
+            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY]
+    print('read single audiobook from: ' + currentDialogContext.currentRootPath + ' at: '+ directory)
+
+    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = [getFolderDetails(currentDialogContext.currentRootPath, directory)]
 
 
 def saveProgress(currentDialogContext):
