@@ -180,7 +180,7 @@ class CHOOSE_AUDIOBOOK:
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
         
-        for index in range(3):
+        for index in range(len(castOptionRows)):
             i=index + 1
             self.lcd.write(i, 0, castOptionRows[index][0], 2)  # selectionMarker
             self.lcd.write(i, 2, castOptionRows[index][1][FD.FOLDER], 15)  # folderName
