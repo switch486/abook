@@ -44,11 +44,7 @@ TBD
 
 # MVP TODOs:
 - TEST: back into audiobook from playback possible
-- TEST: startup from middle of the track
 - TEST: pause audiobook on back
 - TEST: audiobook sorting
 - TEST: update last cast device
-- TEST: select media?!
-- TEST: Volume selection
-- TEST: write logs to a file
 - TEST: shortcut for the last used configurations?
