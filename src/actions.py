@@ -164,7 +164,7 @@ def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
         currentDialogContext, SYSTEM_PROPERTIES.LAST_CAST_DEVICE, deviceName)
     
 def UPDATE_LAST_PLAYED_AUDIOBOOK(currentDialogContext):
-    print('Update last played audiobook: ' + currentDialogContext)
+    print('Update last played audiobook: ' + currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])
     filesystem.updateSystemProperty(
         currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, currentDialogContext.currentRootPath)
     filesystem.updateSystemProperty(
