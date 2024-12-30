@@ -123,6 +123,7 @@ def computeFolders(rootPath):
 
 
 def loadAudiobooks(currentDialogContext):
+    print(">> current root path: " + currentDialogContext.currentRootPath)
     if currentDialogContext.currentRootPath == '':
         currentDialogContext.currentRootPath = currentDialogContext.systemProperties.get(
             SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, "")
@@ -134,7 +135,7 @@ def loadAudiobooks(currentDialogContext):
         print('last audiobook folder is missing, reset to default :' +
               currentDialogContext.currentRootPath)
 
-    print('read audiobooks from: ' + currentDialogContext.currentRootPath)
+    print('>> read audiobooks from: ' + currentDialogContext.currentRootPath)
 
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
         currentDialogContext.currentRootPath)
