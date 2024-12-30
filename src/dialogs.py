@@ -39,11 +39,17 @@ def getViewportListFormatted(list, selectedIndex):
         endIndex = selectedIndex
         startIndex = endIndex - 2
 
-    return [
-        [selectionIndicator(startIndex, selectedIndex), list[startIndex]],
-        [selectionIndicator(startIndex + 1, selectedIndex),
-         list[startIndex + 1]],
-        [selectionIndicator(startIndex + 2, selectedIndex), list[startIndex + 2]]]
+    result = [
+        [selectionIndicator(startIndex, selectedIndex), list[startIndex]]]
+
+    if len(list) > startIndex + 1:
+        result.append([selectionIndicator(startIndex + 1, selectedIndex),
+                       list[startIndex + 1]])
+    if len(list) > startIndex + 2:
+        result.append([selectionIndicator(startIndex + 2, selectedIndex),
+                       list[startIndex + 2]])
+
+    return result
 
 
 class WELCOME:
@@ -61,7 +67,8 @@ class WELCOME:
             currentDialogContext.actions.put(
                 ACTIONS.LOAD_SINGLE_AUDIOBOOK_DETAILS)
             currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
-            currentDialogContext.actions.put(ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
+            currentDialogContext.actions.put(
+                ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
 
         else:
             print('standard navigation case')
@@ -135,7 +142,8 @@ class CHOOSE_AUDIOBOOK:
                 # if audiobook selected - play
                 currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
                 currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
-                currentDialogContext.actions.put(ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
+                currentDialogContext.actions.put(
+                    ACTIONS.UPDATE_LAST_PLAYED_AUDIOBOOK)
             else:
                 # if folder selected - load audiobooks in it
                 currentDialogContext.currentRootPath = join(
