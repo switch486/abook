@@ -74,9 +74,9 @@ class WELCOME:
         lastAudiobookFolder = currentDialogContext.systemProperties[
             SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER]
 
-        self.lcd.write(1, 0, '-OK-', 4)
+        self.lcd.write(0, 0, '-OK-', 4)
         if lastAudiobookFolder is not None:
-            self.lcd.write(1, 11, '-RESUME-', 8)
+            self.lcd.write(0, 11, '-RESUME-', 8)
         self.lcd.write(1, 0, '* Welcome to abook *', 20)
         self.lcd.write(2, 0, 'the audiobook reader', 20)
         self.lcd.write(3, 0, 'Select option above^', 20)
