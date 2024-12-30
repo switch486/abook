@@ -138,6 +138,7 @@ class CHOOSE_AUDIOBOOK:
         print('ChooseAudiobook ' + pressedButton)
         if pressedButton == BUTTONS.BUTTON_A:
             book = currentDialogContext.currentlySelectedAudiobook()
+            print(book)
             if len(book[FD.MP3_FILES]) > 0:
                 # if audiobook selected - play
                 currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)

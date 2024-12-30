@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Python environment set"
+
+source ~/Desktop/abook/venv/bin/activate
+
+echo "launch app"
+
+python src/main.py
