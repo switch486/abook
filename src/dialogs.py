@@ -15,10 +15,6 @@ def selectionIndicator(startIndex, selectedIndex):
     return '> ' if startIndex == selectedIndex else '  '
 
 
-def join(str1, str2, str3='', str4=''):
-    return ''.join([str1, str2, str3, str4])
-
-
 def formatPercentage3(string):
     number = int(string)
     return f"{number:02}%"
@@ -181,11 +177,13 @@ class CHOOSE_AUDIOBOOK:
         castOptionRows = getViewportListFormatted(
             currentDialogContext.currentFolderDetails(),
             currentDialogContext.menu_chooseAudiobook_CursorLocationAbsolute)
-        
+
         for index in range(len(castOptionRows)):
-            i=index + 1
-            self.lcd.write(i, 0, castOptionRows[index][0], 2)  # selectionMarker
-            self.lcd.write(i, 2, castOptionRows[index][1][FD.FOLDER], 15)  # folderName
+            i = index + 1
+            # selectionMarker
+            self.lcd.write(i, 0, castOptionRows[index][0], 2)
+            # folderName
+            self.lcd.write(i, 2, castOptionRows[index][1][FD.FOLDER], 15)
             # percentage
             if len(castOptionRows[index][1][FD.MP3_FILES]) > 0:
                 self.lcd.write(i, 17, formatPercentage3(
