@@ -124,13 +124,13 @@ def computeFolders(rootPath):
 
 def loadAudiobooks(currentDialogContext):
     if currentDialogContext.currentRootPath == '':
-        currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
-            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
+        currentDialogContext.currentRootPath = currentDialogContext.systemProperties.get(
+            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, "")
         print('start with last audiobook folder :' +
               currentDialogContext.currentRootPath)
     if not isdir(currentDialogContext.currentRootPath):
-        currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
-            SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER]
+        currentDialogContext.currentRootPath = currentDialogContext.systemProperties.get(
+            SYSTEM_PROPERTIES.DEFAULT_AUDIOBOOK_ROOT_FOLDER, "")
         print('last audiobook folder is missing, reset to default :' +
               currentDialogContext.currentRootPath)
 
@@ -139,17 +139,18 @@ def loadAudiobooks(currentDialogContext):
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
         currentDialogContext.currentRootPath)
     sortFolderList(currentDialogContext.currentFolderDetails())
-    
-    
+
 
 def loadSingleAudiobookDetails(currentDialogContext):
     currentDialogContext.currentRootPath = currentDialogContext.systemProperties[
-            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
+        SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER]
     directory = currentDialogContext.systemProperties[
-            SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY]
-    print('read single audiobook from: ' + currentDialogContext.currentRootPath + ' at: '+ directory)
+        SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY]
+    print('read single audiobook from: ' +
+          currentDialogContext.currentRootPath + ' at: ' + directory)
 
-    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = [getFolderDetails(currentDialogContext.currentRootPath, directory)]
+    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = [
+        getFolderDetails(currentDialogContext.currentRootPath, directory)]
 
 
 def saveProgress(currentDialogContext):
