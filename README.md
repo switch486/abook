@@ -42,5 +42,3 @@ TBD
 ## select audiobook - TBD
 ## playback manipulations - TBD
 
-# MVP TODOs:
-- TEST: shortcut for the last used configurations?
