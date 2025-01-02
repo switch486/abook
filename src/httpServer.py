@@ -8,8 +8,7 @@ from os.path import abspath
 def launchHttpServerInDirectory(hostIP, port, path):
     print('Launch HTTP Server for localhost and port:' +
           port + ' and path: ' + path)
-    httpd, thread = ServeDirectoryWithHTTP(hostIP, path, int(port))
-    return httpd
+    return ServeDirectoryWithHTTP(hostIP, path, int(port))
 
 
 def stopHttpServer(httpd):
@@ -47,7 +46,7 @@ def ServeDirectoryWithHTTP(machineIP='localhost', directory=".", port=9000):
     thread.setDaemon(True)
     thread.start()
 
-    return httpd, address
+    return httpd
 
 
 def _xprint(*args, **kwargs):

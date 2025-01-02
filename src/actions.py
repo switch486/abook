@@ -36,7 +36,7 @@ def LOAD_AUDIOBOOKS(currentDialogContext):
 def stopHttpServer(currentDialogContext):
     if currentDialogContext.httpServer != None:
         print('Stopping HTTP Server')
-        httpServer.stopHttpServer(httpServer)
+        httpServer.stopHttpServer(currentDialogContext.httpServer)
         currentDialogContext.httpServer = None
 
 
