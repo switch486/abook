@@ -57,6 +57,7 @@ class WELCOME:
         print('Handle Button ' + pressedButton)
         if pressedButton == BUTTONS.BUTTON_A:
             print('short circuit logic - last audiobook')
+            currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
             currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[
                 SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
             currentDialogContext.actions.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
