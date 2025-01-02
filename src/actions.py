@@ -20,6 +20,7 @@ def LOAD_CAST_DEVICES(currentDialogContext):
 def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     print('CONNECT_TO_CAST_DEVICE')
     chromecast.connectToCastDevice(currentDialogContext)
+    CONNECT_TO_CAST_DEVICE(currentDialogContext, currentDialogContext.lastCastDevice)
 
 
 def LOAD_SINGLE_AUDIOBOOK_DETAILS(currentDialogContext):

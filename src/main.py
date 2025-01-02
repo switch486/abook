@@ -13,7 +13,7 @@ from constants import BUTTONS
 PROPERTY_FILE_PATH = './general.properties'
 
 
-@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
+@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
 def hold_handler_e(button):
     global heldButton
     heldButton = BUTTONS.HOLD_BUTTON_E
