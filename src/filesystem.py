@@ -174,7 +174,7 @@ def sortFolderList(folderListToBeSorted):
             f2Len = len(folder2[FD.MP3_FILES])
             if f1Len == f2Len:
                 return folder1[FD.FOLDER] > folder1[FD.FOLDER]
-            return f1Len - f2Len
+            return f2Len - f1Len
         return -1
 
     sorted(folderListToBeSorted, key=functools.cmp_to_key(compare))

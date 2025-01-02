@@ -43,6 +43,5 @@ TBD
 ## playback manipulations - TBD
 
 # MVP TODOs:
-- TEST: back into audiobook from playback possible
 - TEST: audiobook sorting
 - TEST: shortcut for the last used configurations?
