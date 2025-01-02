@@ -44,7 +44,5 @@ TBD
 
 # MVP TODOs:
 - TEST: back into audiobook from playback possible
-- TEST: pause audiobook on back
 - TEST: audiobook sorting
-- TEST: update last cast device
 - TEST: shortcut for the last used configurations?

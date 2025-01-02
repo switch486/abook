@@ -211,12 +211,12 @@ class AUDIOBOOK_PLAY:
             print('D - FF - next track')
             currentDialogContext.actions.put(ACTIONS.NEXT_TRACK)
         elif pressedButton == BUTTONS.BUTTON_E:
-            print('E - RR - previous track /// back on hold')
+            print('E - RR - previous track')
             currentDialogContext.actions.put(ACTIONS.PREVIOUS_TRACK)
         elif pressedButton == BUTTONS.HOLD_BUTTON_E:
-            # Hold E -> Back to previous dialog
+            print('Hold E - pause and return to audiobook choose')
             currentDialogContext.actions.put(ACTIONS.PAUSE)
-            currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
+            currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
 
         return currentDialogContext
 
