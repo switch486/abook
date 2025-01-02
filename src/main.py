@@ -13,44 +13,48 @@ from constants import BUTTONS
 PROPERTY_FILE_PATH = './general.properties'
 
 
-@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=1)
+@buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
 def hold_handler_e(button):
     global heldButton
     heldButton = BUTTONS.HOLD_BUTTON_E
 
 
-@buttonshim.on_press(buttonshim.BUTTON_A)
+@buttonshim.on_release(buttonshim.BUTTON_A)
 def button_a(button, pressed):
-    global pressedButton
-    pressedButton = BUTTONS.BUTTON_A
+    global releasedButton
+    releasedButton = BUTTONS.BUTTON_A
 
 
-@buttonshim.on_press(buttonshim.BUTTON_B)
+@buttonshim.on_release(buttonshim.BUTTON_B)
 def button_b(button, pressed):
-    global pressedButton
-    pressedButton = BUTTONS.BUTTON_B
+    global releasedButton
+    releasedButton = BUTTONS.BUTTON_B
 
 
-@buttonshim.on_press(buttonshim.BUTTON_C)
+@buttonshim.on_release(buttonshim.BUTTON_C)
 def button_c(button, pressed):
-    global pressedButton
-    pressedButton = BUTTONS.BUTTON_C
+    global releasedButton
+    releasedButton = BUTTONS.BUTTON_C
 
 
-@buttonshim.on_press(buttonshim.BUTTON_D)
+@buttonshim.on_release(buttonshim.BUTTON_D)
 def button_d(button, pressed):
-    global pressedButton
-    pressedButton = BUTTONS.BUTTON_D
+    global releasedButton
+    releasedButton = BUTTONS.BUTTON_D
 
 
-@buttonshim.on_press(buttonshim.BUTTON_E)
+@buttonshim.on_release(buttonshim.BUTTON_E)
 def button_e(button, pressed):
-    global pressedButton
-    pressedButton = BUTTONS.BUTTON_E
+    global releasedButton
+    releasedButton = BUTTONS.BUTTON_E
 
 
-pressedButton = 'null'
-heldButton = 'null'
+# technical triggers
+heldButton = None
+releasedButton = None
+
+# UseCase Action
+buttonAction = 'null'
 
 gui = Gui()
 
@@ -67,11 +71,20 @@ currentDialogContext.actions.put(ACTIONS.LOAD_CAST_DEVICES)
 while True:
     repaintNeeded = False
     time.sleep(.5)
+
+    if heldButton is not None and releasedButton is not None:
+        buttonAction = heldButton
+        heldButton = None
+        releasedButton = None
+    elif heldButton is None and releasedButton is not None:
+        buttonAction = releasedButton
+        releasedButton = None
+
     # Button press implies potential action ...
-    if pressedButton != 'null':
-        currentDialogContext = currentDialogContext.handleButton(pressedButton)
+    if buttonAction != 'null':
+        currentDialogContext = currentDialogContext.handleButton(buttonAction)
         repaintNeeded = True
-        pressedButton = 'null'
+        buttonAction = 'null'
 
     while currentDialogContext.actions.empty() == False:
         action = currentDialogContext.actions.get()
