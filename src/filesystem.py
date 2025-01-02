@@ -139,7 +139,7 @@ def loadAudiobooks(currentDialogContext):
 
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
         currentDialogContext.currentRootPath)
-    sortFolderList(currentDialogContext.currentFolderDetails())
+    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = sortFolderList(currentDialogContext.currentFolderDetails())
 
 
 def loadSingleAudiobookDetails(currentDialogContext):
@@ -177,4 +177,4 @@ def sortFolderList(folderListToBeSorted):
             return f2Len - f1Len
         return -1
 
-    sorted(folderListToBeSorted, key=functools.cmp_to_key(compare))
+    return sorted(folderListToBeSorted, key=functools.cmp_to_key(compare))
