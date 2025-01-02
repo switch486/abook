@@ -168,13 +168,13 @@ def saveProgress(currentDialogContext):
 def sortFolderList(folderListToBeSorted):
     def compare(folder1, folder2):
         if folder1[FD.PERCENTAGE] > folder2[FD.PERCENTAGE]:
-            return 1
+            return -1
         if folder1[FD.PERCENTAGE] == folder2[FD.PERCENTAGE]:
             f1Len = len(folder1[FD.MP3_FILES])
             f2Len = len(folder2[FD.MP3_FILES])
             if f1Len == f2Len:
-                return folder1[FD.FOLDER] > folder1[FD.FOLDER]
+                return folder1[FD.FOLDER] < folder1[FD.FOLDER]
             return f1Len - f2Len
-        return -1
+        return 1
 
     return sorted(folderListToBeSorted, key=functools.cmp_to_key(compare))
