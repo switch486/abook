@@ -1,8 +1,11 @@
 #!/bin/bash
+cd "$(dirname "$0")"
+echo "execution at:"
+pwd
 echo "Python environment set"
 
-source ./venv/bin/activate
+source venv/bin/activate
 
 echo "launch app"
 
-python ./src/main.py >> "./logs/$(date +"%Y_%m_%d_%I_%M_%p").log"
+python src/main.py >> "logs/$(date +"%Y_%m_%d_%I_%M_%p").log"
