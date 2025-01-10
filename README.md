@@ -22,10 +22,17 @@ TBD
 - SSH? i2c?
 - python
 - python libs
+- service setup --- https://forums.raspberrypi.com/viewtopic.php?f=29&t=7192&p=828947#p828947
+https://forums.raspberrypi.com/viewtopic.php?p=921354#p921354
+
+$ sudo cp   abook.service  /etc/systemd/system/
+$ sudo chmod u+rwx /etc/systemd/system/abook.service
+
 
 ## Testing the HW Setup
 
 -- i2c debugging
+-- venv python
 
 # Preparation for operative work
 

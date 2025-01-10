@@ -1,0 +1,10 @@
+[Unit]
+Description=Audio BOOK player service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/api/abook/launch
+
+[Install]
+WantedBy=multi-user.target

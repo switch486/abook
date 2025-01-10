@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/api/Desktop/abook/abook/
+cd ~/abook/
 echo "execution at:"
 pwd
 echo "Python environment set"
@@ -8,4 +8,4 @@ source venv/bin/activate
 
 echo "launch app"
 
-python src/main.py
+/venv/bin/python src/main.py
