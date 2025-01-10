@@ -8,4 +8,4 @@ source venv/bin/activate
 
 echo "launch app"
 
-/venv/bin/python src/main.py
+venv/bin/python src/main.py
