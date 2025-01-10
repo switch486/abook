@@ -5,6 +5,7 @@ Wants=network-online.target
 
 [Service]
 ExecStart=/home/api/abook/launch
+User=api
 
 [Install]
 WantedBy=multi-user.target
