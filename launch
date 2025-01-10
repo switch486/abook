@@ -8,4 +8,4 @@ source venv/bin/activate
 
 echo "launch app"
 
-python src/main.py >> "logs/$(date +"%Y_%m_%d_%I_%M_%p").log"
+/venv/bin/python src/main.py >> "logs/$(date +"%Y_%m_%d_%I_%M_%p").log"
