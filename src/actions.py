@@ -74,14 +74,10 @@ def playPassedAudiobook(currentDialogContext, currentBook):
         currentTime -= 5
     stream_type = CONSTANTS.STREAM_TYPE_BUFFERED
 
-
     mc.play_media(url=trackUrl, content_type=contentType, title=title,
                   current_time=currentTime, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
-    print("Seek to current Time...")
-    print(currentTime)
-    mc.seek(currentTime)
 
 
 def startHttpServer(currentDialogContext):
@@ -99,6 +95,27 @@ def PLAY_PAUSE(currentDialogContext):
         mc.pause()
     else:
         mc.play()
+
+
+def SEEK_FWD(currentDialogContext):
+    print("Seek +30")
+    seek(currentDialogContext, 30)
+
+
+def SEEK_RWD(currentDialogContext):
+    print("Seek -30")
+    seek(currentDialogContext, -30)
+
+
+def seek(currentDialogContext, deltaSeconds):
+    mc = currentDialogContext.chromecast_device.media_controller
+    currentBook = currentDialogContext.currentlySelectedAudiobook()
+    currentTime = currentBook[FD.CURRENT_MP3_PROGRESS]
+    currentTime += deltaSeconds
+    print(currentTime)
+    mc.seek(currentTime)
+    print("seek command sent!")
+    print(currentTime)
 
 
 def PAUSE(currentDialogContext):

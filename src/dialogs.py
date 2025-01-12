@@ -218,6 +218,12 @@ class AUDIOBOOK_PLAY:
             print('Hold E - pause and return to audiobook choose')
             currentDialogContext.actions.put(ACTIONS.PAUSE)
             currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
+        elif pressedButton == BUTTONS.HOLD_BUTTON_D:
+            print('Hold D - RWD SEEK')
+            currentDialogContext.actions.put(ACTIONS.SEEK_RWD)
+        elif pressedButton == BUTTONS.HOLD_BUTTON_C:
+            print('Hold C - FWD SEEK')
+            currentDialogContext.actions.put(ACTIONS.SEEK_FWD)
 
         return currentDialogContext
 
