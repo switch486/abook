@@ -20,7 +20,8 @@ def LOAD_CAST_DEVICES(currentDialogContext):
 def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     print('CONNECT_TO_CAST_DEVICE')
     chromecast.connectToCastDevice(currentDialogContext)
-    UPDATE_LAST_CAST_DEVICE(currentDialogContext, currentDialogContext.lastCastDevice)
+    UPDATE_LAST_CAST_DEVICE(currentDialogContext,
+                            currentDialogContext.lastCastDevice)
 
 
 def LOAD_SINGLE_AUDIOBOOK_DETAILS(currentDialogContext):
@@ -68,13 +69,20 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                        currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.CURRENT_MP3]])
     contentType = CONSTANTS.CONTENT_TYPE
     title = currentBook[FD.FOLDER]
-    current_time = currentBook[FD.CURRENT_MP3_PROGRESS]
-    if current_time > 5:
-        current_time -= 5
+    currentTime = currentBook[FD.CURRENT_MP3_PROGRESS]
+    if currentTime > 5:
+        currentTime -= 5
     stream_type = CONSTANTS.STREAM_TYPE_BUFFERED
 
+    print("TRACK DETAILS:")
+    print(trackUrl)
+    print(title)
+    print(currentTime)
+    print(stream_type)
+    print(contentType)
+
     mc.play_media(url=trackUrl, content_type=contentType, title=title,
-                  current_time=current_time, stream_type=stream_type)
+                  current_time=currentTime, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
 
@@ -163,9 +171,11 @@ def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
     print('Update last cast device to: ' + deviceName)
     filesystem.updateSystemProperty(
         currentDialogContext, SYSTEM_PROPERTIES.LAST_CAST_DEVICE, deviceName)
-    
+
+
 def UPDATE_LAST_PLAYED_AUDIOBOOK(currentDialogContext):
-    print('Update last played audiobook: ' + currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])
+    print('Update last played audiobook: ' +
+          currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])
     filesystem.updateSystemProperty(
         currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, currentDialogContext.currentRootPath)
     filesystem.updateSystemProperty(
