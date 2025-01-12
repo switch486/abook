@@ -113,7 +113,11 @@ def seek(currentDialogContext, deltaSeconds):
     currentTime = currentBook[FD.CURRENT_MP3_PROGRESS]
     currentTime += deltaSeconds
     print(currentTime)
+    
+    mc.pause()
     mc.seek(currentTime)
+    mc.play()
+    
     print("seek command sent!")
     print(currentTime)
 
