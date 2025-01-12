@@ -73,16 +73,18 @@ def playPassedAudiobook(currentDialogContext, currentBook):
     if currentTime > 5:
         currentTime -= 5
     stream_type = CONSTANTS.STREAM_TYPE_BUFFERED
+    currentTimeFloat = float(currentTime)
 
     print("TRACK DETAILS:")
     print(trackUrl)
     print(title)
     print(currentTime)
+    print(currentTimeFloat)
     print(stream_type)
     print(contentType)
 
     mc.play_media(url=trackUrl, content_type=contentType, title=title,
-                  current_time=currentTime, stream_type=stream_type)
+                  current_time=currentTimeFloat, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
 
