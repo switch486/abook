@@ -79,6 +79,8 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                   current_time=currentTime, stream_type=stream_type)
     mc.block_until_active()
     mc.play()
+    print("Seek to current Time...")
+    print(currentTime)
     mc.seek(currentTime)
 
 
