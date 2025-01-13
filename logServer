@@ -1,0 +1,9 @@
+#!/bin/bash
+cd ~/abook
+echo "execution at:"
+pwd
+source venv/bin/activate
+
+echo "launch logServer"
+
+venv/bin/python -m http.server 9876

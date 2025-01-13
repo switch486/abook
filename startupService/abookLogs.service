@@ -1,0 +1,11 @@
+[Unit]
+Description=Audio BOOK Logs service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/api/abook/logServer
+User=api
+
+[Install]
+WantedBy=multi-user.target

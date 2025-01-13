@@ -17,6 +17,12 @@ PROPERTY_FILE_PATH = './general.properties'
 def hold_handler_e(button):
     global heldButton
     heldButton = BUTTONS.HOLD_BUTTON_E
+    
+
+@buttonshim.on_hold(buttonshim.BUTTON_A, hold_time=5)
+def hold_handler_a(button):
+    global heldButton
+    heldButton = BUTTONS.EXIT
 
 
 @buttonshim.on_release(buttonshim.BUTTON_A)
@@ -87,10 +93,18 @@ while True:
         repaintNeeded = True
         buttonAction = 'null'
 
-    while currentDialogContext.actions.empty() == False:
-        action = currentDialogContext.actions.get()
-        action(currentDialogContext)
-        repaintNeeded = True
+    try:
+        while currentDialogContext.actions.empty() == False:
+            action = currentDialogContext.actions.get()
+            action(currentDialogContext)
+            repaintNeeded = True
+    except Exception as err:
+        print(f">> EXCEPTION {err=}, {type(err)=}")
+        currentDialogContext.currentDialog = DIALOGS.EXCEPTION(gui)
+        
+    if buttonAction == BUTTONS.EXIT:
+        ACTIONS.STOP_APP(currentDialogContext)
+        break;
 
     if repaintNeeded or currentDialogContext.repaintParts:
         print('--Repaint')

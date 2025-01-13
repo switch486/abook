@@ -34,6 +34,11 @@ def LOAD_AUDIOBOOKS(currentDialogContext):
     filesystem.loadAudiobooks(currentDialogContext)
 
 
+def STOP_APP(currentDialogContext):
+    print('STOP Application - for debug purposes')
+    stopHttpServer(currentDialogContext)
+
+
 def stopHttpServer(currentDialogContext):
     if currentDialogContext.httpServer != None:
         print('Stopping HTTP Server')
@@ -115,15 +120,18 @@ def PAUSE(currentDialogContext):
 
 
 def CHECK_PLAY_STATUS(currentDialogContext):
-    print('CHECK_PLAY_STATUS')
     mc = currentDialogContext.chromecast_device.media_controller
-    print(mc.status)
 
-    if not mc.status.player_is_playing:
-        # in case idle, add next track
+    if mc.status.player_is_paused:
+        print('CHECK_PLAY_STATUS - paused')
+
+    elif not mc.status.player_is_playing:
+        print('CHECK_PLAY_STATUS - next Track')
+        # in case not playing and not paused -> idle, add next track
         NEXT_TRACK(currentDialogContext)
 
     elif mc.status.player_is_playing:
+        print('CHECK_PLAY_STATUS - current Track')
         CURRENT_TRACK(currentDialogContext, mc.status.adjusted_current_time)
 
 
@@ -148,7 +156,6 @@ def VOL_DOWN(currentDialogContext):
 
 
 def NEXT_TRACK(currentDialogContext):
-    print('NEXT_TRACK')
     audiobook = currentDialogContext.moveAudiobookPointerAndGet(1)
     playPassedAudiobook(currentDialogContext, audiobook)
     currentDialogContext.repaintParts.append(paintAction.ALL)

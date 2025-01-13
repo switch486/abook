@@ -269,3 +269,22 @@ class AUDIOBOOK_PLAY:
         currentDialogContext.clearRepaintParts()
 
         currentDialogContext.actions.put(ACTIONS.CHECK_PLAY_STATUS)
+
+
+class EXCEPTION:
+
+    def __init__(self, lcd):
+        self.lcd = lcd
+
+    def handleButton(self, currentDialogContext, pressedButton):
+        print('Handle Button ' + pressedButton)
+        return currentDialogContext
+
+    def displayDialog(self, currentDialogContext):
+        print('Dialog: Exception ')
+        self.lcd.clear()
+
+        self.lcd.write(0, 0, 'EXCEPTION CAUGTH', 20)
+        self.lcd.write(2, 0, 'Let Your dad know', 20)
+        self.lcd.write(3, 5, 'sorry', 15)
+        currentDialogContext.clearRepaintParts()
