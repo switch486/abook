@@ -17,16 +17,6 @@ PROPERTY_FILE_PATH = './general.properties'
 def hold_handler_e(button):
     global heldButton
     heldButton = BUTTONS.HOLD_BUTTON_E
-    
-@buttonshim.on_hold(buttonshim.BUTTON_D, hold_time=1)
-def hold_handler_d(button):
-    global heldButton
-    heldButton = BUTTONS.HOLD_BUTTON_D
-    
-@buttonshim.on_hold(buttonshim.BUTTON_C, hold_time=1)
-def hold_handler_c(button):
-    global heldButton
-    heldButton = BUTTONS.HOLD_BUTTON_C
 
 
 @buttonshim.on_release(buttonshim.BUTTON_A)
@@ -76,6 +66,7 @@ currentDialogContext.systemProperties = filesystem.loadSystemProperties(
 currentDialogContext.currentDialog = DIALOGS.WELCOME(gui)
 
 currentDialogContext.currentDialog.displayDialog(currentDialogContext)
+currentDialogContext.actions.put(ACTIONS.LOAD_LAST_VERSION_CHANGE_DATE)
 currentDialogContext.actions.put(ACTIONS.LOAD_CAST_DEVICES)
 
 while True:

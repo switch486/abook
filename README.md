@@ -13,6 +13,10 @@ Consisting of:
 
 TBD
 
+# HW Setup - Bricks enclosure with button breakout
+
+TBD
+
 # Software Setup Guide
 
 ## SW installation
@@ -27,6 +31,9 @@ https://forums.raspberrypi.com/viewtopic.php?p=921354#p921354
 
 $ sudo cp   abook.service  /etc/systemd/system/
 $ sudo chmod u+rwx /etc/systemd/system/abook.service
+$ sudo systemctl status abook
+$ sudo systemctl start abook
+$ sudo systemctl stop abook
 
 
 ## Testing the HW Setup
@@ -40,6 +47,7 @@ $ sudo chmod u+rwx /etc/systemd/system/abook.service
 
 -- root
 -- folders
+-- files
 -- abook files
 
 # Supported Use Cases within abook
@@ -48,4 +56,11 @@ $ sudo chmod u+rwx /etc/systemd/system/abook.service
 ## folder structure jumping around - TBD
 ## select audiobook - TBD
 ## playback manipulations - TBD
+
+TODO - 
+-bug, on resume, when paused, exception!!
+-task - split mp3s based on chapters and Secondly by 5 minute parts
+-task - logs to outside 
+-bug - usb hangs after a while
+-task - save mp3 details to file when reading them for the first time
 

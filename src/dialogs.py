@@ -82,7 +82,7 @@ class WELCOME:
         if lastAudiobookFolder is not None:
             self.lcd.write(0, 11, '-RESUME-', 8)
         self.lcd.write(1, 0, '* Welcome to abook *', 20)
-        self.lcd.write(2, 0, 'the audiobook reader', 20)
+        self.lcd.write(2, 0, currentDialogContext.lastVersionChangeDate, 20)
         self.lcd.write(3, 0, 'Select option above^', 20)
         currentDialogContext.clearRepaintParts()
 
@@ -218,12 +218,6 @@ class AUDIOBOOK_PLAY:
             print('Hold E - pause and return to audiobook choose')
             currentDialogContext.actions.put(ACTIONS.PAUSE)
             currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
-        elif pressedButton == BUTTONS.HOLD_BUTTON_D:
-            print('Hold D - RWD SEEK')
-            currentDialogContext.actions.put(ACTIONS.SEEK_RWD)
-        elif pressedButton == BUTTONS.HOLD_BUTTON_C:
-            print('Hold C - FWD SEEK')
-            currentDialogContext.actions.put(ACTIONS.SEEK_FWD)
 
         return currentDialogContext
 

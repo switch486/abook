@@ -10,6 +10,8 @@ class DialogContext:
 
     lastCastDevice = ''
     chromecastDevices = ''
+    
+    lastVersionChangeDate = ''
 
     # helper variables
     menu_chooseCast_CursorLocationAbsolute = 0

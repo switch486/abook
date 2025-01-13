@@ -139,7 +139,8 @@ def loadAudiobooks(currentDialogContext):
 
     currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = computeFolders(
         currentDialogContext.currentRootPath)
-    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = sortFolderList(currentDialogContext.currentFolderDetails())
+    currentDialogContext.folderDetails[currentDialogContext.currentRootPath] = sortFolderList(
+        currentDialogContext.currentFolderDetails())
 
 
 def loadSingleAudiobookDetails(currentDialogContext):

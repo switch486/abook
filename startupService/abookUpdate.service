@@ -1,0 +1,11 @@
+[Unit]
+Description=Audio BOOK Updater service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/api/abook/updateApp
+User=api
+
+[Install]
+WantedBy=multi-user.target

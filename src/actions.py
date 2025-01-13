@@ -57,6 +57,17 @@ def getIPOfCurrentMachine():
     return ipAddress.strip()
 
 
+def LOAD_LAST_VERSION_CHANGE_DATE(currentDialogContext):
+    print('LOAD_LAST_VERSION_CHANGE_DATE')
+    currentDialogContext.lastVersionChangeDate = getLastVersionChangeDate()
+
+
+def getLastVersionChangeDate():
+    date = popen('git log -1 --date=format:"%Y/%m/%d" --format="%ad"').read()
+    print("last change date: " + date)
+    return date.strip()
+
+
 def playPassedAudiobook(currentDialogContext, currentBook):
     mc = currentDialogContext.chromecast_device.media_controller
 
@@ -95,31 +106,6 @@ def PLAY_PAUSE(currentDialogContext):
         mc.pause()
     else:
         mc.play()
-
-
-def SEEK_FWD(currentDialogContext):
-    print("Seek +30")
-    seek(currentDialogContext, 30)
-
-
-def SEEK_RWD(currentDialogContext):
-    print("Seek -30")
-    seek(currentDialogContext, -30)
-
-
-def seek(currentDialogContext, deltaSeconds):
-    mc = currentDialogContext.chromecast_device.media_controller
-    currentBook = currentDialogContext.currentlySelectedAudiobook()
-    currentTime = currentBook[FD.CURRENT_MP3_PROGRESS]
-    currentTime += deltaSeconds
-    print(currentTime)
-    
-    mc.pause()
-    mc.seek(currentTime)
-    mc.play()
-    
-    print("seek command sent!")
-    print(currentTime)
 
 
 def PAUSE(currentDialogContext):
