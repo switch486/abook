@@ -4,55 +4,32 @@ from os import listdir, popen
 from os.path import isdir, isfile, join
 from calculator import calculateTimes
 import functools
-
-# TODO V2 load property files for volume settings?
+import json
 
 
 def loadSystemProperties(currentDialogContext):
-    return loadPropertyFile(currentDialogContext.systemPropertiesPath)
+    return loadProperties(currentDialogContext.systemPropertiesPath)
 
 
-def loadPropertyFile(path):
+def loadProperties(path):
     print('read properties from: ' + path)
-    properties = {}
-    if os.path.isfile(path):
-        with open(path, FO.READ) as file:
-            for line in file:
-                if line.startswith(FO.COMMENT) or not line.strip():
-                    continue
-                key, value = line.strip().split(FO.EQUALS, 1)
-                properties[key] = value
-    return properties
+    return json.load(open(path))
 
 
-def updateSystemProperty(currentDialogContext, key, new_value):
-    properties = loadSystemProperties(currentDialogContext)
-    properties[key] = new_value
-    with open(currentDialogContext.systemPropertiesPath, FO.WRITE) as file:
-        for key, value in properties.items():
-            file.write(f'{key}{FO.EQUALS}{value}{FO.NEWLINE}')
+def updateProperties(path, properties):
+    json.dump(properties, open(path, 'w'))
 
 
-def updatePropertyFile(path, key1, new_value1, key2, new_value2):
-    print('progress file: ' + path)
-    print(f'{key1}{FO.EQUALS}{new_value1}')
-    print(f'{key2}{FO.EQUALS}{new_value2}')
-    properties = {}
-    if os.path.isfile(path):
-        properties = loadPropertyFile(path)
-
-    properties[key1] = new_value1
-    properties[key2] = new_value2
-    with open(path, FO.WRITE_CREATE) as file:
-        for key, value in properties.items():
-            file.write(f'{key}{FO.EQUALS}{value}{FO.NEWLINE}')
+def updateSystemProperties(currentDialogContext):
+    updateProperties(
+        currentDialogContext.systemPropertiesPath, currentDialogContext.systemProperties)
 
 
 def isMp3File(filepath):
     return filepath.endswith(CONSTANTS.MP3_FILETYPE)
 
 
-def isAbookProgress(filepath):
+def isAbookDetailsFile(filepath):
     return filepath.endswith(CONSTANTS.PROGRESS_FILE)
 
 
@@ -62,56 +39,52 @@ def getFolderDetails(rootPath, folder):
 
     files = [f for f in listdir(joinedPath) if isfile(join(joinedPath, f))]
 
-    containsMp3Files = any(map(isMp3File, files))
-    print('containsMp3s: ' + str(containsMp3Files))
-    mp3Files = [x for x in files if isMp3File(x)]
-    mp3Files.sort()
+    # Fallback if data has been acquired earlier
+    audiobookDetailFilenames = [x for x in files if isAbookDetailsFile(x)]
+    audiobookDetailFilename = audiobookDetailFilenames[0] if len(
+        audiobookDetailFilenames) > 0 else None
+    print('audiobookDetails: ' + str(audiobookDetailFilename))
 
-    progressFiles = [x for x in files if isAbookProgress(x)]
-    progressFile = progressFiles[0] if len(progressFiles) > 0 else None
-    print('progressFile: ' + str(progressFile))
+    audiobookDetails = {}
+    if audiobookDetailFilename != None:
+        audiobookDetails = loadProperties(
+            join(joinedPath, audiobookDetailFilename))
 
-    # progress file handling
-    playpointMp3Name = ''
-    playpointMp3Seconds = 0
-    progressDetails = None
-    if progressFile != None:
-        progressDetails = loadPropertyFile(join(joinedPath, progressFile))
-        playpointMp3Name = progressDetails[CONSTANTS.PROGRESS_MP3_KEY]
-        playpointMp3Seconds = int(
-            progressDetails[CONSTANTS.PROGRESS_SECOND_KEY])
+    else:
+        audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY] = ''
+        audiobookDetails[CONSTANTS.PROGRESS_SECOND_KEY] = 0
+
+        containsMp3Files = any(map(isMp3File, files))
+        print('containsMp3s: ' + str(containsMp3Files))
+        audiobookDetails[CONSTANTS.MP3_FILES] = [
+            x for x in files if isMp3File(x)]
+        audiobookDetails[CONSTANTS.MP3_FILES].sort()
+
+        if containsMp3Files:
+            resultRows = popen('cd "' + joinedPath +
+                               '" && mp3info -p "%f#%S\n" *.mp3').read().splitlines()
+            audiobookDetails[CONSTANTS.MP3_DURATIONS] = {}
+            for line in resultRows:
+                key, value = line.strip().split('#', 1)
+                audiobookDetails[CONSTANTS.MP3_DURATIONS][key] = value
 
     # set startup if no progress
     currentMp3Idx = 0
-    if playpointMp3Name == '' and len(mp3Files) > 0:
-        playpointMp3Name = mp3Files[0]
-    elif len(mp3Files) > 0:
-        currentMp3Idx = mp3Files.index(playpointMp3Name)
-
-    # mp3 durations
-    mp3Lengths = None
-    if containsMp3Files:
-        resultRows = popen('cd "' + joinedPath +
-                           '" && mp3info -p "%f#%S\n" *.mp3').read().splitlines()
-        mp3Lengths = {}
-        for line in resultRows:
-            key, value = line.strip().split('#', 1)
-            mp3Lengths[key] = value
+    if audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY] == '' and len(audiobookDetails[CONSTANTS.MP3_FILES]) > 0:
+        audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY] = audiobookDetails[CONSTANTS.MP3_FILES][0]
+    elif len(audiobookDetails[CONSTANTS.MP3_FILES]) > 0:
+        currentMp3Idx = audiobookDetails[CONSTANTS.MP3_FILES].index(
+            audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY])
 
     # total and elapsed times
-    totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage = calculateTimes(
-        playpointMp3Name, playpointMp3Seconds, mp3Files, mp3Lengths)
+    totalTime, elapsedTime, percentage = calculateTimes(audiobookDetails)
 
     return {FD.ROOT_PATH: rootPath,
             FD.FOLDER: folder,
-            FD.MP3_FILES: mp3Files,
-            FD.MP3_LENGTHS: mp3Lengths,
-            FD.CURRENT_MP3: playpointMp3Name,
+            FD.AUDIOBOOK_DETAILS_KEY: audiobookDetails,
             FD.CURRENT_MP3_IDX: currentMp3Idx,
             FD.TOTAL_TIME: totalTime,
             FD.ELAPSED_TIME: elapsedTime,
-            FD.PREVIOS_MP3_PROGRESS: previousMp3Progress,
-            FD.CURRENT_MP3_PROGRESS: currentMp3Progress,
             FD.PERCENTAGE: percentage}
 
 
@@ -157,22 +130,19 @@ def loadSingleAudiobookDetails(currentDialogContext):
 
 def saveProgress(currentDialogContext):
     currentBook = currentDialogContext.currentlySelectedAudiobook()
-    progressFilePath = currentDialogContext.getCurrentAudiobookProgressFilePath()
+    audiobookDetailsFilepath = currentDialogContext.getCurrentAudiobookDetailsFilePath()
 
-    updatePropertyFile(progressFilePath,
-                       CONSTANTS.PROGRESS_MP3_KEY,
-                       currentBook[FD.CURRENT_MP3],
-                       CONSTANTS.PROGRESS_SECOND_KEY,
-                       currentBook[FD.CURRENT_MP3_PROGRESS])
+    updateProperties(audiobookDetailsFilepath,
+                     currentBook[FD.AUDIOBOOK_DETAILS_KEY])
 
 
 def sortFolderList(folderListToBeSorted):
     def compare(folder1, folder2):
-        if folder1[FD.PERCENTAGE] > folder2[FD.PERCENTAGE]:
+        if folder1[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE] > folder2[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]:
             return -1
-        if folder1[FD.PERCENTAGE] == folder2[FD.PERCENTAGE]:
-            f1Len = len(folder1[FD.MP3_FILES])
-            f2Len = len(folder2[FD.MP3_FILES])
+        if folder1[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE] == folder2[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]:
+            f1Len = len(folder1[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])
+            f2Len = len(folder2[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])
             if f1Len == f2Len:
                 return folder1[FD.FOLDER] < folder1[FD.FOLDER]
             return f2Len - f1Len

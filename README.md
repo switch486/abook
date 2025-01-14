@@ -62,6 +62,6 @@ TODO -
 -task - split mp3s based on chapters and Secondly by 5 minute parts
 -TEST FIX - logs to outside 
 -bug - usb hangs after a while
--task - save mp3 details to file when reading them for the first time
+-TEST FIX - save mp3 details to file when reading them for the first time
 -TEST FIX - exception handing for actions 
 

@@ -43,9 +43,14 @@ MS.PLAYING = 'PLAYING'
 
 # Filehandling
 CONSTANTS = types.SimpleNamespace()
-CONSTANTS.PROGRESS_FILE = 'abook.progress'
+## - Audiobook details dictionary keys
 CONSTANTS.PROGRESS_MP3_KEY = 'currentMp3'
 CONSTANTS.PROGRESS_SECOND_KEY = 'second'
+CONSTANTS.MP3_FILES = 'mp3Files'
+CONSTANTS.MP3_DURATIONS = 'mp3Durations'
+
+## - Audiobook Folder Details
+CONSTANTS.PROGRESS_FILE = 'abookProgress.json'
 CONSTANTS.CONTENT_TYPE = 'audio/mp3'
 CONSTANTS.STREAM_TYPE_BUFFERED = 'STREAM_TYPE_BUFFERED'
 CONSTANTS.HTTP_STRING = 'http://'
@@ -55,16 +60,14 @@ CONSTANTS.URL_DIR_SEPARATOR = '/'
 
 # FOLER DETAILS KEYS
 FD = types.SimpleNamespace()
+## - AudiobookDetailsKey 
+FD.AUDIOBOOK_DETAILS_KEY = 'audiobookDetailsKey'
+## - direct properties
 FD.ROOT_PATH = 'rootPath'
 FD.FOLDER = 'folder'
-FD.MP3_FILES = 'mp3Files'
-FD.MP3_LENGTHS = 'mp3Lengths'
-FD.CURRENT_MP3 = 'currentMp3'
 FD.CURRENT_MP3_IDX = 'currentMp3Idx'
 FD.TOTAL_TIME = 'totalTime'
 FD.ELAPSED_TIME = 'elapsedTime'
-FD.PREVIOS_MP3_PROGRESS = 'previousMp3Progress'
-FD.CURRENT_MP3_PROGRESS = 'currentMp3Progress'
 FD.PERCENTAGE = 'percentage'
 FD.PATH_SEPARATOR = '/'
 

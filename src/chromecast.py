@@ -1,9 +1,10 @@
 import pychromecast
+from constants import SYSTEM_PROPERTIES
 
 
 def connectToCastDevice(currentDialogContext):
     chromecasts, browser = pychromecast.get_listed_chromecasts(
-        friendly_names=[currentDialogContext.lastCastDevice])
+        friendly_names=[currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE]])
     currentDialogContext.chromecast_device = chromecasts[0]
     currentDialogContext.chromecast_device.wait()
 

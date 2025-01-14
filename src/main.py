@@ -10,14 +10,14 @@ from constants import BUTTONS
 
 
 # default property file path
-PROPERTY_FILE_PATH = './general.properties'
+SYSTEM_PROPERTIES_FILE_PATH = './systemProperties.json'
 
 
 @buttonshim.on_hold(buttonshim.BUTTON_E, hold_time=2)
 def hold_handler_e(button):
     global heldButton
     heldButton = BUTTONS.HOLD_BUTTON_E
-    
+
 
 @buttonshim.on_hold(buttonshim.BUTTON_A, hold_time=5)
 def hold_handler_a(button):
@@ -65,7 +65,7 @@ buttonAction = 'null'
 gui = Gui()
 
 currentDialogContext = dc.DialogContext()
-currentDialogContext.systemPropertiesPath = PROPERTY_FILE_PATH
+currentDialogContext.systemPropertiesPath = SYSTEM_PROPERTIES_FILE_PATH
 
 currentDialogContext.systemProperties = filesystem.loadSystemProperties(
     currentDialogContext)
@@ -98,13 +98,13 @@ while True:
             action = currentDialogContext.actions.get()
             action(currentDialogContext)
             repaintNeeded = True
-    except Exception as err:
+    except BaseException as err:
         print(f">> EXCEPTION {err=}, {type(err)=}")
         currentDialogContext.currentDialog = DIALOGS.EXCEPTION(gui)
-        
+
     if buttonAction == BUTTONS.EXIT:
         ACTIONS.STOP_APP(currentDialogContext)
-        break;
+        break
 
     if repaintNeeded or currentDialogContext.repaintParts:
         print('--Repaint')

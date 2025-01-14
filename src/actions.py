@@ -6,22 +6,20 @@ from os import popen
 
 
 def LOAD_CAST_DEVICES(currentDialogContext):
-    currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[
-        SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
     currentDialogContext.chromecastDevices = chromecast.getAvailableChromecasts(
         currentDialogContext)
-    print('Last Cast Device: ' + currentDialogContext.lastCastDevice)
+    print('Last Cast Device: ' +
+          currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE])
     print(currentDialogContext.chromecastDevices)
-    if currentDialogContext.lastCastDevice in currentDialogContext.chromecastDevices:
+    if currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE] in currentDialogContext.chromecastDevices:
         currentDialogContext.menu_chooseCast_CursorLocationAbsolute = currentDialogContext.chromecastDevices.index(
-            currentDialogContext.lastCastDevice)
+            currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE])
 
 
 def CONNECT_TO_CAST_DEVICE(currentDialogContext):
     print('CONNECT_TO_CAST_DEVICE')
     chromecast.connectToCastDevice(currentDialogContext)
-    UPDATE_LAST_CAST_DEVICE(currentDialogContext,
-                            currentDialogContext.lastCastDevice)
+    UPDATE_LAST_CAST_DEVICE(currentDialogContext)
 
 
 def LOAD_SINGLE_AUDIOBOOK_DETAILS(currentDialogContext):
@@ -85,7 +83,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
                        currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.CURRENT_MP3]])
     contentType = CONSTANTS.CONTENT_TYPE
     title = currentBook[FD.FOLDER]
-    currentTime = currentBook[FD.CURRENT_MP3_PROGRESS]
+    currentTime = currentBook[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_SECOND_KEY]
     if currentTime > 5:
         currentTime -= 5
     stream_type = CONSTANTS.STREAM_TYPE_BUFFERED
@@ -181,14 +179,16 @@ def saveAudiobookProgress(currentDialogContext):
 
 def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
     print('Update last cast device to: ' + deviceName)
-    filesystem.updateSystemProperty(
-        currentDialogContext, SYSTEM_PROPERTIES.LAST_CAST_DEVICE, deviceName)
+    filesystem.updateSystemProperties(currentDialogContext)
 
 
 def UPDATE_LAST_PLAYED_AUDIOBOOK(currentDialogContext):
     print('Update last played audiobook: ' +
           currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])
-    filesystem.updateSystemProperty(
-        currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER, currentDialogContext.currentRootPath)
-    filesystem.updateSystemProperty(
-        currentDialogContext, SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY, currentDialogContext.currentlySelectedAudiobook()[FD.FOLDER])
+    filesystem.updateSystemProperties(currentDialogContext)
+
+    currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOT_FOLDER] = currentDialogContext.currentRootPath
+    currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_AUDIOBOOK_ROOD_DIRECTORY] = currentDialogContext.currentlySelectedAudiobook()[
+        FD.FOLDER]
+
+    filesystem.updateSystemProperties(currentDialogContext)

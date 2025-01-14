@@ -1,4 +1,4 @@
-from constants import BUTTONS, PA as paintAction, FD, SYSTEM_PROPERTIES
+from constants import BUTTONS, PA as paintAction, FD, SYSTEM_PROPERTIES, CONSTANTS
 import actions as ACTIONS
 from os.path import join
 from pathlib import PurePosixPath
@@ -58,8 +58,6 @@ class WELCOME:
         if pressedButton == BUTTONS.BUTTON_A:
             print('short circuit logic - last audiobook')
             currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
-            currentDialogContext.lastCastDevice = currentDialogContext.systemProperties[
-                SYSTEM_PROPERTIES.LAST_CAST_DEVICE]
             currentDialogContext.actions.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
             currentDialogContext.actions.put(
                 ACTIONS.LOAD_SINGLE_AUDIOBOOK_DETAILS)
@@ -106,7 +104,7 @@ class CHOOSE_CAST:
                 return currentDialogContext
         elif pressedButton == BUTTONS.BUTTON_A:
             # accept cast Device at cursor
-            currentDialogContext.lastCastDevice = currentDialogContext.chromecastDevices[
+            currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE] = currentDialogContext.chromecastDevices[
                 currentDialogContext.menu_chooseCast_CursorLocationAbsolute]
             currentDialogContext.currentDialog = CHOOSE_AUDIOBOOK(self.lcd)
             currentDialogContext.actions.put(ACTIONS.CONNECT_TO_CAST_DEVICE)
@@ -137,7 +135,7 @@ class CHOOSE_AUDIOBOOK:
             book = currentDialogContext.currentlySelectedAudiobook()
             print(currentDialogContext.currentRootPath)
             print(book)
-            if len(book[FD.MP3_FILES]) > 0:
+            if len(book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES]) > 0:
                 # if audiobook selected - play
                 currentDialogContext.currentDialog = AUDIOBOOK_PLAY(self.lcd)
                 currentDialogContext.actions.put(ACTIONS.PLAY_AUDIOBOOK)
@@ -186,9 +184,9 @@ class CHOOSE_AUDIOBOOK:
             # folderName
             self.lcd.write(i, 2, castOptionRows[index][1][FD.FOLDER], 15)
             # percentage
-            if len(castOptionRows[index][1][FD.MP3_FILES]) > 0:
+            if len(castOptionRows[index][1][FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES]) > 0:
                 self.lcd.write(i, 17, formatPercentage3(
-                    castOptionRows[index][1][FD.PERCENTAGE]), 3)
+                    castOptionRows[index][1][FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]), 3)
 
         currentDialogContext.clearRepaintParts()
 
@@ -246,21 +244,25 @@ class AUDIOBOOK_PLAY:
 
         if shouldPaint(paintAction.AUDIOBOOK_PERCENTAGE, currentDialogContext):
             self.lcd.write(1, 17, formatPercentage3(
-                book[FD.PERCENTAGE]), 3)  # percentage
+                book[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]), 3)  # percentage
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NAME, currentDialogContext):
-            self.lcd.write(2, 0, book[FD.CURRENT_MP3], 20)  # mp3Name
+            self.lcd.write(2, 0, book[FD.AUDIOBOOK_DETAILS_KEY]
+                           [CONSTANTS.PROGRESS_MP3_KEY], 20)  # mp3Name
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NUMBERS, currentDialogContext):
             # TrackNo/TrackCount
             self.lcd.write(
-                3, 0, str(book[FD.CURRENT_MP3_IDX]) + '/' + str(len(book[FD.MP3_FILES])), 7)
+                3, 0, str(book[FD.CURRENT_MP3_IDX]) + '/' + str(len(book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])), 7)
 
         if shouldPaint(paintAction.AUDIOBOOK_TIME_NUMBERS, currentDialogContext):
             # currentTrackTime / totalTrackTime
-            mc, sc = divmod(book[FD.CURRENT_MP3_PROGRESS], 60)
+            mc, sc = divmod(book[FD.AUDIOBOOK_DETAILS_KEY]
+                            [CONSTANTS.PROGRESS_SECOND_KEY], 60)
             mt, st = divmod(
-                int(book[FD.MP3_LENGTHS][book[FD.CURRENT_MP3]]), 60)
+                int(book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_DURATIONS][
+                    book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_MP3_KEY]
+                ]), 60)
             timeStatus = '{0:02d}:{1:02d}/{2:02d}:{3:02d}'.format(
                 mc, sc, mt, st)
 

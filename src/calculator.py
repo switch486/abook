@@ -1,3 +1,5 @@
+from constants import CONSTANTS
+
 
 def sublist_up_to(lst, element):
     try:
@@ -14,16 +16,14 @@ def calculateTime(mp3Files, mp3Lengths):
     return time
 
 
-def calculateTimes(mp3Name, mp3Seconds, mp3Files, mp3Lengths):
-    totalTime = calculateTime(mp3Files, mp3Lengths)
+def calculateTimes(audiobookDetails):
+    totalTime = calculateTime(audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.MP3_LENGTHS])
     elapsedTime = 0
     previousMp3Progress = 0
-    currentMp3Progress = 0
-    if mp3Name != None:
+    if audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY] != None:
         previousMp3Progress = calculateTime(sublist_up_to(
-            mp3Files, mp3Name), mp3Lengths)
-        currentMp3Progress += int(mp3Seconds)
-        elapsedTime = previousMp3Progress + currentMp3Progress
+            audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY]), audiobookDetails[CONSTANTS.MP3_LENGTHS])
+        elapsedTime = previousMp3Progress + audiobookDetails[CONSTANTS.PROGRESS_SECOND_KEY]
 
     # percentage
     e = int(elapsedTime)
@@ -32,4 +32,4 @@ def calculateTimes(mp3Name, mp3Seconds, mp3Files, mp3Lengths):
     if t != 0:
         percentage = int((100*e)/t)
 
-    return totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage
+    return totalTime, elapsedTime, percentage

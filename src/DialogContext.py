@@ -7,10 +7,10 @@ class DialogContext:
     currentDialog = None
     actions = queue.Queue()
     systemPropertiesPath = None
-
-    lastCastDevice = ''
-    chromecastDevices = ''
+    systemProperties = {}
     
+    chromecastDevices = ''
+
     lastVersionChangeDate = ''
 
     # helper variables
@@ -29,8 +29,8 @@ class DialogContext:
 
     # repaint fields in the dialog, handled by its own dialog and cleared after repaint.
     repaintParts = []
-    
-    progressSaveEveryXPaints = 10 # about 5 seconds
+
+    progressSaveEveryXPaints = 10  # about 5 seconds
     progressSaveCounter = 0
 
     def clearRepaintParts(self):
@@ -49,54 +49,41 @@ class DialogContext:
         return self.currentDialog.handleButton(self, pressedButton)
 
     def moveAudiobookPointerAndGet(self, jump):
-        currentBook = self.currentlySelectedAudiobook()
+        currentAudiobookDetails = self.currentlySelectedAudiobook()
 
-        currentMp3Idx = currentBook[FD.CURRENT_MP3_IDX]
+        currentMp3Idx = currentAudiobookDetails[FD.CURRENT_MP3_IDX]
         if currentMp3Idx == 0 and jump < 0:
             return
-        if currentMp3Idx == len(currentBook[FD.MP3_FILES]) + 1 and jump > 0:
+        if currentMp3Idx == len(currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES]) + 1 and jump > 0:
             return
 
         currentMp3Idx += jump
-        playpointMp3Name = currentBook[FD.MP3_FILES][currentMp3Idx]
+        playpointMp3Name = currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES][currentMp3Idx]
+        currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_MP3_KEY] = playpointMp3Name
+        currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_SECOND_KEY] = 0
+        currentAudiobookDetails[FD.CURRENT_MP3_IDX] = currentMp3Idx
 
-        # replace currentBook properties completely with new properties:
-        self.setCurrentFolderProgress(self.calculateCurrentFolderProgress(
-            currentMp3Idx, playpointMp3Name, 0, currentBook))
+        self.updateCurrentFolderProgress(currentAudiobookDetails)
 
         return self.currentlySelectedAudiobook()
 
-    def setCurrentFolderProgress(self, newFolderDetails):
-        self.currentFolderDetails()[
-            self.menu_chooseAudiobook_CursorLocationAbsolute] = newFolderDetails
+    def updateCurrentFolderProgress(self, currentAudiobookDetails):
+        totalTime, elapsedTime, percentage = calculateTimes(
+            currentAudiobookDetails)
 
-    def calculateCurrentFolderProgress(self, currentMp3Idx, playpointMp3Name, playpointMp3Seconds, currentBook):
-        # total and elapsed times
-        totalTime, elapsedTime, previousMp3Progress, currentMp3Progress, percentage = calculateTimes(
-            playpointMp3Name, playpointMp3Seconds, currentBook[FD.MP3_FILES], currentBook[FD.MP3_LENGTHS])
-
-        # replace currentBook properties completely with new properties:
-        return {FD.ROOT_PATH: currentBook[FD.ROOT_PATH],
-                FD.FOLDER: currentBook[FD.FOLDER],
-                FD.MP3_FILES: currentBook[FD.MP3_FILES],
-                FD.MP3_LENGTHS: currentBook[FD.MP3_LENGTHS],
-                FD.CURRENT_MP3: playpointMp3Name,
-                FD.CURRENT_MP3_IDX: currentMp3Idx,
-                FD.TOTAL_TIME: totalTime,
-                FD.ELAPSED_TIME: elapsedTime,
-                FD.PREVIOS_MP3_PROGRESS: previousMp3Progress,
-                FD.CURRENT_MP3_PROGRESS: currentMp3Progress,
-                FD.PERCENTAGE: percentage}
+        currentAudiobookDetails[FD.TOTAL_TIME] = totalTime
+        currentAudiobookDetails[FD.ELAPSED_TIME] = elapsedTime
+        currentAudiobookDetails[FD.PERCENTAGE] = percentage
 
     def updateTrackCalculateAudiobook(self, currentMp3Progress):
-        currentBook = self.currentlySelectedAudiobook()
+        currentAudiobookDetails = self.currentlySelectedAudiobook()
+        
+        currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_SECOND_KEY] = currentMp3Progress
 
-        # replace currentBook properties completely with new properties:
-        self.setCurrentFolderProgress(self.calculateCurrentFolderProgress(
-            currentBook[FD.CURRENT_MP3_IDX], currentBook[FD.CURRENT_MP3], currentMp3Progress, currentBook))
+        self.updateCurrentFolderProgress(currentAudiobookDetails)
 
         return self.currentlySelectedAudiobook()
 
-    def getCurrentAudiobookProgressFilePath(self):
+    def getCurrentAudiobookDetailsFilePath(self):
         book = self.currentlySelectedAudiobook()
         return ''.join([book[FD.ROOT_PATH], FD.PATH_SEPARATOR, book[FD.FOLDER], FD.PATH_SEPARATOR, CONSTANTS.PROGRESS_FILE])
