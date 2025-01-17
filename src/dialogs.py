@@ -238,30 +238,30 @@ class AUDIOBOOK_PLAY:
             self.lcd.writeHeader(PLAY_AUDIOBOOK_HEADER)
 
         book = currentDialogContext.currentlySelectedAudiobook()
+        bookDetails = book[FD.AUDIOBOOK_DETAILS_KEY]
 
         if shouldPaint(paintAction.AUDIOBOOK_TITLE, currentDialogContext):
             self.lcd.write(1, 0, book[FD.FOLDER], 17)  # folderName
 
         if shouldPaint(paintAction.AUDIOBOOK_PERCENTAGE, currentDialogContext):
             self.lcd.write(1, 17, formatPercentage3(
-                book[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]), 3)  # percentage
+                bookDetails[FD.PERCENTAGE]), 3)  # percentage
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NAME, currentDialogContext):
-            self.lcd.write(2, 0, book[FD.AUDIOBOOK_DETAILS_KEY]
-                           [CONSTANTS.PROGRESS_MP3_KEY], 20)  # mp3Name
+            self.lcd.write(
+                2, 0, bookDetails[CONSTANTS.PROGRESS_MP3_KEY], 20)  # mp3Name
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NUMBERS, currentDialogContext):
             # TrackNo/TrackCount
             self.lcd.write(
-                3, 0, str(book[FD.CURRENT_MP3_IDX]) + '/' + str(len(book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])), 7)
+                3, 0, str(book[FD.CURRENT_MP3_IDX]) + '/' + str(len(bookDetails[CONSTANTS.MP3_FILES])), 7)
 
         if shouldPaint(paintAction.AUDIOBOOK_TIME_NUMBERS, currentDialogContext):
             # currentTrackTime / totalTrackTime
-            mc, sc = divmod(book[FD.AUDIOBOOK_DETAILS_KEY]
-                            [CONSTANTS.PROGRESS_SECOND_KEY], 60)
+            mc, sc = divmod(bookDetails[CONSTANTS.PROGRESS_SECOND_KEY], 60)
             mt, st = divmod(
-                int(book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_DURATIONS][
-                    book[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_MP3_KEY]
+                int(bookDetails[CONSTANTS.MP3_DURATIONS][
+                    bookDetails[CONSTANTS.PROGRESS_MP3_KEY]
                 ]), 60)
             timeStatus = '{0:02d}:{1:02d}/{2:02d}:{3:02d}'.format(
                 mc, sc, mt, st)

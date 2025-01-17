@@ -7,6 +7,7 @@ from gui import Gui
 import buttonshim
 import filesystem
 from constants import BUTTONS
+import traceback
 
 
 # default property file path
@@ -99,6 +100,7 @@ while True:
             action(currentDialogContext)
             repaintNeeded = True
     except BaseException as err:
+        print(traceback.format_exc())
         print(f">> EXCEPTION {err=}, {type(err)=}")
         currentDialogContext.currentDialog = DIALOGS.EXCEPTION(gui)
 
