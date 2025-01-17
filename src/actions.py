@@ -79,7 +79,7 @@ def playPassedAudiobook(currentDialogContext, currentBook):
 
     currentIP = getIPOfCurrentMachine()
 
-    trackUrl = ''.join([CONSTANTS.HTTP_STRING, currentIP, CONSTANTS.COLON, port, CONSTANTS.URL_DIR_SEPARATOR,
+    trackUrl = ''.join([CONSTANTS.HTTP_STRING, currentIP, CONSTANTS.COLON, str(port), CONSTANTS.URL_DIR_SEPARATOR,
                        currentBook[FD.FOLDER], CONSTANTS.URL_DIR_SEPARATOR, currentBook[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.PROGRESS_MP3_KEY]])
     contentType = CONSTANTS.CONTENT_TYPE
     title = currentBook[FD.FOLDER]
