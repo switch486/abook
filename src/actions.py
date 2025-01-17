@@ -177,8 +177,8 @@ def saveAudiobookProgress(currentDialogContext):
         currentDialogContext.progressSaveCounter += 1
 
 
-def UPDATE_LAST_CAST_DEVICE(currentDialogContext, deviceName):
-    print('Update last cast device to: ' + deviceName)
+def UPDATE_LAST_CAST_DEVICE(currentDialogContext):
+    print('Update last cast device to: ' + currentDialogContext.systemProperties[SYSTEM_PROPERTIES.LAST_CAST_DEVICE])
     filesystem.updateSystemProperties(currentDialogContext)
 
 
