@@ -59,11 +59,11 @@ def getFolderDetails(rootPath, folder):
         audiobookDetails[CONSTANTS.MP3_FILES] = [
             x for x in files if isMp3File(x)]
         audiobookDetails[CONSTANTS.MP3_FILES].sort()
+        audiobookDetails[CONSTANTS.MP3_DURATIONS] = {}
 
         if containsMp3Files:
             resultRows = popen('cd "' + joinedPath +
                                '" && mp3info -p "%f#%S\n" *.mp3').read().splitlines()
-            audiobookDetails[CONSTANTS.MP3_DURATIONS] = {}
             for line in resultRows:
                 key, value = line.strip().split('#', 1)
                 audiobookDetails[CONSTANTS.MP3_DURATIONS][key] = value
