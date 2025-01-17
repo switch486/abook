@@ -69,7 +69,7 @@ class DialogContext:
 
     def updateCurrentFolderProgress(self, currentAudiobookDetails):
         totalTime, elapsedTime, percentage = calculateTimes(
-            currentAudiobookDetails)
+            currentAudiobookDetails[FD.AUDIOBOOK_DETAILS_KEY])
 
         currentAudiobookDetails[FD.TOTAL_TIME] = totalTime
         currentAudiobookDetails[FD.ELAPSED_TIME] = elapsedTime
