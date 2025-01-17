@@ -186,7 +186,7 @@ class CHOOSE_AUDIOBOOK:
             # percentage
             if len(castOptionRows[index][1][FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES]) > 0:
                 self.lcd.write(i, 17, formatPercentage3(
-                    castOptionRows[index][1][FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]), 3)
+                    castOptionRows[index][1][FD.PERCENTAGE]), 3)
 
         currentDialogContext.clearRepaintParts()
 
