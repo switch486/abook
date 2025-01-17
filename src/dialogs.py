@@ -245,7 +245,7 @@ class AUDIOBOOK_PLAY:
 
         if shouldPaint(paintAction.AUDIOBOOK_PERCENTAGE, currentDialogContext):
             self.lcd.write(1, 17, formatPercentage3(
-                bookDetails[FD.PERCENTAGE]), 3)  # percentage
+                book[FD.PERCENTAGE]), 3)  # percentage
 
         if shouldPaint(paintAction.AUDIOBOOK_TRACK_NAME, currentDialogContext):
             self.lcd.write(
