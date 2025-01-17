@@ -17,12 +17,12 @@ def calculateTime(mp3Files, mp3Lengths):
 
 
 def calculateTimes(audiobookDetails):
-    totalTime = calculateTime(audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.MP3_LENGTHS])
+    totalTime = calculateTime(audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.MP3_DURATIONS])
     elapsedTime = 0
     previousMp3Progress = 0
     if audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY] != None:
         previousMp3Progress = calculateTime(sublist_up_to(
-            audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY]), audiobookDetails[CONSTANTS.MP3_LENGTHS])
+            audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.PROGRESS_MP3_KEY]), audiobookDetails[CONSTANTS.MP3_DURATIONS])
         elapsedTime = previousMp3Progress + audiobookDetails[CONSTANTS.PROGRESS_SECOND_KEY]
 
     # percentage
