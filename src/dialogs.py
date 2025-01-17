@@ -223,6 +223,8 @@ class AUDIOBOOK_PLAY:
         mc = currentDialogContext.chromecast_device.media_controller
         if not mc.status.player_is_playing:
             print('Dialog: Play Audiobook - paused')
+       
+            currentDialogContext.actions.put(ACTIONS.CHECK_PLAY_STATUS)
             return
 
         print('Dialog: Play Audiobook ')
