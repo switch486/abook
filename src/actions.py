@@ -1,4 +1,4 @@
-from constants import SYSTEM_PROPERTIES, MS, PA as paintAction, FD, CONSTANTS, ACTIONS
+from constants import SYSTEM_PROPERTIES, MS, PA as paintAction, FD, CONSTANTS
 import chromecast
 import filesystem
 import httpServer
@@ -109,7 +109,7 @@ def PLAY_PAUSE(currentDialogContext):
         mc.pause()
     else:
         mc.play()
-        currentDialogContext.actions.put(ACTIONS.CHECK_PLAY_STATUS)
+        currentDialogContext.actions.put(CHECK_PLAY_STATUS)
 
 
 def PAUSE(currentDialogContext):
