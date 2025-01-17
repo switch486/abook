@@ -17,6 +17,8 @@ def calculateTime(mp3Files, mp3Lengths):
 
 
 def calculateTimes(audiobookDetails):
+    print('\n\n\n')
+    print(audiobookDetails)
     totalTime = calculateTime(audiobookDetails[CONSTANTS.MP3_FILES], audiobookDetails[CONSTANTS.MP3_DURATIONS])
     elapsedTime = 0
     previousMp3Progress = 0
