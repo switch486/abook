@@ -138,9 +138,9 @@ def saveProgress(currentDialogContext):
 
 def sortFolderList(folderListToBeSorted):
     def compare(folder1, folder2):
-        if folder1[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE] > folder2[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]:
+        if folder1[FD.PERCENTAGE] > folder2[FD.PERCENTAGE]:
             return -1
-        if folder1[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE] == folder2[FD.AUDIOBOOK_DETAILS_KEY][FD.PERCENTAGE]:
+        if folder1[FD.PERCENTAGE] == folder2[FD.PERCENTAGE]:
             f1Len = len(folder1[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])
             f2Len = len(folder2[FD.AUDIOBOOK_DETAILS_KEY][CONSTANTS.MP3_FILES])
             if f1Len == f2Len:
