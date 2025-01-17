@@ -58,10 +58,8 @@ $ sudo systemctl stop abook
 ## playback manipulations - TBD
 
 TODO - 
--TEST FIX, on resume, when paused, exception!!
 -task - split mp3s based on chapters and Secondly by 5 minute parts
 -TEST FIX - logs to outside 
 -bug - usb hangs after a while
--TEST FIX - save mp3 details to file when reading them for the first time
--TEST FIX - exception handing for actions 
+-bug - when navigate back from playing track, the http server stopps and hangs
 
