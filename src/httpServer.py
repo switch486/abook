@@ -7,7 +7,7 @@ from os.path import abspath
 
 def launchHttpServerInDirectory(hostIP, port, path):
     print('Launch HTTP Server for localhost and port:' +
-          port + ' and path: ' + path)
+          str(port) + ' and path: ' + str(path))
     return ServeDirectoryWithHTTP(hostIP, path, int(port))
 
 
