@@ -264,7 +264,7 @@ class AUDIOBOOK_PLAY:
                     bookDetails[CONSTANTS.PROGRESS_MP3_KEY]
                 ]), 60)
             timeStatus = '{0:02d}:{1:02d}/{2:02d}:{3:02d}'.format(
-                mc, sc, mt, st)
+                int(mc), int(sc), int(mt), int(st))
 
             self.lcd.write(3, 7, timeStatus, 13)
 
